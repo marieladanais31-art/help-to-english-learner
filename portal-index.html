@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Portal de Apoyo Chanak · FLDOE #134620</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <section id="access-screen" class="access-screen">
+    <div class="access-card">
+      <img src="assets/logo-chanak.png" alt="Chanak International Academy" class="access-logo" />
+      <span class="eyebrow" data-i18n="accessEyebrow">Portal privado de apoyo</span>
+      <h1 data-i18n="accessTitle">Portal de Apoyo Chanak</h1>
+      <p data-i18n="accessText">Acceso para familias, estudiantes, mentores y coordinadores autorizados.</p>
+      <div class="access-form">
+        <input id="access-code" type="password" data-i18n-placeholder="accessPlaceholder" placeholder="Código de acceso" onkeydown="if(event.key==='Enter') validateAccessCode()" />
+        <button onclick="validateAccessCode()" data-i18n="accessButton">Entrar al portal</button>
+      </div>
+      <p id="access-error" class="access-error"></p>
+      <p class="access-note" data-i18n="accessNote">El portal orienta y organiza. El SIS Chanak registra la información oficial.</p>
+    </div>
+  </section>
+
+  <div id="portal-content" class="portal-content">
+    <header class="topbar">
+      <a class="brand" href="#inicio" onclick="showSection('inicio')">
+        <img src="assets/logo-chanak.png" alt="Chanak International Academy" />
+        <div>
+          <strong>Chanak International Academy</strong>
+          <small data-i18n="brandSubtitle">Portal de apoyo · FLDOE #134620</small>
+        </div>
+      </a>
+
+      <nav class="nav-links" aria-label="Navegación principal">
+        <button class="active" onclick="showSection('inicio', this)" data-i18n="navInicio">Inicio</button>
+        <button onclick="showSection('familias', this)" data-i18n="navFamilias">Familias</button>
+        <button onclick="showSection('rutina', this)" data-i18n="navRutina">Rutina Core Americano</button>
+        <button onclick="showSection('extension', this)" data-i18n="navExtension">Extensión Local</button>
+        <button onclick="showSection('lifeskills', this)" data-i18n="navLife">Life Skills</button>
+        <button onclick="showSection('coins', this)" data-i18n="navCoins">Sistema de Formación de Carácter</button>
+        <button onclick="showSection('english-bridge', this)">Helping English Learner</button>
+        <button onclick="showSection('ingles-conversacional-kids', this)">Conversational English Kids</button>
+        <button onclick="showSection('dual-diploma', this)" style="color:#6366f1;font-weight:900;">🎓 Dual Diploma App</button>
+        <button onclick="showSection('manual', this)" style="background:#0284c7;color:#fff;font-weight:900;">📘 Manual Interactivo</button>
+        <button onclick="showSection('recursos', this)" data-i18n="navRecursos">Recursos</button>
+        <button onclick="showSection('diagnostico', this)" data-i18n="navDiagnostico">Diagnóstico</button>
+        <button onclick="showSection('chanak-flex', this)" style="color:#0284c7;font-weight:900;">Chanak Flex</button>
+      </nav>
+
+      <div class="top-actions">
+        <a class="sis-btn" href="https://sis.chanakacademy.org" target="_blank" rel="noopener noreferrer" style="background:#16a34a;color:#fff;font-weight:900;">SIS ↗</a>
+        <a class="sis-btn" href="https://dualdiploma.chanakacademy.org/" target="_blank" rel="noopener noreferrer" style="background:#4f46e5;color:#fff;">Dual Diploma ↗</a>
+        <select id="lang-select" onchange="setLanguage(this.value)" class="lang-select" aria-label="Selector de idioma">
+          <option value="es">🌐 ES</option>
+          <option value="en">🇬🇧 EN</option>
+          <option value="ca">CA</option>
+          <option value="va">VA</option>
+          <option value="gl">GL</option>
+        </select>
+        <span class="badge gold">MSA Candidacy</span>
+        <button class="logout" onclick="logoutPortal()" data-i18n="logout">Salir</button>
+      </div>
+    </header>
+
+    <main>
+      <section id="inicio" class="section active">
+        <div class="hero">
+          <div class="hero-copy">
+            <span class="eyebrow" data-i18n="homeEyebrow">Educación internacional con cosmovisión bíblica</span>
+            <h1 data-i18n="homeTitle">Aprendo hoy. Lidero mañana. Impacto siempre.</h1>
+            <p data-i18n="homeText">Este portal guía a familias, estudiantes y mentores. Las notas, PEI, boletines, transcripts y documentos oficiales se gestionan en el SIS Chanak.</p>
+            <p class="hero-pathways" data-i18n="homePathways">Un colegio, cuatro vías de material: A.C.E. · LIFEPAC · CLE · Chanak Flex; mismo acompañamiento, mismo estándar de dominio.</p>
+            <div class="hero-actions">
+              <button type="button" class="primary" onclick="showSection('manual')">📘 Manual Interactivo para Padres</button>
+              <a href="https://sis.chanakacademy.org" target="_blank" rel="noopener noreferrer" class="primary" style="background:#16a34a;" data-i18n="btnSis">Entrar al SIS ↗</a>
+              <button type="button" onclick="showSection('diagnostico')" data-i18n="btnAce">Diagnóstico y Ruta PEI</button>
+            </div>
+          </div>
+          <div class="hero-card">
+            <img src="assets/logo-chanak.png" alt="Logo Chanak" />
+            <div class="mini-grid">
+              <div><strong>60%</strong><span data-i18n="sixty">Currículo Americano</span></div>
+              <div><strong>20%</strong><span data-i18n="twentyLocal">Extensión Local</span></div>
+              <div><strong>20%</strong><span data-i18n="twentyLife">Life Skills</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="notice important">
+          <strong data-i18n="portalRuleTitle">Regla del portal:</strong>
+          <span data-i18n="portalRule">el portal orienta el trabajo; el SIS Chanak es el canal oficial para calificaciones, PEI, boletines, transcripts y documentos.</span>
+        </div>
+
+        <div class="grid cards-4">
+          <article class="card quick" onclick="showSection('diagnostico')"><span>🧭</span><h3 data-i18n="cardDiagTitle">Diagnóstico y PEI</h3><p data-i18n="cardDiagText">Ruta por vía curricular, sin pruebas duplicadas.</p></article>
+          <article class="card quick" onclick="showSection('rutina')"><span>✏️</span><h3 data-i18n="cardPaceTitle">Rutina Core Americano</h3><p data-i18n="cardPaceText">Metas diarias, revisión supervisada y dominio mínimo del 80%.</p></article>
+          <article class="card quick" onclick="showSection('english-bridge')"><span>ABC</span><h3>Helper English Learner</h3><p>App interactiva para ABC English Learners, vocabulario, canciones externas y 20 Chanak Coins por lección.</p></article>
+          <article class="card quick" onclick="showSection('lifeskills')"><span>🛡️</span><h3 data-i18n="cardLifeTitle">Life Skills</h3><p data-i18n="cardLifeText">Actividades semanales y proyecto de liderazgo.</p></article>
+          <article class="card quick" onclick="showSection('extension')"><span>🌍</span><h3 data-i18n="cardExtTitle">Extensión Local</h3><p data-i18n="cardExtText">Lengua, historia, geografía y cultura local.</p></article>
+        </div>
+      </section>
+
+      <section id="familias" class="section">
+        <div class="section-head">
+          <span class="eyebrow" data-i18n="familiesEyebrow">Guía rápida para familias</span>
+          <h2 data-i18n="familiesTitle">Lo esencial, sin complicarse</h2>
+          <p data-i18n="familiesText">La familia acompaña la rutina, custodia el proceso y sube las calificaciones finales al SIS. El tutor-mentor revisa y da aprobación final cuando corresponda.</p>
+        </div>
+        <div class="stepper">
+          <div class="step"><b>1</b><h3 data-i18n="famStep1Title">Diagnóstico</h3><p data-i18n="famStep1Text">Primero confirmamos la vía curricular. Después, la familia realiza solo la prueba de ubicación correspondiente.</p></div>
+          <div class="step"><b>2</b><h3 data-i18n="famStep2Title">PEI</h3><p data-i18n="famStep2Text">Chanak valida la ruta académica y las áreas de refuerzo.</p></div>
+          <div class="step"><b>3</b><h3 data-i18n="famStep3Title">Rutina</h3><p data-i18n="famStep3Text">Unidades de aprendizaje, agenda, metas, lectura, carácter y oración.</p></div>
+          <div class="step"><b>4</b><h3 data-i18n="famStep4Title">SIS</h3><p data-i18n="famStep4Text">Boletines, alertas, calificaciones y documentos oficiales se gestionan en el SIS.</p></div>
+        </div>
+
+        <div class="grid cards-2 mt">
+          <article class="card">
+            <h3 data-i18n="familyRoutineTitle">Rutina diaria de onboarding</h3>
+            <ul class="checklist">
+              <li data-i18n="familyRoutine1">Opening Exercises: Biblia, oración, pasaje del mes y rasgo del carácter.</li>
+              <li data-i18n="familyRoutine2">Trabajo en unidades de aprendizaje con metas diarias y revisión supervisada.</li>
+              <li data-i18n="familyRoutine3">Life Skills: actividades semanales que refuerzan los temas y construyen el proyecto.</li>
+              <li data-i18n="familyRoutine4">Extensión Local: trabajo semanal en lengua, historia, geografía y cultura.</li>
+              <li data-i18n="familyRoutine5">Educación Artística y Educación Física pueden reforzarse con actividades extracurriculares.</li>
+              <li data-i18n="familyRoutine6">ePACE y herramientas A.C.E. pueden usarse como apoyo opcional para práctica, refuerzo y seguimiento, cuando corresponda.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3 data-i18n="familyAlertsTitle">Alertas y boletín</h3>
+            <ul class="warning-list">
+              <li data-i18n="familyAlerts1">Si pasan 3 semanas sin subir calificaciones de unidades de aprendizaje, el SIS debe generar alerta.</li>
+              <li data-i18n="familyAlerts2">Si vence el tiempo estipulado de Life Skills o Extensión Local sin entrega, debe generarse alerta.</li>
+              <li data-i18n="familyAlerts3">La familia podrá descargar el boletín de calificaciones desde el SIS.</li>
+              <li data-i18n="familyAlerts4">El tutor-mentor revisa evidencias y confirma aprobación final cuando corresponda.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section id="rutina" class="section">
+        <div class="section-head">
+          <span class="eyebrow" data-i18n="routineEyebrow">Rutina Core Americano</span>
+          <h2 data-i18n="routineTitle">Una misma metodología, distintos materiales</h2>
+          <p data-i18n="routineText">Chanak organiza el avance con Mastery Learning, modelo 60/20/20, acompañamiento de mentoras y registro oficial en el SIS.</p>
+        </div>
+
+        <div class="card mt">
+          <h3 data-i18n="routineCommonTitle">Una misma metodología, distintos materiales</h3>
+          <ul class="checklist">
+            <li data-i18n="routineCommon1">Opening Exercises: Biblia, oración, pasaje del mes y rasgo del carácter.</li>
+            <li data-i18n="routineCommon2">Metas diarias y trabajo supervisado mediante el Mapa de Metas.</li>
+            <li data-i18n="routineCommon3">Life Skills semanal y Extensión Local semanal.</li>
+            <li data-i18n="routineCommon4">Regla de dominio Chanak: no se avanza a la siguiente unidad de aprendizaje sin demostrar dominio mínimo del 80%.</li>
+            <li data-i18n="routineCommon5">La calificación final siempre se sube al SIS.</li>
+          </ul>
+        </div>
+
+        <div class="tabs pathway-tabs mt" aria-label="Vías de material">
+          <button class="active" type="button" onclick="showPathway('ace', this)" data-i18n="pathwayAceTitle">Vía A.C.E.</button>
+          <button type="button" onclick="showPathway('lifepac', this)" data-i18n="pathwayLifepacTitle">Vía LIFEPAC</button>
+          <button type="button" onclick="showPathway('cle', this)" data-i18n="pathwayCleTitle">Vía CLE</button>
+          <button type="button" onclick="showPathway('flex', this)" data-i18n="pathwayFlexTitle">Vía Chanak Flex</button>
+        </div>
+
+        <div id="pathway-ace" class="pathway-panel active">
+          <div class="card mt">
+            <h3 data-i18n="pathwayAceTitle">Vía A.C.E.</h3>
+            <p data-i18n="pathwayAceIntro">La Vía A.C.E. sigue activa y es mayoritaria actualmente. Sus términos propios se mantienen dentro de este bloque para describir el sistema A.C.E.</p>
+            <div class="timeline mt">
+              <div class="timeline-item"><span>📖</span><h3 data-i18n="routineStep1Title">Opening Exercises</h3><p data-i18n="routineStep1Text">Biblia, oración, pasaje del mes, rasgo del carácter y preparación del corazón.</p></div>
+              <div class="timeline-item"><span>✏️</span><h3 data-i18n="routineStep2Title">Trabajo en lápiz</h3><p data-i18n="routineStep2Text">El estudiante trabaja su PACE con lápiz, siguiendo metas diarias.</p></div>
+              <div class="timeline-item"><span>🖊️🔴</span><h3 data-i18n="routineStep3Title">Corrección en rojo</h3><p data-i18n="routineStep3Text">La corrección se realiza con bolígrafo rojo y claves custodiadas.</p></div>
+              <div class="timeline-item"><span>🖊️🟢</span><h3 data-i18n="routineStep4Title">Aprobación en verde</h3><p data-i18n="routineStep4Text">El supervisor aprueba, confirma o firma revisión con bolígrafo verde.</p></div>
+            </div>
+            <div class="grid cards-2 mt">
+              <article class="mini-card">
+                <h4 data-i18n="paceSecurityTitle">Protocolo antes de entregar una PACE</h4>
+                <ul class="checklist">
+                  <li data-i18n="paceSecurity1">Retirar y guardar el examen que viene en medio de la PACE de trabajo antes de entregarla al estudiante.</li>
+                  <li data-i18n="paceSecurity2">Retirar y custodiar la PACE de comprobación o material de examen cuando aplique.</li>
+                  <li data-i18n="paceSecurity3">Checkups, mini evaluaciones y autoexamen requieren autorización o firma del supervisor.</li>
+                  <li data-i18n="paceSecurity4">Después del autoexamen, el PACE Test se realiza preferiblemente al día siguiente.</li>
+                  <li data-i18n="paceSecurity5">La nota mínima para aprobar una PACE es 80%.</li>
+                  <li data-i18n="paceSecurity6">La calificación final se sube al SIS Chanak.</li>
+                </ul>
+              </article>
+              <article class="mini-card">
+                <h4 data-i18n="epaceTitle">ePACE y herramientas de práctica opcionales</h4>
+                <p data-i18n="epaceIntro">El programa principal puede trabajarse con PACEs físicos según el PEI, pero ePACE y las herramientas digitales de A.C.E. pueden usarse como apoyo opcional cuando Chanak lo indique o la familia lo tenga disponible.</p>
+                <ul class="checklist">
+                  <li><strong data-i18n="epaceCard1Title">ePACE</strong>: <span data-i18n="epaceCard1Text">Versión digital de PACEs seleccionados. Puede apoyar práctica, seguimiento y aprendizaje individualizado.</span></li>
+                  <li><strong data-i18n="epaceCard2Title">Word Builder / Reading</strong>: <span data-i18n="epaceCard2Text">Recursos de práctica para vocabulario, lectura, fonética, fluidez y comprensión.</span></li>
+                  <li><strong data-i18n="epaceCard3Title">Math Builder</strong>: <span data-i18n="epaceCard3Text">Herramienta de refuerzo para práctica matemática, lagunas básicas y consolidación.</span></li>
+                </ul>
+              </article>
+            </div>
+            <div class="notice mt">
+              <strong data-i18n="epaceRuleTitle">Regla:</strong>
+              <span data-i18n="epaceRule">ePACE y las herramientas digitales son apoyo; no sustituyen el PEI validado por Chanak, la custodia académica ni el registro oficial en el SIS.</span>
+            </div>
+          </div>
+        </div>
+
+        <div id="pathway-lifepac" class="pathway-panel">
+          <div class="card mt">
+            <h3 data-i18n="pathwayLifepacTitle">Vía LIFEPAC</h3>
+            <p data-i18n="pathwayLifepacText">LIFEPAC organiza el año en 10 cuadernos por materia. El estudiante trabaja cada cuaderno con metas diarias y revisión supervisada. Durante la unidad se realizan Self Tests para comprobar avance. El Unit Test se realiza con supervisión y custodia del material de examen. Chanak mantiene el estándar de dominio: mínimo 80%. La calificación final se sube al SIS. Chanak orienta la organización semanal; la secuencia de unidades sigue el plan del PEI.</p>
+            <p class="note" data-i18n="pathwayAvailability">Disponibilidad progresiva por materias; consulta con tu mentora.</p>
+          </div>
+        </div>
+
+        <div id="pathway-cle" class="pathway-panel">
+          <div class="card mt">
+            <h3 data-i18n="pathwayCleTitle">Vía CLE</h3>
+            <p data-i18n="pathwayCleText">CLE trabaja con LightUnits, avances cortos y repaso constante. El estudiante progresa por unidades con metas diarias, quizzes intermedios y test por unidad. Las evaluaciones se realizan con supervisión y custodia cuando corresponda. Chanak mantiene el estándar de dominio: mínimo 80%. La calificación final se sube al SIS.</p>
+            <p class="note" data-i18n="pathwayAvailability">Disponibilidad progresiva por materias; consulta con tu mentora.</p>
+          </div>
+        </div>
+
+        <div id="pathway-flex" class="pathway-panel">
+          <div class="card mt">
+            <h3 data-i18n="pathwayFlexTitle">Vía Chanak Flex</h3>
+            <p data-i18n="pathwayFlexText">En Chanak Flex, la familia trabaja con material aprobado en el PEI. El avance se organiza por unidades de aprendizaje y el dominio se valida mediante evaluaciones Chanak según el calendario del PEI. La nota mínima de dominio es 80%. La calificación final se sube al SIS.</p>
+            <p class="note" data-i18n="pathwayAvailability">Disponibilidad progresiva por materias; consulta con tu mentora.</p>
+            <div class="button-row mt">
+              <a class="primary" href="apps/chanak-flex/index.html" target="_blank" rel="noopener" data-i18n="flexAppButton">Abrir Chanak Flex · Sequence y Tests Trimestrales</a>
+            </div>
+            <p class="note" data-i18n="flexAppHint">Aplicación institucional para realizar los exámenes trimestrales Chanak Flex. La calificación final se registra en el SIS.</p>
+          </div>
+        </div>
+
+        <div class="notice important mt">
+          <strong data-i18n="pathwayPeiQuestion">¿No sabes qué vía usa tu familia?</strong>
+          <span data-i18n="pathwayPeiAnswer">Está definida en el PEI de tu estudiante. Ante dudas, escribe a offcampus@chanakacademy.org.</span>
+        </div>
+      </section>
+
+      <!-- ── SECCIÓN INDEPENDIENTE CHANAK FLEX ── -->
+      <section id="chanak-flex" class="section">
+        <div class="section-head">
+          <span class="eyebrow" style="color:#0284c7;font-weight:900;">Vía Curricular Alternativa</span>
+          <h2>Chanak Flex: Evaluación y Secuencia Flexible</h2>
+          <p>Chanak Flex permite a las familias trabajar con materiales curriculares propios o alternativos aprobados formalmente en su Plan Educativo Individualizado (PEI), manteniendo el estándar internacional de excelencia y la supervisión de dominio (mínimo 80%).</p>
+        </div>
+
+        <div class="grid cards-2 mt">
+          <div class="card" style="background:#F0F9FF;border-color:#BAE6FD;">
+            <h3 style="color:#0369A1;">🎯 ¿Cómo Funciona Chanak Flex?</h3>
+            <ul class="checklist" style="margin-top:12px;">
+              <li><strong>Material Aprobado en PEI:</strong> La familia propone y valida el plan de texto o currículo con la mentora pedagógica.</li>
+              <li><strong>Organización por Unidades:</strong> El año académico se estructura en unidades de aprendizaje semanales y metas de avance diario.</li>
+              <li><strong>Evaluaciones Trimestrales Chanak:</strong> El estudiante demuestra dominio realizando los exámenes institucionales supervisados.</li>
+              <li><strong>Registro Oficial en SIS:</strong> La calificación final aprobada (mínimo 80%) se guarda en el SIS Chanak para boletines y transcripts.</li>
+            </ul>
+            <div class="button-row mt">
+              <a class="primary" href="apps/chanak-flex/index.html" target="_blank" rel="noopener noreferrer" style="background:#0284c7;">Abrir App Chanak Flex · Evaluaciones y Sequence ↗</a>
+            </div>
+          </div>
+
+          <div class="card" style="background:#FAF5FF;border-color:#E9D5FF;">
+            <h3 style="color:#7E22CE;">📘 Integración con la Vía Principal A.C.E.</h3>
+            <p style="font-size:14px;color:#581C87;line-height:1.6;margin-top:8px;">
+              En Chanak International Academy, la <strong>Vía Principal es A.C.E. (Accelerated Christian Education)</strong> por su probado sistema de Mastery Learning. Sin embargo, respetamos la libertad pedagógica de las familias al ofrecer <strong>LIFEPAC</strong>, <strong>CLE (Christian Light Education)</strong> y <strong>Chanak Flex</strong> como vías validadas que conducen a la misma certificación internacional FLDOE #134620.
+            </p>
+            <div class="notice important mt" style="background:#fff;">
+              <strong>Soporte pedagógico:</strong> Si deseas combinar materias A.C.E. con Chanak Flex, consúltalo con tu mentora asignada durante la sesión de diagnóstico del PEI.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="diagnostico" class="section">
+        <div class="section-head">
+          <span class="eyebrow" data-i18n="diagEyebrow">Ubicación por vía curricular</span>
+          <h2 data-i18n="diagTitle">Diagnóstico y Ruta PEI</h2>
+          <p data-i18n="diagText">En Chanak no aplicamos pruebas duplicadas. Cada estudiante realiza la evaluación necesaria según la vía curricular definida o recomendada para su PEI. Primero confirmamos la vía de material: A.C.E., LIFEPAC, CLE o Chanak Flex. Después la familia realiza solo la prueba de ubicación correspondiente y envía los resultados a Chanak para revisión de la mentora.</p>
+        </div>
+
+        <div class="grid cards-4 diagnostic-route-grid">
+          <article class="card diagnostic-card">
+            <h3 data-i18n="diagAceTitle">Vía A.C.E.</h3>
+            <p data-i18n="diagAceText">El estudiante realiza el A.C.E. Diagnostic Test Online. Esta prueba permite ubicar al estudiante dentro de la secuencia A.C.E. y detectar posibles lagunas que deban reforzarse antes de avanzar.</p>
+            <p class="note" data-i18n="diagAceInstruction">Al terminar, guarda o descarga los resultados y envíalos a Chanak.</p>
+            <a class="primary small" href="https://www.acediagnostictest.com/" target="_blank" rel="noopener noreferrer" data-i18n="diagAceButton">Ir al A.C.E. Diagnostic Test</a>
+          </article>
+          <article class="card diagnostic-card">
+            <h3 data-i18n="diagLifepacTitle">Vía LIFEPAC</h3>
+            <p data-i18n="diagLifepacText">La familia realiza los Assessment and Placement Tests de AOP/LIFEPAC según las materias necesarias. Los resultados se envían a Chanak para orientar la ruta inicial del PEI.</p>
+            <p class="note" data-i18n="diagLifepacInstruction">Descarga la prueba correspondiente, realiza la evaluación y envía resultados/fotos/PDF a Chanak.</p>
+            <a class="primary small" href="https://aop.com/pages/assessment-and-placement-tests" target="_blank" rel="noopener noreferrer" data-i18n="diagLifepacButton">Ir a AOP Assessment and Placement Tests</a>
+          </article>
+          <article class="card diagnostic-card">
+            <h3 data-i18n="diagCleTitle">Vía CLE</h3>
+            <p data-i18n="diagCleText">La familia realiza los Diagnostic Tests de Christian Light, especialmente en Math y Language Arts. Para otras materias, Chanak revisa el nivel de lectura independiente y el historial académico del estudiante.</p>
+            <p class="note" data-i18n="diagCleInstruction">Descarga Math y/o Language Arts según indique la mentora. Usa las instrucciones oficiales de corrección. Envía resultados a Chanak.</p>
+            <a class="primary small" href="https://christianlight.org/shop-curriculum/diagnostic-tests" target="_blank" rel="noopener noreferrer" data-i18n="diagCleButton">Ir a Christian Light Diagnostic Tests</a>
+          </article>
+          <article class="card diagnostic-card">
+            <h3 data-i18n="diagFlexTitle">Vía Chanak Flex</h3>
+            <p data-i18n="diagFlexText">Chanak aplica una evaluación institucional según el material aprobado en el PEI y las unidades de aprendizaje definidas para el estudiante.</p>
+            <p class="note" data-i18n="diagFlexInstruction">Herramienta institucional recuperada desde la landing de pago. Úsala cuando la mentora confirme que corresponde esta vía.</p>
+            <a class="primary small" href="https://chanak-diagnostico.vercel.app/evaluacion.html" target="_blank" rel="noopener noreferrer" data-i18n="diagFlexButton">Abrir evaluación Chanak Flex</a>
+          </article>
+        </div>
+
+        <div class="grid cards-2 mt">
+          <article class="card diagnostic-send">
+            <h3 data-i18n="diagSendTitle">Enviar resultados</h3>
+            <p data-i18n="diagSendText">Envía los resultados a offcampus@chanakacademy.org con el asunto: Resultado diagnóstico - Nombre del estudiante - Vía curricular.</p>
+            <a class="primary small" href="mailto:offcampus@chanakacademy.org?subject=Resultado%20diagn%C3%B3stico%20-%20Nombre%20del%20estudiante%20-%20V%C3%ADa%20curricular" data-i18n="diagSendButton">Preparar email</a>
+          </article>
+          <article class="notice important diagnostic-note">
+            <strong data-i18n="diagNoteTitle">Nota:</strong>
+            <span data-i18n="diagNoteText">El diagnóstico sirve para conocer el punto de partida, detectar lagunas, definir la ruta y preparar el PEI.</span>
+          </article>
+        </div>
+      </section>
+
+      <section id="lifeskills" class="section">
+        <div class="section-head library-head">
+          <span class="eyebrow">Carácter · Propósito · Servicio · Liderazgo · College Prep</span>
+          <h2>Ruta Life Skills & Leadership</h2>
+          <p>Life Skills acompaña al estudiante en el desarrollo de carácter, hábitos, responsabilidad, servicio, liderazgo y preparación para la vida adulta. Las guías están organizadas por etapa para que cada familia pueda trabajar con claridad, sin sobrecargar al estudiante.</p>
+        </div>
+
+        <article class="card library-highlight mt">
+          <h3>Catálogo Life Skills Chanak</h3>
+          <p>Catálogo interactivo bilingüe (ES/EN) con el Programa Principal (Seedling · Explorer · Builder · Launch), unidades de aprendizaje transversales, retos, referencias y ChanakCoins. Coherente con el modelo 60/20/20 y la rúbrica oficial 40/30/30.</p>
+          <div class="button-row">
+            <a class="primary small" href="https://chanak-life-skills.vercel.app" target="_blank" rel="noopener noreferrer">Abrir catálogo interactivo</a>
+          </div>
+          <div class="lifeskills-embed" style="margin-top:16px;border:1px solid rgba(0,0,0,.08);border-radius:12px;overflow:hidden;background:#fff">
+            <iframe
+              src="https://chanak-life-skills.vercel.app"
+              title="Catálogo interactivo Life Skills & Leadership"
+              loading="lazy"
+              style="width:100%;height:720px;border:0;display:block"
+              allow="clipboard-write"></iframe>
+          </div>
+        </article>
+
+        <div class="grid cards-3 mt library-grid">
+          <article class="card library-card">
+            <h3>Juniors · Opcional y complementario</h3>
+            <p>Mini proyectos prácticos para introducir hábitos, creatividad, servicio, comunicación, bienestar, tecnología y economía del hogar.</p>
+            <div class="button-row level-buttons">
+              <a class="resource-pill active" href="resources/life-skills/life-skills-junior-1-8-9.pdf" target="_blank" rel="noopener noreferrer">Junior 1 · 8–9 años</a>
+              <a class="resource-pill active" href="resources/life-skills/life-skills-junior-2-10-11.pdf" target="_blank" rel="noopener noreferrer">Junior 2 · 10–11 años</a>
+              <a class="resource-pill active" href="resources/life-skills/life-skills-junior-3-12-13.pdf" target="_blank" rel="noopener noreferrer">Junior 3 · 12–13 años</a>
+            </div>
+          </article>
+
+          <article class="card library-card">
+            <h3>Programa Principal</h3>
+            <p>Proyectos anuales de identidad, propósito, liderazgo, finanzas, servicio y college prep.</p>
+            <div class="button-row level-buttons">
+              <a class="resource-pill active" href="resources/life-skills/life-skills-seedling-14.pdf" target="_blank" rel="noopener noreferrer">Nivel 1 · Seedling · 14 años</a>
+              <a class="resource-pill active" href="resources/life-skills/life-skills-explorer-15.pdf" target="_blank" rel="noopener noreferrer">Nivel 2 · Explorer · 15 años</a>
+              <a class="resource-pill active" href="resources/life-skills/life-skills-builder-16.pdf" target="_blank" rel="noopener noreferrer">Nivel 3 · Builder · 16 años</a>
+              <a class="resource-pill active" href="resources/life-skills/life-skills-launch-17.pdf" target="_blank" rel="noopener noreferrer">Nivel 4 · Launch · 17 años</a>
+            </div>
+          </article>
+
+          <article class="card library-card">
+            <h3>SAT / College Prep</h3>
+            <p>Preparación progresiva para Digital SAT, inglés académico y expediente universitario.</p>
+            <div class="button-row level-buttons">
+              <a class="primary small" href="https://en.khanacademy.org/test-prep/digital-sat" target="_blank" rel="noopener noreferrer">Khan Academy Digital SAT</a>
+            </div>
+          </article>
+        </div>
+
+        <div class="notice mt library-note">
+          <strong>Sistema de evaluación:</strong>
+          <span>Evidencia visual / evidencia del proyecto 40 pts · Referencia externa 30 pts · Reflexión, ensayo o Personal Statement 30 pts.</span>
+        </div>
+
+        <blockquote class="mt emphasis-quote">El GPT sugiere. El tutor-mentor valida. El SIS registra.</blockquote>
+
+        <div class="card mt calculator-card">
+          <h3 data-i18n="lifeCalcTitle">Calculador de nota · Life Skills</h3>
+          <p data-i18n="lifeCalcText">Introduce la valoración de cada parte. El sistema calcula una nota orientativa, genera feedback básico y prepara un correo para offcampus@chanakacademy.org.</p>
+
+          <div class="calc-grid">
+            <label><span data-i18n="studentName">Nombre del estudiante</span><input id="life-student" type="text" placeholder="Nombre y apellido"></label>
+            <label><span data-i18n="projectTitle">Proyecto / actividad</span><input id="life-project" type="text" placeholder="Título del proyecto"></label>
+            <label><span data-i18n="lifeVisual">Evidencia visual · 40 pts</span><input id="life-visual" type="number" min="0" max="40" value="0"></label>
+            <label><span data-i18n="lifeReference">Referencia externa · 30 pts</span><input id="life-reference" type="number" min="0" max="30" value="0"></label>
+            <label><span data-i18n="lifeReflection">Reflexión / ensayo · 30 pts</span><input id="life-reflection" type="number" min="0" max="30" value="0"></label>
+          </div>
+
+          <div class="calc-actions">
+            <button onclick="calculateLifeSkills()" data-i18n="calcButton">Calcular y generar feedback</button>
+            <button onclick="copyLifePrompt()" data-i18n="copyAiPrompt">Copiar prompt para IA</button>
+          </div>
+
+          <div id="life-result" class="calc-result"></div>
+        </div>
+
+        <div class="notice mt gpt-notice">
+          <strong data-i18n="gptGradeTitle">GPT Nota Sugerida Chanak:</strong>
+          <span>El GPT sugiere. El tutor-mentor valida. El SIS registra.</span>
+          <div class="calc-actions">
+            <a class="primary small" href="https://chatgpt.com/g/g-69ff9d02cbd4819184f4a8e31988be1f-nota-sugerida-chanak-life-skills-extension-local" target="_blank" rel="noopener noreferrer" data-i18n="openSuggestedGradeGpt">Abrir GPT Nota Sugerida</a>
+          </div>
+        </div>
+      </section>
+
+      <section id="extension" class="section">
+        <div class="section-head library-head">
+          <span class="eyebrow">Lengua · Historia · Geografía · Cultura · Fe</span>
+          <h2>Biblioteca de Extensión Local</h2>
+          <p>Selecciona la guía correspondiente al nivel del estudiante. Cada guía organiza el trabajo semanal de Extensión Local con actividades, entregables mensuales, competencias LOMLOE y criterios de evaluación alineados con el sistema Chanak.</p>
+        </div>
+
+        <article class="card library-highlight mt">
+          <h3>Catálogo Extensión Local Chanak</h3>
+          <p>Cuaderno interactivo con las 12 guías oficiales (1.º–6.º Primaria, 1.º–4.º ESO, 1.º–2.º Bachillerato): mapa mensual completo, rúbrica, entregables, competencias LOMLOE y pasaje bíblico por mes.</p>
+          <div class="button-row">
+            <a class="primary small" href="https://chanak-extension-local.vercel.app" target="_blank" rel="noopener noreferrer">Abrir catálogo interactivo</a>
+          </div>
+          <div class="lifeskills-embed" style="margin-top:16px;border:1px solid rgba(0,0,0,.08);border-radius:12px;overflow:hidden;background:#fff">
+            <iframe
+              src="https://chanak-extension-local.vercel.app"
+              title="Catálogo interactivo Extensión Local"
+              loading="lazy"
+              style="width:100%;height:720px;border:0;display:block"
+              allow="clipboard-write"></iframe>
+          </div>
+        </article>
+
+        <article class="card extension-studio mt">
+          <div class="studio-head">
+            <div>
+              <span class="eyebrow">Cuaderno interactivo</span>
+              <h3>Ruta por grado</h3>
+              <p>Elige el grado del estudiante para ver el enfoque, las misiones, el entregable del mes y las evidencias que deben quedar organizadas en su carpeta.</p>
+            </div>
+            <a class="secondary small" href="https://drive.google.com/drive/folders/1QMQX_XqIZALgm9zKALECaocrTF-EDrsH?usp=drive_link" target="_blank" rel="noopener noreferrer">Carpeta Drive oficial</a>
+          </div>
+
+          <div id="extension-grade-tabs" class="level-selector" aria-label="Selector de grado de Extensión Local"></div>
+          <div id="extension-workbook-card" class="extension-workbook"></div>
+        </article>
+
+        <div class="grid cards-3 mt compact-cards">
+          <article class="mini-card guidance-card">
+            <span>Paso 1</span>
+            <h4>Cómo se aprende</h4>
+            <p>Extensión Local trabaja con aprendizaje por proyecto: investigar, leer, conversar, crear una evidencia y explicar lo aprendido con conexión local y fe.</p>
+          </article>
+          <article class="mini-card guidance-card">
+            <span>Paso 2</span>
+            <h4>LOMLOE resumida</h4>
+            <p>La LOMLOE organiza competencias y saberes básicos. En Chanak se usa como referencia local para lengua, historia, geografía, cultura, arte, tecnología y educación física, sin sustituir el PEI.</p>
+          </article>
+          <article class="mini-card guidance-card">
+            <span>Paso 3</span>
+            <h4>Evaluación diagnóstica</h4>
+            <p>Al inicio de la ruta, y cuando la mentora lo indique, se observa lectura, escritura, comprensión, expresión oral y conocimiento del entorno para definir punto de partida y áreas por fortalecer.</p>
+          </article>
+        </div>
+
+        <div class="grid cards-3 mt compact-cards">
+          <article class="mini-card guidance-card">
+            <h4>Video de presentación</h4>
+            <p>Graba de 2 a 5 minutos. Presenta el tema, muestra el proceso, enseña la evidencia y cierra con una frase sobre lo que aprendiste y cómo lo aplicarás.</p>
+          </article>
+          <article class="mini-card guidance-card">
+            <h4>Hablar en público</h4>
+            <p>Prepara tres ideas, mira a la cámara, habla despacio, evita leer todo el texto y practica una vez de pie antes de grabar o exponer.</p>
+          </article>
+          <article class="mini-card guidance-card">
+            <h4>Trabajos manuales con excelencia</h4>
+            <p>Planifica materiales, cuida limpieza y proporción, etiqueta partes importantes, toma fotos del proceso y revisa detalles antes de entregar.</p>
+          </article>
+        </div>
+
+        <div class="grid cards-3 mt library-grid">
+          <article class="card library-card">
+            <h3>Primaria</h3>
+            <p>Base cultural, lengua escrita, historia cercana y geografía del entorno.</p>
+            <div class="button-row level-buttons">
+              <a class="resource-pill active" href="resources/extension-local/extension-local-1-primaria.pdf" target="_blank" rel="noopener noreferrer">1.º Primaria</a>
+              <a class="resource-pill active" href="resources/extension-local/extension-local-2-primaria.pdf" target="_blank" rel="noopener noreferrer">2.º Primaria</a>
+              <a class="resource-pill active" href="resources/extension-local/extension-local-3-primaria.pdf" target="_blank" rel="noopener noreferrer">3.º Primaria</a>
+              <a class="resource-pill active" href="resources/extension-local/extension-local-4-primaria.pdf" target="_blank" rel="noopener noreferrer">4.º Primaria</a>
+              <a class="resource-pill active" href="resources/extension-local/extension-local-5-primaria.pdf" target="_blank" rel="noopener noreferrer">5.º Primaria</a>
+              <a class="resource-pill active" href="resources/extension-local/extension-local-6-primaria.pdf" target="_blank" rel="noopener noreferrer">6.º Primaria</a>
+            </div>
+          </article>
+
+          <article class="card library-card">
+            <h3>ESO</h3>
+            <p>Lectura crítica, historia de España, análisis de fuentes, redacción y conexión local.</p>
+            <div class="button-row level-buttons">
+              <a class="resource-pill active" href="resources/extension-local/extension-local-1-eso.pdf" target="_blank" rel="noopener noreferrer">1.º ESO</a>
+              <a class="resource-pill active" href="resources/extension-local/extension-local-2-eso.pdf" target="_blank" rel="noopener noreferrer">2.º ESO</a>
+              <a class="resource-pill active" href="resources/extension-local/extension-local-3-eso.pdf" target="_blank" rel="noopener noreferrer">3.º ESO</a>
+              <a class="resource-pill active" href="resources/extension-local/extension-local-4-eso.pdf" target="_blank" rel="noopener noreferrer">4.º ESO</a>
+            </div>
+          </article>
+
+          <article class="card library-card">
+            <h3>Bachillerato</h3>
+            <p>Comentario de texto, síntesis histórica, literatura, geografía y preparación avanzada.</p>
+            <div class="button-row level-buttons">
+              <a class="resource-pill active" href="resources/extension-local/extension-local-1-bachillerato.pdf" target="_blank" rel="noopener noreferrer">1.º Bachillerato</a>
+              <a class="resource-pill active" href="resources/extension-local/extension-local-2-bachillerato.pdf" target="_blank" rel="noopener noreferrer">2.º Bachillerato</a>
+            </div>
+          </article>
+        </div>
+
+        <div class="notice mt library-note">
+          <strong>Sistema de evaluación:</strong>
+          <span>Conocimiento 30 pts · Ejecución 40 pts · Conexión local y fe 30 pts.</span>
+        </div>
+
+        <div class="notice mt">
+          <span>El calculador del LMS y el GPT Nota Sugerida orientan el feedback, pero la aprobación final corresponde al tutor-mentor o coordinación académica. La nota final debe registrarse en el SIS Chanak.</span>
+        </div>
+
+        <div class="card mt calculator-card">
+          <h3 data-i18n="extCalcTitle">Calculador de nota · Extensión Local</h3>
+          <p data-i18n="extCalcText">Introduce la valoración de cada parte. El sistema calcula una nota orientativa, genera feedback básico y prepara un correo para offcampus@chanakacademy.org.</p>
+
+          <div class="calc-grid">
+            <label><span data-i18n="studentName">Nombre del estudiante</span><input id="ext-student" type="text" placeholder="Nombre y apellido"></label>
+            <label><span data-i18n="projectTitle">Proyecto / actividad</span><input id="ext-project" type="text" placeholder="Título del proyecto"></label>
+            <label><span data-i18n="extKnowledge">Conocimiento · 30 pts</span><input id="ext-knowledge" type="number" min="0" max="30" value="0"></label>
+            <label><span data-i18n="extExecution">Ejecución · 40 pts</span><input id="ext-execution" type="number" min="0" max="40" value="0"></label>
+            <label><span data-i18n="extConnection">Conexión local · 30 pts</span><input id="ext-connection" type="number" min="0" max="30" value="0"></label>
+          </div>
+
+          <div class="calc-actions">
+            <button onclick="calculateExtension()" data-i18n="calcButton">Calcular y generar feedback</button>
+            <button onclick="copyExtensionPrompt()" data-i18n="copyAiPrompt">Copiar prompt para IA</button>
+          </div>
+
+          <div id="ext-result" class="calc-result"></div>
+        </div>
+
+        <div class="notice mt gpt-notice">
+          <strong data-i18n="gptGradeTitle">GPT Nota Sugerida Chanak:</strong>
+          <span>El calculador del LMS y el GPT Nota Sugerida orientan el feedback, pero la aprobación final corresponde al tutor-mentor o coordinación académica. La nota final debe registrarse en el SIS Chanak.</span>
+          <div class="calc-actions">
+            <a class="primary small" href="https://chatgpt.com/g/g-69ff9d02cbd4819184f4a8e31988be1f-nota-sugerida-chanak-life-skills-extension-local" target="_blank" rel="noopener noreferrer" data-i18n="openSuggestedGradeGpt">Abrir GPT Nota Sugerida</a>
+          </div>
+        </div>
+      </section>
+
+      <section id="coins" class="section">
+        <div class="section-head">
+          <span class="eyebrow">Sistema de Formación de Carácter</span>
+          <h2>Rasgos del carácter, pasajes, privilegios y restauración</h2>
+          <p class="hero-pathways">Sistema de Formación de Carácter Chanak</p>
+          <p>Las Chanak Coins reconocen hábitos visibles de responsabilidad, diligencia, servicio, excelencia e integridad. Cuando un hábito necesita corrección, las coins pueden quedar en pausa hasta completar una acción restaurativa.</p>
+        </div>
+
+        <!-- ── 1. Agenda 2026-2027 (PRIMERO) ── -->
+        <div class="card mt character-card" style="margin-bottom:24px;">
+          <div class="studio-head">
+            <div>
+              <span class="eyebrow">Agenda 2026-2027</span>
+              <h3>Rasgos del carácter y pasajes del mes</h3>
+              <p>Selecciona un mes para ver el pasaje principal, enfoque familiar y rasgos semanales de la agenda oficial.</p>
+            </div>
+            <a class="secondary small" href="https://drive.google.com/file/d/17xXAutcSK8GmvAGGqT8PA3CNiN9u30dD/view?usp=drive_link" target="_blank" rel="noopener noreferrer">Abrir agenda</a>
+          </div>
+          <div id="character-month-tabs" class="level-selector month-selector" aria-label="Selector de mes"></div>
+          <div id="character-month-card" class="character-month"></div>
+        </div>
+
+        <div class="notice important">
+          <strong>Shop Chanak:</strong>
+          <span>los privilegios se canjean de forma mensual o trimestral, según la guía familiar y la validación de la mentora. La billetera del portal es una herramienta orientativa local; no añade backend ni modifica SIS.</span>
+        </div>
+
+        <div class="notice mt">
+          <span>En Chanak la disciplina restaura. Por eso usamos coins en pausa, motivo claro, conversación formativa y restitución del hábito.</span>
+        </div>
+
+        <div class="coin-gallery mt">
+          <img src="resources/chanakcoins-20.png" alt="20 ChanakCoins" />
+          <img src="resources/chanakcoins-50.png" alt="50 ChanakCoins" />
+          <img src="resources/chanakcoins-100.png" alt="100 ChanakCoins" />
+        </div>
+
+        <div class="grid cards-3 mt">
+          <article class="card"><h3>Chanak Coins</h3><ul class="checklist"><li>Unidad de aprendizaje con dominio excelente: 100 Chanak Coins</li><li>Unidad de aprendizaje con dominio validado: 50 Chanak Coins</li><li>Pasaje del mes en la primera semana: 100</li><li>Pasaje del mes en inglés: 20</li><li>Rasgo del carácter demostrado: 100</li><li>Acto de servicio documentado: 20</li></ul></article>
+          <article class="card"><h3>Pausa</h3><ul class="warning-list"><li>No establecer metas del día</li><li>Entrega incompleta sin aviso</li><li>Espacio de trabajo desordenado</li><li>Corrección realizada sin seguir el protocolo</li><li>Actitud irrespetuosa o desafiante</li></ul></article>
+          <article class="card"><h3>Acciones restaurativas</h3><ul class="checklist"><li>Tiempo breve de reflexión guiada</li><li>Conversación restaurativa con el adulto supervisor</li><li>Ensayo o audio de responsabilidad</li><li>Plan de mejora semanal</li><li>Reparar daño o restituir el hábito</li></ul></article>
+        </div>
+
+        <div class="restore-flow mt">
+          <span>Motivo de pausa</span>
+          <b>→</b>
+          <span>Acción restaurativa</span>
+          <b>→</b>
+          <span>Coins restaurados</span>
+        </div>
+
+        <div class="card mt coin-wallet" style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:16px;padding:24px;">
+          <div class="wallet-summary" style="display:flex;flex-col:column;gap:16px;">
+            <div>
+              <span class="eyebrow" style="color:#0284c7;font-weight:900;text-transform:uppercase;font-size:12px;">Billetera Privada Oficial</span>
+              <h3 style="margin-top:6px;font-weight:900;color:#0f172a;font-size:20px;">Gestión Privada de Chanak Coins en el SIS</h3>
+              <p style="color:#475569;font-size:14px;line-height:1.6;margin-top:8px;">Las Chanak Coins, la aprobación de méritos y la asignación a cada hijo se gestionan de manera privada y segura desde el <strong>Portal de Padres en el SIS Chanak</strong>.</p>
+            </div>
+            <div style="margin-top:12px;">
+              <a class="primary" href="https://sis.chanakacademy.org/parent" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:8px;padding:10px 20px;background:#0284c7;color:#fff;border-radius:10px;font-weight:800;text-decoration:none;">
+                Entrar al SIS de Padres para Otorgar y Asignar Coins
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="privilege-section mt">
+          <h3>Niveles de privilegios</h3>
+          <div class="grid cards-3 mt">
+            <article class="mini-card"><h4>Sembrador</h4><p>El estudiante comienza a formar hábitos visibles de responsabilidad, orden y constancia. Puede elegir un privilegio sencillo de Shop Chanak.</p></article>
+            <article class="mini-card"><h4>Mayordomo</h4><p>El estudiante demuestra autonomía y cuidado de sus responsabilidades. Puede acceder a privilegios de agenda, proyecto o actividad especial.</p></article>
+            <article class="mini-card"><h4>Embajador</h4><p>El estudiante modela hábitos para otros. Puede asumir privilegios de liderazgo, servicio o mentoreo, siempre con validación de la mentora.</p></article>
+          </div>
+        </div>
+
+        <div class="card mt shop-card">
+          <div class="studio-head">
+            <div>
+              <span class="eyebrow">Intercambio</span>
+              <h3>Shop Chanak</h3>
+              <p>Opciones sugeridas para canjear Chanak Coins. Cada familia puede adaptar los privilegios a edad, contexto y PEI.</p>
+            </div>
+            <a class="secondary small" href="https://drive.google.com/drive/folders/14kOx3_zehJTEamDIiJzBrPO6__19d7SY?usp=drive_link" target="_blank" rel="noopener noreferrer">Billetes imprimibles</a>
+          </div>
+          <div id="shop-items" class="shop-grid"></div>
+        </div>
+      </section>
+
+      <section id="english-bridge" class="section">
+        <div class="section-head">
+          <span class="eyebrow">ABC English Learners</span>
+          <h2>Helping English Learner App</h2>
+          <p>Acceso interactivo al programa de inglés con fonética ABCs, canciones MP3 originales, juegos del Apéndice D para supervisores, rutina diaria y PACEs de 1.º Grado.</p>
+        </div>
+        <div class="notice important">
+          <strong>Uso seguro y pedagógico:</strong>
+          <span>Plataforma interactiva integrada con canciones, fonética multi-sensorial, manual del supervisor y seguimiento de progreso.</span>
+        </div>
+        <div class="button-row">
+          <a class="primary small" href="apps/help-to-english-learner/index.html" target="_blank" rel="noopener noreferrer">Abrir en pantalla completa</a>
+          <button type="button" onclick="showSection('rutina')">Volver a rutina LMS</button>
+        </div>
+        <div class="bridge-embed-shell">
+          <iframe
+            src="apps/help-to-english-learner/index.html"
+            title="Helping English Learner App"
+            loading="lazy"
+            allow="clipboard-write; encrypted-media; picture-in-picture"
+          ></iframe>
+        </div>
+      </section>
+
+      <section id="ingles-conversacional-kids" class="section">
+        <div class="section-head">
+          <span class="eyebrow">Chanak Conversational English (8-12 años)</span>
+          <h2>Chanak English Kids - 36 Lecciones y 60+ Verbos</h2>
+          <p>Aplicación conversacional por niveles (Beginner, Middle, Advance) con 60+ verbos, Desafío Chanak, cuentos cristianos y sistema de Chanak Coins 🪙.</p>
+        </div>
+        <div class="notice important">
+          <strong>Programa Conversacional Chanak:</strong>
+          <span>Sistema activo de 36 lecciones con Spoken Active Recall, micrófono inteligente, fonética IPA y diploma oficial Chanak.</span>
+        </div>
+        <div class="button-row">
+          <a class="primary small" href="apps/ingles-conversacional-kids/index.html" target="_blank" rel="noopener noreferrer">Abrir en pantalla completa</a>
+          <button type="button" onclick="showSection('rutina')">Volver a rutina LMS</button>
+        </div>
+        <div class="bridge-embed-shell">
+          <iframe
+            src="apps/ingles-conversacional-kids/index.html"
+            title="Chanak English Kids (36 Lecciones)"
+            loading="lazy"
+            allow="clipboard-write; encrypted-media; picture-in-picture"
+          ></iframe>
+        </div>
+      </section>
+
+      <section id="dual-diploma" class="section">
+        <div class="section-head">
+          <span class="eyebrow" style="color:#6366f1;font-weight:900;">Programa Internacional Dual Diploma</span>
+          <h2>Doble Titulación High School (EE.UU. & País de Origen)</h2>
+          <p>Obtén simultáneamente el High School Diploma acreditado en Estados Unidos y el Bachillerato / Diploma oficial de tu país con convalidación del 75% de créditos.</p>
+        </div>
+
+        <div class="notice important" style="background:#EEF2FF;border-color:#C7D2FE;color:#3730A3;">
+          <strong>Acceso Oficial Dual Diploma:</strong>
+          <span>Plataforma interactiva para estudiantes de High School (Grados 9 a 12) matriculados en el programa de doble titulación.</span>
+        </div>
+
+        <div class="button-row" style="margin-bottom:24px;">
+          <a class="primary small" href="https://dualdiploma.chanakacademy.org/" target="_blank" rel="noopener noreferrer" style="background:#4f46e5;font-weight:900;padding:12px 24px;font-size:15px;border-radius:12px;">🎓 Acceder a la App Dual Diploma ↗</a>
+        </div>
+
+        <div class="grid cards-3 mt">
+          <article class="card">
+            <span style="font-size:32px;">📜</span>
+            <h3>75% Convalidación de Créditos</h3>
+            <p>Se convalidan las materias troncales cursadas en el plan de estudios del colegio (Matemáticas, Ciencias, Historia local).</p>
+          </article>
+          <article class="card">
+            <span style="font-size:32px;">🇺🇸</span>
+            <h3>6 Asignaturas Americanas Directas</h3>
+            <p>Cursado de asignaturas en inglés directo (English I-IV, US History, US Government & Economics) en la plataforma interactiva.</p>
+          </article>
+          <article class="card">
+            <span style="font-size:32px;">🎓</span>
+            <h3>Doble Titulación Oficial</h3>
+            <p>Doble diploma oficial que abre puertas directas a universidades internacionales en Estados Unidos, Europa y Latinoamérica.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="recursos" class="section">
+        <div class="section-head">
+          <span class="eyebrow">Centro de recursos</span>
+          <h2>Recursos organizados para familias</h2>
+          <p>Enlaces y plantillas para trabajar sin perderse: el portal orienta, Drive conserva materiales de apoyo y el SIS mantiene el registro oficial.</p>
+        </div>
+
+        <div class="grid cards-3">
+          <article class="card resource-card"><span class="icon big">EL</span><h3>Cuadernos Extensión Local</h3><p>Acceso al cuaderno interactivo por grado y a la carpeta oficial con los contenidos base.</p><div class="download-row"><button class="secondary small" type="button" onclick="showSection('extension')">Abrir en portal</button><a href="https://drive.google.com/drive/folders/1QMQX_XqIZALgm9zKALECaocrTF-EDrsH?usp=drive_link" target="_blank" rel="noopener noreferrer">Drive oficial</a></div></article>
+          <article class="card resource-card"><span class="icon big">AG</span><h3>Agenda familiar 2026-2027</h3><p>Pasajes mensuales, rasgos semanales, seguimiento familiar y cierres trimestrales.</p><div class="download-row"><a class="primary small" href="https://drive.google.com/file/d/17xXAutcSK8GmvAGGqT8PA3CNiN9u30dD/view?usp=drive_link" target="_blank" rel="noopener noreferrer">Abrir agenda</a><a href="resources/agenda-devocional-familiar-lite.pdf" target="_blank" rel="noopener noreferrer">Vista lite</a></div></article>
+          <article class="card resource-card"><span class="icon big">CC</span><h3>ChanakCoins y Shop Chanak</h3><p>Billetera local, privilegios, coins en pausa, restauración y billetes imprimibles.</p><div class="download-row"><button class="secondary small" type="button" onclick="showSection('coins')">Abrir pestaña</button><a href="https://drive.google.com/drive/folders/14kOx3_zehJTEamDIiJzBrPO6__19d7SY?usp=drive_link" target="_blank" rel="noopener noreferrer">Billetes</a></div></article>
+          <article class="card resource-card"><span class="icon big">PL</span><h3>Plantillas rápidas</h3><p>Horario sugerido, pasajes del mes, rasgos semanales y rúbrica de revisión en casa.</p><div class="download-row"><a href="resources/horario-sugerido-chanak.png" download>Horario</a><a href="resources/plantilla-pasajes-del-mes.png" download>Pasajes</a><a href="resources/plantilla-rasgos-semanales.png" download>Rasgos</a><a href="resources/rubrica-rapida-casa.png" download>Rúbrica</a></div></article>
+          <article class="card resource-card"><span class="icon bg">LS</span><h3>Life Skills</h3><p>Guías por etapa para hábitos, servicio, liderazgo, comunicación, evidencia visual y reflexión.</p><div class="download-row"><button class="secondary small" type="button" onclick="showSection('lifeskills')">Abrir en portal</button><a href="resources/life-skills/life-skills-seedling-14.pdf" target="_blank" rel="noopener noreferrer">Ejemplo guía</a></div></article>
+          <article class="card resource-card"><span class="icon big">ABC</span><h3>Helper English Learner</h3><p>App interactiva para ABC English Learners: lecciones, vocabulario con imágenes, canciones externas, conducta y evidencias.</p><div class="download-row"><button class="secondary small" type="button" onclick="showSection('english-bridge')">Abrir en LMS</button><a href="https://ha-azure-ten.vercel.app" target="_blank" rel="noopener noreferrer">Pantalla completa</a></div></article>
+          <article class="card resource-card"><span class="icon big">LO</span><h3>Guías LOMLOE</h3><p>Enlaces oficiales para currículo, saberes básicos y contenidos de referencia en España.</p><div class="download-row"><a href="https://educagob.educacionfpydeportes.gob.es/curriculo/curriculo-lomloe.html" target="_blank" rel="noopener noreferrer">Currículo</a><a href="https://www.boe.es/buscar/act.php?id=BOE-A-2022-3296" target="_blank" rel="noopener noreferrer">Primaria</a><a href="https://www.boe.es/buscar/act.php?id=BOE-A-2022-4975" target="_blank" rel="noopener noreferrer">ESO</a></div></article>
+          <article class="card resource-card"><span class="icon big">EP</span><h3>ePACE opcional</h3><p>Acceso y orientación para usar ePACE y herramientas A.C.E. como apoyo complementario cuando corresponda.</p><a class="primary small" href="https://epace.aceconnect.com/login/index.php" target="_blank" rel="noopener noreferrer">Abrir recurso</a></article>
+          <article class="card resource-card"><span class="icon big">NB</span><h3>NotebookLM</h3><p>Espacios de consulta para mentoras: procedimientos, diagnóstico, Life Skills y Extensión Local.</p><div class="notebook-links"><a id="nb-mentor" href="#" target="_blank">Mentor</a><a id="nb-diagnostico" href="#" target="_blank">Diagnóstico</a><a id="nb-life" href="#" target="_blank">Life Skills</a><a id="nb-local" href="#" target="_blank">Extensión</a></div></article>
+          <article class="card resource-card"><span class="icon big">MP</span><h3>Manual para Padres</h3><p>Guía interactiva completa del portal LMS y SIS Chanak, aplicaciones de inglés, cuadernos por grado y gestión de evidencias.</p><button class="primary small" type="button" onclick="showSection('manual')">Abrir Manual Interactivo</button></article>
+        </div>
+      </section>
+
+      <!-- ── MANUAL INTERACTIVO PARA PADRES Y FAMILIAS ── -->
+      <section id="manual" class="section">
+        <div class="section-head" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;background:#F8FAFC;border:1px solid #E2E8F0;padding:24px;border-radius:24px;margin-bottom:24px;">
+          <div>
+            <span class="eyebrow" style="color:#0284c7;font-weight:900;">Guía Oficial e Interactiva para Familias</span>
+            <h2 style="font-size:32px;margin-top:4px;">Manual para Padres: Uso de LMS, Apps y SIS</h2>
+            <p style="margin-top:6px;font-size:15px;color:#475569;">Guía completa visual para acompañar el trabajo diario en casa, el uso de las Apps de Inglés, el registro de entregables y la gestión en el Portal del Padre y Estudiante del SIS.</p>
+          </div>
+          <div>
+            <button type="button" onclick="window.print()" class="primary" style="background:#0284c7;gap:8px;padding:12px 20px;font-size:14px;border-radius:12px;">
+              📥 Descargar / Imprimir Manual en PDF
+            </button>
+          </div>
+        </div>
+
+        <!-- Pestañas de navegación del manual -->
+        <div class="tabs mt" style="gap:8px;margin-bottom:24px;flex-wrap:wrap;">
+          <button class="active" onclick="showManualTab('man-modelo', this)">1. Modelo Pedagógico</button>
+          <button onclick="showManualTab('man-cuadernos', this)">2. Cuadernos & Vías</button>
+          <button onclick="showManualTab('man-extension', this)">3. Extensión Local</button>
+          <button onclick="showManualTab('man-lifeskills', this)">4. Life Skills</button>
+          <button onclick="showManualTab('man-english', this)">5. Apps de Inglés</button>
+          <button onclick="showManualTab('man-sis-student', this)">6. SIS Perfil Estudiante</button>
+          <button onclick="showManualTab('man-sis-parent', this)">7. SIS Perfil Padre</button>
+        </div>
+
+        <!-- ── Tab 1: Modelo Pedagógico ── -->
+        <div id="man-modelo" class="manual-panel active">
+          <div class="card">
+            <span class="eyebrow" style="color:#0284c7;font-weight:900;">1. Modelo Pedagógico Chanak (60 / 20 / 20)</span>
+            <h3 style="margin-top:6px;">Metodología de Aprendizaje por Dominio (Mastery Learning)</h3>
+            <p>Chanak International Academy opera bajo un modelo estructurado en tres pilares fundamentales que garantizan excelencia académica, arraigo cultural y formación del carácter:</p>
+            <div class="grid cards-3 mt">
+              <article class="mini-card" style="background:#F0F9FF;border-color:#BAE6FD;">
+                <span style="font-size:32px;">🇺🇸 60%</span>
+                <h4 style="color:#0369A1;">Core Americano (Vía Principal A.C.E.)</h4>
+                <p style="font-size:13px;color:#0C4A6E;">Matemáticas, Lengua Inglesa, Ciencias Sociales y Ciencias Naturales. La <strong>vía curricular principal es A.C.E.</strong> por su probado sistema de Mastery Learning, pero también utilizamos <strong>LIFEPAC</strong>, <strong>CLE</strong> y la alternativa institucional <strong>Chanak Flex</strong>. Avance individual con nota mínima de dominio de <strong>80%</strong>.</p>
+              </article>
+              <article class="mini-card" style="background:#F0FDF4;border-color:#BBF7D0;">
+                <span style="font-size:32px;">🌍 20%</span>
+                <h4 style="color:#15803D;">Extensión Local</h4>
+                <p style="font-size:13px;color:#14532D;">Ingreso semanal al app para repasar lecciones de referencia y ganar coins. Entregable práctico mensual cuya calificación se asigna uniformemente a todas las asignaturas locales del mes.</p>
+              </article>
+              <article class="mini-card" style="background:#FFFBEB;border-color:#FDE68A;">
+                <span style="font-size:32px;">🛡️ 20%</span>
+                <h4 style="color:#B45309;">Life Skills & Leadership</h4>
+                <p style="font-size:13px;color:#78350F;">Entrega trimestral de proyectos con avance semanal constante. En la etapa Junior, los estudiantes pueden elegir libremente entre <strong>80 proyectos de liderazgo</strong> a ejecutar.</p>
+              </article>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Tab 2: Cuadernos & Vías ── -->
+        <div id="man-cuadernos" class="manual-panel" style="display:none;">
+          <div class="card">
+            <span class="eyebrow" style="color:#0284c7;font-weight:900;">2. Vías Curriculares & Protocolo de Cuadernos</span>
+            <h3 style="margin-top:6px;">Vía Principal A.C.E. y Vías Aprobadas</h3>
+            <p>La vía principal en Chanak es <strong>A.C.E. (Accelerated Christian Education)</strong>. Adicionalmente, apoyamos <strong>LIFEPAC</strong>, <strong>CLE</strong> y la app institucional <strong>Chanak Flex</strong> para familias con materiales alternativos validados en su PEI.</p>
+            <div class="stepper mt">
+              <div class="step"><b>1</b><h3>Opening Exercises</h3><p>Biblia, oración, pasaje del mes y rasgo del carácter según la Agenda Devocional Familiar.</p></div>
+              <div class="step"><b>2</b><h3 style="color:#0B2C5F;">Trabajo en Lápiz</h3><p>El estudiante resuelve su trabajo del día exclusivamente con lápiz en su cuaderno o unidad.</p></div>
+              <div class="step"><b style="background:#DC2626;">3</b><h3 style="color:#DC2626;">Corrección en Rojo</h3><p>El estudiante o supervisor corrige con bolígrafo rojo acudiendo a las claves de respuestas custodiadas.</p></div>
+              <div class="step"><b style="background:#16A34A;">4</b><h3 style="color:#16A34A;">Firma en Verde</h3><p>El supervisor aprueba la unidad y firma en verde al verificar que las correcciones están completas.</p></div>
+            </div>
+            <div class="notice important mt">
+              <strong>Protocolo de Exámenes:</strong> Retirar el examen que viene en el medio de la unidad antes de entregársela al estudiante. El examen se realiza al finalizar la unidad bajo supervisión estricta. Nota mínima de aprobación: 80%.
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Tab 3: Extensión Local ── -->
+        <div id="man-extension" class="manual-panel" style="display:none;">
+          <div class="card">
+            <span class="eyebrow" style="color:#0284c7;font-weight:900;">3. Catálogo y Entregables de Extensión Local</span>
+            <h3 style="margin-top:6px;">Rutina Semanal en App y Entrega de Proyecto Mensual</h3>
+            <p>Extensión Local combina la práctica semanal en la app interactiva con entregables prácticos mensuales:</p>
+            <div class="grid cards-3 mt">
+              <div style="background:#FAFCFF;border:1px solid #DCE5F2;padding:18px;border-radius:20px;">
+                <h4 style="color:#0B2C5F;margin-bottom:8px;">1. Rutina Semanal en la App</h4>
+                <p style="font-size:13px;color:#475569;">Durante la semana, el estudiante ingresa a la app de Extensión Local para revisar las lecciones de referencia (resúmenes de contenido) y <strong>gana Chanak Coins por cada lección terminada</strong>.</p>
+              </div>
+              <div style="background:#FAFCFF;border:1px solid #DCE5F2;padding:18px;border-radius:20px;">
+                <h4 style="color:#0B2C5F;margin-bottom:8px;">2. Proyecto Práctico Mensual</h4>
+                <p style="font-size:13px;color:#475569;">Cada mes el estudiante realiza 1 proyecto práctico. El alumno sube su trabajo a Drive y hace clic en <strong>"Reporté"</strong> dentro del SIS.</p>
+              </div>
+              <div style="background:#F0FDF4;border:1px solid #BBF7D0;padding:18px;border-radius:20px;">
+                <h4 style="color:#15803D;margin-bottom:8px;">3. Calificación Unificada</h4>
+                <p style="font-size:13px;color:#14532D;"><strong>Regla de Evaluación:</strong> La nota obtenida en el proyecto mensual se asigna de manera unificada a todas las asignaturas locales del mes (Lengua, Historia, Geografía, Cultura).</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Tab 4: Life Skills ── -->
+        <div id="man-lifeskills" class="manual-panel" style="display:none;">
+          <div class="card">
+            <span class="eyebrow" style="color:#0284c7;font-weight:900;">4. Life Skills & Leadership</span>
+            <h3 style="margin-top:6px;">Entrega Trimestral y Elección de Proyectos Junior (80 Opciones)</h3>
+            <p>Life Skills promueve el desarrollo de proyectos reales con entregas estipuladas por trimestre (Q1, Q2, Q3):</p>
+            <div class="grid cards-2 mt" style="margin-bottom:16px;">
+              <div style="background:#FFFBEB;border:1px solid #FDE68A;padding:18px;border-radius:20px;">
+                <h4 style="color:#B45309;margin-bottom:6px;">Catálogo Junior: 80 Proyectos de Liderazgo</h4>
+                <p style="font-size:13px;color:#78350F;line-height:1.6;">En la etapa Junior, los estudiantes cuentan con libertad para elegir entre un catálogo de <strong>80 proyectos prácticos de liderazgo</strong>, finanzas, servicio comunitario y desarrollo del carácter.</p>
+              </div>
+              <div style="background:#FAFCFF;border:1px solid #DCE5F2;padding:18px;border-radius:20px;">
+                <h4 style="color:#0B2C5F;margin-bottom:6px;">Avance Semanal Continuo</h4>
+                <p style="font-size:13px;color:#475569;line-height:1.6;">Aunque la entrega formal se califica por trimestre en el SIS, el estudiante trabaja semanalmente en su horario asignado recolectando evidencias.</p>
+              </div>
+            </div>
+            <div class="rubric-grid mt">
+              <div>
+                <b>40 pts</b>
+                <span>Evidencia Visual</span>
+                <small>Fotografías, video o documento gráfico del proceso.</small>
+              </div>
+              <div>
+                <b>30 pts</b>
+                <span>Referencia Externa</span>
+                <small>Firma/validación de un adulto supervisor externo.</small>
+              </div>
+              <div>
+                <b>30 pts</b>
+                <span>Reflexión en Inglés</span>
+                <small>Ensayo o audio de reflexión en inglés conectando fe y acción.</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Tab 5: Apps de Inglés ── -->
+        <div id="man-english" class="manual-panel" style="display:none;">
+          <div class="card">
+            <span class="eyebrow" style="color:#0284c7;font-weight:900;">5. Plataforma de Apps de Inglés Integradas</span>
+            <h3 style="margin-top:6px;">Helper English Learner App y Conversational English Kids</h3>
+            <p>Las aplicaciones de inglés están integradas en el SIS para apoyar el desarrollo del idioma según la etapa del alumno:</p>
+            <div class="grid cards-2 mt">
+              <div style="background:#F0F9FF;border:1px solid #BAE6FD;padding:20px;border-radius:20px;">
+                <h4 style="color:#0369A1;margin-bottom:6px;">Helper English Learner App (Adaptada para ABC)</h4>
+                <p style="font-size:13px;color:#0C4A6E;line-height:1.6;">Diseñada y adaptada específicamente para apoyar a los estudiantes que realizan el programa <strong>ABC with Ace and Christi (Kinder / 1.º Primaria)</strong>. Incluye fonética multi-sensorial ABC, tarjetas con audio, canciones originales MP3, juegos del Apéndice D y otorga <strong>20 Chanak Coins por lección</strong>.</p>
+              </div>
+              <div style="background:#FAF5FF;border:1px solid #E9D5FF;padding:20px;border-radius:20px;">
+                <h4 style="color:#7E22CE;margin-bottom:6px;">Conversational English Kids (36 Lecciones)</h4>
+                <p style="font-size:13px;color:#581C87;line-height:1.6;">36 Lecciones de conversación activa con 60+ verbos, reconocimiento de voz por micrófono inteligente (Spoken Active Recall), cuentos y Desafío Chanak con diploma oficial de conversación.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Tab 6: SIS Perfil Estudiante ── -->
+        <div id="man-sis-student" class="manual-panel" style="display:none;">
+          <div class="card">
+            <span class="eyebrow" style="color:#0284c7;font-weight:900;">6. SIS — Guía del Perfil del Estudiante (sis.chanakacademy.org/student)</span>
+            <h3 style="margin-top:6px;">Vista del Panel Estudiantil Chanak</h3>
+            <p>En el perfil del estudiante, los alumnos encuentran todas sus herramientas en un solo lugar organizado:</p>
+            <div class="grid cards-2 mt">
+              <div style="border:1px solid #E2E8F0;border-radius:16px;padding:16px;background:#F8FAFC;">
+                <span style="font-weight:900;color:#0284c7;font-size:13px;">A. Suite Superior de Apps de Inglés</span>
+                <p style="font-size:13px;color:#475569;margin-top:4px;">Accesos directos arriba para Helper English Learner (apoyo ABC) y Conversational English Kids.</p>
+              </div>
+              <div style="border:1px solid #E2E8F0;border-radius:16px;padding:16px;background:#F8FAFC;">
+                <span style="font-weight:900;color:#0284c7;font-size:13px;">B. Billetera de Chanak Coins</span>
+                <p style="font-size:13px;color:#475569;margin-top:4px;">Muestra el saldo de monedas aprobadas, avance hacia la meta del mes (100 coins) e historial desplegable.</p>
+              </div>
+              <div style="border:1px solid #E2E8F0;border-radius:16px;padding:16px;background:#F8FAFC;">
+                <span style="font-weight:900;color:#0284c7;font-size:13px;">C. Mis Entregables & Alertas de Retraso</span>
+                <p style="font-size:13px;color:#475569;margin-top:4px;">Checklist por grado para presionar "Reporté" y adjuntar Drive, con avisos de retraso si una entrega expira.</p>
+              </div>
+              <div style="border:1px solid #E2E8F0;border-radius:16px;padding:16px;background:#F8FAFC;">
+                <span style="font-weight:900;color:#0284c7;font-size:13px;">D. Registro por Trimestre (Desplegable)</span>
+                <p style="font-size:13px;color:#475569;margin-top:4px;">Pestaña desplegable ▶/▼ con el historial de calificaciones ordenadas por materia y trimestre.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Tab 7: SIS Perfil Padre ── -->
+        <div id="man-sis-parent" class="manual-panel" style="display:none;">
+          <div class="card">
+            <span class="eyebrow" style="color:#0284c7;font-weight:900;">7. SIS — Guía del Perfil de Padres (sis.chanakacademy.org/parent)</span>
+            <h3 style="margin-top:6px;">Flujo de Calificaciones, Aprobación de Evidencias y Documentos Oficiales</h3>
+            <p>Guía detallada de cómo opera el panel de padres en el SIS Chanak:</p>
+
+            <div class="grid cards-2 mt">
+              <div style="border:1px solid #BAE6FD;border-radius:18px;padding:18px;background:#F0F9FF;">
+                <h4 style="color:#0369A1;margin-bottom:6px;">1. Ingreso de Notas por el Padre</h4>
+                <p style="font-size:13px;color:#0C4A6E;line-height:1.6;">La familia custodia el proceso diario y registra en el SIS la calificación final obtenida en el examen de la unidad/PACE.</p>
+              </div>
+              <div style="border:1px solid #BBF7D0;border-radius:18px;padding:18px;background:#F0FDF4;">
+                <h4 style="color:#15803D;margin-bottom:6px;">2. Revisión del Coordinador & Emisión de Boletín</h4>
+                <p style="font-size:13px;color:#14532D;line-height:1.6;">El coordinador o mentor revisa y aprueba el informe/evidencia registrada. <strong>Una vez aprobados por coordinación, la familia puede visualizar y descargar el Boletín Oficial de Calificaciones.</strong></p>
+              </div>
+            </div>
+
+            <div class="subpanel mt" style="background:#fff;border-color:#E2E8F0;">
+              <h4 style="color:#0B2C5F;margin-bottom:10px;">📄 Pestañas y Documentos Oficiales Descargables en el Perfil de Padres:</h4>
+              <div class="grid cards-3">
+                <div style="border:1px solid #E2E8F0;border-radius:14px;padding:14px;background:#F8FAFC;">
+                  <strong style="color:#0284c7;display:block;margin-bottom:4px;">Carta de Matrícula</strong>
+                  <p style="font-size:12px;color:#475569;margin:0;">Descarga en PDF de la carta de confirmación de inscripción con código FLDOE #134620 en español e inglés.</p>
+                </div>
+                <div style="border:1px solid #E2E8F0;border-radius:14px;padding:14px;background:#F8FAFC;">
+                  <strong style="color:#0284c7;display:block;margin-bottom:4px;">Contrato y Firma Digital</strong>
+                  <p style="font-size:12px;color:#475569;margin:0;">Revisión, descarga y módulo de firma digital del contrato educativo de la familia.</p>
+                </div>
+                <div style="border:1px solid #E2E8F0;border-radius:14px;padding:14px;background:#F8FAFC;">
+                  <strong style="color:#0284c7;display:block;margin-bottom:4px;">PEI Actualizado</strong>
+                  <p style="font-size:12px;color:#475569;margin:0;">Descarga directa del Plan Educativo Individualizado vigente con el diagnóstico y metas del año.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="notice important mt">
+              <strong>🔔 Alertas de Retraso Automáticas:</strong> Padre y estudiante visualizan notificaciones visuales destacadas cuando un entregable de Life Skills, Extensión Local o evaluación de unidad supera el tiempo estipulado en el calendario.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── POLÍTICAS DE PRIVACIDAD Y PROTECCIÓN DE DATOS ── -->
+      <section id="privacy" class="section">
+        <div class="section-head">
+          <span class="eyebrow" style="color:#0284c7;font-weight:900;">Normativa Legal y Custodia Educativa</span>
+          <h2 style="font-size:36px;">Políticas de Privacidad y Protección de Datos</h2>
+          <p style="font-size:15px;color:#475569;margin-top:8px;">Chanak International Academy (FLDOE #134620) garantiza la máxima seguridad de la información confidencial de familias y estudiantes conforme a la legislación internacional de protección de menores en el entorno escolar.</p>
+        </div>
+
+        <div class="grid cards-2 mt">
+          <div class="card" style="background:#F8FAFC;border-color:#E2E8F0;">
+            <h3 style="font-size:22px;color:#0B2C5F;">1. Cumplimiento de Normativas COPPA y FERPA (EE.UU.)</h3>
+            <p style="font-size:14px;color:#475569;line-height:1.6;margin-top:8px;">
+              En cumplimiento estricto de la ley <strong>COPPA</strong> (Children's Online Privacy Protection Act) y <strong>FERPA</strong> (Family Educational Rights and Privacy Act), Chanak International Academy no recopila ni comercializa datos personales de menores de 13 años sin el consentimiento expreso y verificable del padre, madre o tutor legal. Toda la información académica se mantiene protegida bajo secreto profesional educativo.
+            </p>
+          </div>
+
+          <div class="card" style="background:#F8FAFC;border-color:#E2E8F0;">
+            <h3 style="font-size:22px;color:#0B2C5F;">2. Protección de Datos GDPR / LOPDGDD (España / UE)</h3>
+            <p style="font-size:14px;color:#475569;line-height:1.6;margin-top:8px;">
+              Para las familias con residencia en la Unión Europea o España, el tratamiento de datos se rige por el <strong>Reglamento General de Protección de Datos (RGPD)</strong> y la <strong>LOPDGDD 3/2018</strong>. Las familias pueden ejercer en cualquier momento sus derechos de acceso, rectificación, supresión, limitación del tratamiento y portabilidad escribiendo a <em>privacy@chanakacademy.org</em>.
+            </p>
+          </div>
+
+          <div class="card" style="background:#F8FAFC;border-color:#E2E8F0;">
+            <h3 style="font-size:22px;color:#0B2C5F;">3. Separación entre Portal LMS y Registro SIS</h3>
+            <p style="font-size:14px;color:#475569;line-height:1.6;margin-top:8px;">
+              El <strong>Portal LMS</strong> es una herramienta orientativa para organizar el trabajo en casa. No almacena datos sensibles ni contraseñas. Toda la base de datos oficial de calificaciones, PEI, boletines y contratos se custodia exclusivamente dentro de la infraestructura cifrada del <strong>SIS Chanak (Supabase / SSL Cifrado de 256 bits)</strong>.
+            </p>
+          </div>
+
+          <div class="card" style="background:#F8FAFC;border-color:#E2E8F0;">
+            <h3 style="font-size:22px;color:#0B2C5F;">4. Consentimiento del Tutor y No Comercialización</h3>
+            <p style="font-size:14px;color:#475569;line-height:1.6;margin-top:8px;">
+              Chanak International Academy <strong>NUNCA venderá, alquilará ni compartirá</strong> datos de estudiantes o familias con terceros con fines publicitarios o comerciales. El acceso a expedientes de alumnos está estrictamente reservado a sus padres vinculados y al personal pedagógico autorizado por el colegio.
+            </p>
+          </div>
+        </div>
+      </section>
+</main>
+
+    <footer>
+      <strong>Chanak International Academy</strong> · FLDOE #134620 · MSA Candidacy · <span data-i18n="footerText">Portal privado de apoyo</span><br/>
+      <span data-i18n="footerRule">El portal orienta. El SIS registra la información oficial.</span><br/>
+      <div style="margin-top:12px;display:flex;justify-content:center;align-items:center;gap:16px;font-size:13px;flex-wrap:wrap;">
+        <button type="button" onclick="showSection('manual')" style="background:none;border:none;color:#0284c7;font-weight:800;cursor:pointer;text-decoration:underline;">📘 Manual Interactivo para Padres</button>
+        <span style="color:#cbd5e1;">•</span>
+        <button type="button" onclick="showSection('privacy')" style="background:none;border:none;color:#64748b;font-weight:700;cursor:pointer;text-decoration:underline;">🛡️ Políticas de Privacidad & COPPA / FERPA</button>
+      </div>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

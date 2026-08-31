@@ -693,54 +693,684 @@ const ANIMAL_SCIENCE_PACES = {
 // Based on real "Horario Fase 1" and weekly guides
 // ============================================================
 
+// ============================================================
+// Weekly Schedule — from DLC Manual & A.C.E. Supervisor Guide
+// Reorganización Oficial: Semanas 1 a 17 con Objetivos, PACEs y Días
+// ============================================================
+
 const WEEKLY_SCHEDULE = {
   week1: {
-    title: "Week 1 — Vocabulary & Classroom Phrases",
-    focus: "First Words & Classroom Commands",
+    weekNum: 1,
+    title: "Semana 1 — Preparación, Comandos & Vocabulario Inicial",
+    phase: "Fase 1: Preparación & Fundamentos",
+    manualPages: "Manual DLC Fase 1 · Apéndice E (Tarjetas A–D)",
+    objectives: [
+      "Memorizar los compromisos diarios: Pledge to the Christian Flag, Pledge to the Bible y Morning Prayer.",
+      "Aprender e interactuar con 6 reglas fundamentales del aula (Sit down, Stand up, Listen, Look, Quiet).",
+      "Reconocer y pronunciar números del 1 al 10, colores básicos y formas geométricas.",
+      "Identificar los primeros 10 sustantivos del salón de clases (chair, table, door, window, floor, pencil, book).",
+      "Establecer la Regla Obligatoria de las 5 Repeticiones orales en voz alta para cada palabra."
+    ],
+    paces: [
+      { subject: "speaking", paceNum: "1001", label: "🗣️ Speaking English 1001 (Vocabulario Base)", color: "#4ECDC4" },
+      { subject: "supervisor", tab: "guide-chanak", label: "👩‍🏫 Guía Maestro-Padre Chanak", color: "#5B4FE9" },
+      { subject: "evaluator", tab: "goalcard", label: "🎯 Primera Daily Goal Card", color: "#FFD93D" }
+    ],
     dailyActivities: [
-      { day: "Day 1", activities: ["Pledge to Christian Flag (in English)", "Classroom Rules introduction", "Numbers 1-10", "Colors: red, blue, green, yellow, orange, purple", "Nouns: chair, table, door, window, floor"] },
-      { day: "Day 2", activities: ["Review pledges", "Body parts: head, shoulders, knees, toes", "Commands: Sit down, Stand up, Point to...", "Verbs: listen, run, say, sit, stand"] },
-      { day: "Day 3", activities: ["Calendar time", "Review nouns & verbs", "New nouns: pencil, eraser, ruler, marker, book", "Shapes: circle, square, triangle, rectangle, oval"] },
-      { day: "Day 4", activities: ["Numbers 1-15", "Review classroom nouns", "Draw pictures for 5 words", "Game: Bingo with classroom vocabulary"] },
-      { day: "Day 5", activities: ["Colors review", "Shapes review", "WORD BUILDING WORDS introduction: ark, ball, cake, mat, jar, bat, fan, farm, rake, train, car, gate, harp, rain", "Pile Game with Word Building cards"] },
+      {
+        day: "Día 1 · Lunes",
+        objective: "Apertura, Compromisos Cristianos y Nombres de Objetos del Salón",
+        activities: [
+          "Apertura: Recitar Pledge to Christian Flag & Morning Prayer con el audio.",
+          "Presentación de reglas del aula: No fighting, Sit down, Listen.",
+          "Vocabulario: chair, table, door, window, floor (repetir 5 veces cada uno con la imagen).",
+          "Dinámica Apéndice D-1: Simon Says con verbos iniciales (sit, stand)."
+        ],
+        actions: [
+          { type: "speaking", target: "1001", label: "🗣️ Ver Vocabulario 1001" },
+          { type: "audio", target: "01", label: "🎵 CD Pista 01" },
+          { type: "game", target: "D-1", label: "🤸 Simon Says (D-1)" },
+          { type: "goalcard", label: "🎯 Crear Goal Card" }
+        ]
+      },
+      {
+        day: "Día 2 · Martes",
+        objective: "Partes del Cuerpo y Comandos de Acción Física",
+        activities: [
+          "Apertura y repaso de compromisos en inglés.",
+          "Canción corporal: Head, Shoulders, Knees and Toes.",
+          "Comandos: Sit down, Stand up, Point to..., Touch your head.",
+          "Repetición oral 5x de partes del cuerpo: head, eye, ear, mouth, nose."
+        ],
+        actions: [
+          { type: "speaking", target: "1001", label: "🗣️ Repasar Cuerpo (Pág. 1-5)" },
+          { type: "audio", target: "02", label: "🎵 CD Pista 02" },
+          { type: "game", target: "D-8", label: "❓ What Is This? (D-8)" }
+        ]
+      },
+      {
+        day: "Día 3 · Miércoles",
+        objective: "Útiles Escolares, Formas y Calendario Conversacional",
+        activities: [
+          "Calendario diario: Day, Month, Weather en inglés.",
+          "Nuevos sustantivos: pencil, paper, eraser, book, desk, office.",
+          "Figuras geométricas: circle, square, triangle, rectangle, oval.",
+          "Drill de pronunciación con tarjetas interactivas 5x."
+        ],
+        actions: [
+          { type: "speaking", target: "1001", label: "🗣️ Útiles Escolares (Pág. 6-15)" },
+          { type: "game", target: "D-5", label: "🔍 Word Hunt (D-5)" }
+        ]
+      },
+      {
+        day: "Día 4 · Jueves",
+        objective: "Números 1-15, Colores y Asociación Visual",
+        activities: [
+          "Conteo oral guiado del 1 al 15.",
+          "Identificación de colores: red, blue, green, yellow, orange, purple.",
+          "Dibujo en cuaderno físico de 5 objetos del aula y etiquetado en inglés.",
+          "Juego de Bingo de vocabulario del salón (Apéndice D-6)."
+        ],
+        actions: [
+          { type: "game", target: "D-6", label: "🎯 Bingo Vocabulario (D-6)" },
+          { type: "speaking", target: "1001", label: "🗣️ Vocabulario Colores" }
+        ]
+      },
+      {
+        day: "Día 5 · Viernes",
+        objective: "Evaluación Oral Semanal, Cuadro de Estrellas y Cierre",
+        activities: [
+          "Repaso general de los 10 sustantivos y 5 comandos aprendidos.",
+          "Verificación del Star Chart y colocación de estrellas ganadas.",
+          "Juego de clasificación Pile Game (Apéndice D-3).",
+          "Oración de cierre y felicitación por la Semana 1."
+        ],
+        actions: [
+          { type: "evaluator", target: "stars", label: "⭐ Star Chart Semanal" },
+          { type: "game", target: "D-3", label: "📚 Pile Game (D-3)" }
+        ]
+      }
     ]
   },
-  week2_4: {
-    title: "Weeks 2-4 — Speaking English Pace 1",
-    focus: "Speaking English PACE 1 — Conversation & Commands",
+
+  week2: {
+    weekNum: 2,
+    title: "Semana 2 — Speaking English PACE 1 (Págs. 1–10)",
+    phase: "Fase 1: Speaking English Core",
+    manualPages: "PACE Física Speaking English 1001 págs. 1–10 + Tarjetas E–H",
+    objectives: [
+      "Trabajar y completar las páginas 1 a 10 del cuaderno físico Speaking English 1001.",
+      "Dominar estructuras orales: 'I am a...', 'You are...', 'This is my...', 'Touch your...'.",
+      "Aprender palabras de articulación: jump, hands, fingers, foot, feet, circle, boy, girl.",
+      "Escuchar y cantar canciones de las pistas 01 y 02 del CD original.",
+      "Supervisar con bolígrafo rojo y registrar avance en la Goal Card."
+    ],
+    paces: [
+      { subject: "speaking", paceNum: "1001", label: "🗣️ Speaking English 1001 (Págs. 1–10)", color: "#4ECDC4" },
+      { subject: "evaluator", tab: "goalcard", label: "🎯 Goal Card: Speaking 1-10", color: "#FFD93D" }
+    ],
     dailyActivities: [
-      { day: "Week 2 Day 1", activities: ["Review Week 1 nouns: ark, ball, cake, mat, jar...", "NEW: I am / You are / Sit Down / Point to / Stand up", "Song: Speaking English CD Track 1", "Commands Pace 1 video", "Picture Card: Fire, Kite, Feather"] },
-      { day: "Week 2 Day 2", activities: ["NEW: I am a... / Turn / Are you a...? / Stop / Walk / Yes", "Word Building: flower, iron, frog, lion, match, milk", "Games: Bingo D-2, D-4, D-5"] },
-      { day: "Week 2 Day 3", activities: ["NEW: I am a... / Hop / Touch / Yes", "Word Building: nightingale, sagebrush, monkey, pear, pig", "Games Appendix D-2, D-4, D-3"] },
-      { day: "Week 2 Day 4", activities: ["Review all Speaking English Pace 1 vocabulary", "PACE ACTIVITY pages 1-20", "Game: Pile Game"] },
-      { day: "Week 2 Day 5", activities: ["COLORS review", "Word Building words review", "Bingo game", "Vocabulary quiz"] },
+      {
+        day: "Día 1 · Lunes",
+        objective: "Frases 'I am' / 'You are' y Cuaderno Físico Págs. 1–5",
+        activities: [
+          "Opening: Compromisos, oración matutina y versículo semanal.",
+          "Frases nuevas: I am a boy / I am a girl / You are my supervisor.",
+          "Trabajo en PACE física Speaking English 1001 (páginas 1 a 5).",
+          "Reproducción de canción CD Pista 01."
+        ],
+        actions: [
+          { type: "speaking", target: "1001", label: "🗣️ Speaking 1001 (Pág. 1-5)" },
+          { type: "audio", target: "01", label: "🎵 CD Pista 01" },
+          { type: "game", target: "D-6", label: "🎯 Bingo (D-6)" }
+        ]
+      },
+      {
+        day: "Día 2 · Martes",
+        objective: "Verbos de Movimiento y Cuaderno Físico Págs. 6–10",
+        activities: [
+          "Comandos de acción: Turn, Stop, Walk, Hop, Jump.",
+          "Preguntas de confirmación: 'Are you a...? / Yes, I am / No, I am not'.",
+          "Trabajo en PACE física Speaking English 1001 (páginas 6 a 10).",
+          "Juego de memoria de tarjetas de palabras (Apéndice D-2)."
+        ],
+        actions: [
+          { type: "speaking", target: "1001", label: "🗣️ Speaking 1001 (Pág. 6-10)" },
+          { type: "game", target: "D-2", label: "🃏 Memory Game (D-2)" }
+        ]
+      },
+      {
+        day: "Día 3 · Miércoles",
+        objective: "Partes Faciales, Sentidos y Tarjetas Visuales",
+        activities: [
+          "Vocabulario de sentidos: Eye, Ear, Nose, Mouth, Chin, Cheek.",
+          "Drill oral 5x: 'Look at the picture / Touch your nose'.",
+          "Preguntas pre-escritura en la mesa del supervisor.",
+          "Juego de búsqueda de palabras en el aula (Apéndice D-4)."
+        ],
+        actions: [
+          { type: "speaking", target: "1001", label: "🗣️ Vocabulario Cara & Sentidos" },
+          { type: "game", target: "D-4", label: "🐟 Go Fish (D-4)" }
+        ]
+      },
+      {
+        day: "Día 4 · Jueves",
+        objective: "Revisión de Páginas 1–10 con Bolígrafo Rojo",
+        activities: [
+          "El supervisor revisa páginas 1 a 10 de Speaking English 1001.",
+          "Corrección inmediata de cualquier respuesta con error (100% de dominio).",
+          "Comandos orales rápidos: 'Put down your pencil, Pick up your book'.",
+          "Juego de Hot Potato para fluidez oral (Apéndice D-7)."
+        ],
+        actions: [
+          { type: "game", target: "D-7", label: "🥔 Hot Potato (D-7)" },
+          { type: "evaluator", target: "calc", label: "🧮 Calculadora de Puntaje" }
+        ]
+      },
+      {
+        day: "Día 5 · Viernes",
+        objective: "Celebración de Avance y Asignación de Estrellas",
+        activities: [
+          "Demostración oral: El estudiante recita 10 palabras y 3 comandos aprendidos.",
+          "Otorgar estrellas doradas en el Star Chart por completar Págs. 1-10.",
+          "Cierre con oración de gratitud por el progreso semanal."
+        ],
+        actions: [
+          { type: "evaluator", target: "stars", label: "⭐ Asignar Estrellas" }
+        ]
+      }
     ]
   },
+
+  week3: {
+    weekNum: 3,
+    title: "Semana 3 — Speaking English PACE 2 (Págs. 1–12)",
+    phase: "Fase 1: Familia & Animales",
+    manualPages: "PACE Física Speaking English 1002 págs. 1–12 + Tarjetas I–M",
+    objectives: [
+      "Completar páginas 1 a 12 del cuaderno físico Speaking English 1002.",
+      "Vocabulario de la familia: Mother, Father, Brother, Sister, Baby, Grandfather, Grandmother.",
+      "Vocabulario de animales domésticos y mascotas: Dog, Cat, Puppy, Kitten.",
+      "Aprender expresiones de cortesía: 'Please', 'Thank you', 'You are welcome'.",
+      "Repetir 5 veces cada término con su tarjeta ilustrada."
+    ],
+    paces: [
+      { subject: "speaking", paceNum: "1002", label: "🗣️ Speaking English 1002 (Págs. 1–12)", color: "#A29BFE" },
+      { subject: "evaluator", tab: "goalcard", label: "🎯 Goal Card: Speaking 1002", color: "#FFD93D" }
+    ],
+    dailyActivities: [
+      {
+        day: "Día 1 · Lunes",
+        objective: "Miembros de la Familia y Pronombres He/She/They",
+        activities: [
+          "Opening + Pledges en inglés.",
+          "Presentación de la familia: Mother, Father, Baby, Son, Daughter.",
+          "Frases: 'He is my father / She is my mother / They are my family'.",
+          "PACE física Speaking English 1002 (págs. 1–5)."
+        ],
+        actions: [
+          { type: "speaking", target: "1002", label: "🗣️ Speaking 1002 (Pág. 1-5)" },
+          { type: "audio", target: "03", label: "🎵 CD Pista 03" }
+        ]
+      },
+      {
+        day: "Día 2 · Martes",
+        objective: "Mascotas, Animales y Comandos de Clase",
+        activities: [
+          "Vocabulario: Dog, Cat, Puppy, Kitten, Sing, Song, Glue, Crayon.",
+          "Comandos: 'Sing a song', 'Clap your hands', 'Snap your fingers'.",
+          "PACE física Speaking English 1002 (págs. 6–10)."
+        ],
+        actions: [
+          { type: "speaking", target: "1002", label: "🗣️ Speaking 1002 (Pág. 6-10)" },
+          { type: "game", target: "D-2", label: "🃏 Memory Mascotas (D-2)" }
+        ]
+      },
+      {
+        day: "Día 3 · Miércoles",
+        objective: "Acciones en el Learning Center y Cortesía",
+        activities: [
+          "Vocabulario: Trash, Box, Learning Center, Cheek, Chin.",
+          "Comandos: 'Throw away', 'Open the box', 'Close the door'.",
+          "Práctica de cortesía: 'Please' y 'Thank you'."
+        ],
+        actions: [
+          { type: "speaking", target: "1002", label: "🗣️ Learning Center (Pág. 11-15)" },
+          { type: "game", target: "D-5", label: "🔍 Word Hunt (D-5)" }
+        ]
+      },
+      {
+        day: "Día 4 · Jueves",
+        objective: "Prendas de Vestir y Colores de Ropa",
+        activities: [
+          "Vocabulario: Dress, Shirt, Pants, Skirt, Blouse, Shoe, Socks.",
+          "Preguntas: 'What is this? It is a shirt / What color is the dress?'.",
+          "PACE física Speaking English 1002 (págs. 11–12)."
+        ],
+        actions: [
+          { type: "speaking", target: "1002", label: "🗣️ Ropa & Colores" },
+          { type: "game", target: "D-6", label: "🎯 Bingo Ropa (D-6)" }
+        ]
+      },
+      {
+        day: "Día 5 · Viernes",
+        objective: "Revisión Semanal de Speaking English 1002",
+        activities: [
+          "Revisión y firma del supervisor en páginas 1 a 12.",
+          "Juego grupal 'What Is This?' (Apéndice D-8) con prendas y familia.",
+          "Registro en Star Chart."
+        ],
+        actions: [
+          { type: "game", target: "D-8", label: "❓ What Is This? (D-8)" },
+          { type: "evaluator", target: "stars", label: "⭐ Star Chart" }
+        ]
+      }
+    ]
+  },
+
+  week4: {
+    weekNum: 4,
+    title: "Semana 4 — Speaking English PACE 3 (Págs. 1–15)",
+    phase: "Fase 1: Hogar, Cocina & Ropa",
+    manualPages: "PACE Física Speaking English 1003 págs. 1–15 + Tarjetas N–R",
+    objectives: [
+      "Completar páginas 1 a 15 del cuaderno físico Speaking English 1003.",
+      "Vocabulario de la casa y cocina: Kitchen, Refrigerator, Stove, Sink, Pan, Kettle, Plate, Fork, Cup, Spoon.",
+      "Ropa de abrigo y accesorios: Vest, Coat, Sweater, Umbrella, Watch, Clock, Belt, Glove, Scarf, Hat.",
+      "Preguntas horarias: 'What time is it? It is ___ o'clock'.",
+      "Regla de 5 repeticiones orales con ilustraciones."
+    ],
+    paces: [
+      { subject: "speaking", paceNum: "1003", label: "🗣️ Speaking English 1003 (Págs. 1–15)", color: "#FF6B6B" },
+      { subject: "evaluator", tab: "goalcard", label: "🎯 Goal Card: Speaking 1003", color: "#FFD93D" }
+    ],
+    dailyActivities: [
+      {
+        day: "Día 1 · Lunes",
+        objective: "Prendas de Invierno y la Hora",
+        activities: [
+          "Vocabulario: Vest, Coat, Sweater, Umbrella, Watch, Clock.",
+          "Pregunta clave: 'What time is it? It is 9 o'clock'.",
+          "PACE física Speaking English 1003 (págs. 1–5)."
+        ],
+        actions: [
+          { type: "speaking", target: "1003", label: "🗣️ Speaking 1003 (Pág. 1-5)" },
+          { type: "audio", target: "04", label: "🎵 CD Pista 04" }
+        ]
+      },
+      {
+        day: "Día 2 · Martes",
+        objective: "La Casa y Accesorios Personales",
+        activities: [
+          "Vocabulario: House, Apartment, Belt, Glove, Scarf, Hat, Tie.",
+          "Frases: 'I live in a house / Put on your coat / Take off your hat'.",
+          "PACE física Speaking English 1003 (págs. 6–10)."
+        ],
+        actions: [
+          { type: "speaking", target: "1003", label: "🗣️ Speaking 1003 (Pág. 6-10)" },
+          { type: "game", target: "D-2", label: "🃏 Memory Casa (D-2)" }
+        ]
+      },
+      {
+        day: "Día 3 · Miércoles",
+        objective: "Botones, Cierres y Aves",
+        activities: [
+          "Vocabulario: Cap, Glasses, Zipper, Buttons, Peacock, Bird, Bow.",
+          "Comandos: 'Zip up your jacket / Button up your shirt'.",
+          "PACE física Speaking English 1003 (págs. 11–15)."
+        ],
+        actions: [
+          { type: "speaking", target: "1003", label: "🗣️ Speaking 1003 (Pág. 11-15)" },
+          { type: "game", target: "D-4", label: "🐟 Go Fish (D-4)" }
+        ]
+      },
+      {
+        day: "Día 4 · Jueves",
+        objective: "Objetos de la Cocina y Preparación de Alimentos",
+        activities: [
+          "Vocabulario: Kitchen, Refrigerator, Stove, Sink, Pan, Lid, Kettle, Jar, Glass.",
+          "Frases: 'In the kitchen / I can cook / Clean the sink'.",
+          "Revisión y práctica oral 5x."
+        ],
+        actions: [
+          { type: "speaking", target: "1003", label: "🗣️ Cocina & Utensilios" },
+          { type: "game", target: "D-6", label: "🎯 Bingo Cocina (D-6)" }
+        ]
+      },
+      {
+        day: "Día 5 · Viernes",
+        objective: "Mesa, Cubiertos y Cierre Semanal",
+        activities: [
+          "Vocabulario: Plate, Fork, Cup, Spoon, Knife, Water, Mop.",
+          "Frases en la mesa: 'Pass me the water, please / Thank you / You are welcome'.",
+          "Revisión del supervisor y estrellas ganadas."
+        ],
+        actions: [
+          { type: "evaluator", target: "stars", label: "⭐ Star Chart" }
+        ]
+      }
+    ]
+  },
+
   week5: {
-    title: "Week 5 — Introduction to ABCs",
-    focus: "ABCs Introduction + Speaking English Pace 4 + Word Building 1001",
+    weekNum: 5,
+    title: "Semana 5 — Speaking English 4 & Puente a las PACEs del ABC",
+    phase: "Fase 1: Transición al Programa Fonético ABC",
+    manualPages: "PACE Física Speaking English 1004 págs. 1–20 + Intro a Word Building 1001",
+    objectives: [
+      "Completar páginas 1 a 20 de la PACE física Speaking English 1004.",
+      "Vocabulario de dormitorio, juguetes y transportes: Bed, Lamp, Pillow, Bear, Doll, Car, Bus, Train.",
+      "Conceptos opuestos: Big/Little, Tall/Short, Dirty/Clean, Asleep/Awake.",
+      "Preparar al estudiante para el programa formal de fonética ABC (Aa Ape, Antelope, Armadillo).",
+      "Introducir la tarjeta T&K de lectura y la escritura de primeras palabras."
+    ],
+    paces: [
+      { subject: "speaking", paceNum: "1004", label: "🗣️ Speaking English 1004 (Págs. 1–20)", color: "#55EFC4" },
+      { subject: "wordBuilding", paceNum: "1001", label: "🔠 Word Building 1001 (Preparación)", color: "#FF6B6B" },
+      { subject: "evaluator", tab: "goalcard", label: "🎯 Goal Card Transición", color: "#FFD93D" }
+    ],
     dailyActivities: [
-      { day: "Day 1", activities: ["Opening: Pledges + Prayer", "Numbers 1-33", "CONVERSATIONAL REVIEW (Simon Says with verbs)", "Review nouns", "New Conversation from Speaking English Pace 4", "PACE Activity Speaking English pages 1-5", "Song: CD Track 3-4", "Bingo: Appendix D-6"] },
-      { day: "Day 2", activities: ["Opening", "Numbers 1-36", "Review Verbs, Nouns, Conversation", "New Conversation Speaking English Pace 4", "PACE Activity pages 6-10", "Song CD Track 3-4", "Review Word Building 1001"] },
-      { day: "Day 3", activities: ["Opening", "Numbers 1-33", "Review all Speaking English 4 vocab", "PACE Activity pages 11-15", "Word Building 1001 — Writing words practice", "Games: Bingo D-6, D-2, D-5"] },
-      { day: "Day 4", activities: ["Numbers 1-38", "New Conversation Speaking English Pace 4", "PACE Activity pages 16-20", "Review Word Building 1001"] },
-      { day: "Day 5", activities: ["Numbers 1-39", "Review all Pace 4 vocabulary", "PACE Activity pages 21-25", "Word Building 1001 review"] },
-    ]
-  },
-  week6_17: {
-    title: "Weeks 6-17 — ABCs Program (Letters A-Z)",
-    focus: "Full ABCs with Ace and Christi — one letter group per week",
-    weeklyPattern: [
-      "Monday: Opening + Review previous letter + Introduce new letter (song, story, T&K card)",
-      "Tuesday: Review letter song + New words practice + PACE Activity pages 1-5",
-      "Wednesday: Word Building vocabulary + Writing practice + Para Leer syllables",
-      "Thursday: Review all words + Games (Bingo, Pile Game) + Animal Science connection",
-      "Friday: Self-Test practice + Star Chart review + Closing celebration"
+      {
+        day: "Día 1 · Lunes",
+        objective: "Dormitorio, Sueño y Despertar",
+        activities: [
+          "Opening con promesas y oración.",
+          "Vocabulario: Bed, Lamp, Pillow, Quilt, Asleep, Awake.",
+          "Comandos: 'Time to sleep / Wake up! / Good morning!'.",
+          "Speaking English 1004 (págs. 1–5)."
+        ],
+        actions: [
+          { type: "speaking", target: "1004", label: "🗣️ Speaking 1004 (Pág. 1-5)" },
+          { type: "audio", target: "05", label: "🎵 CD Pista 05" }
+        ]
+      },
+      {
+        day: "Día 2 · Martes",
+        objective: "Juguetes, Bloques y Rompecabezas",
+        activities: [
+          "Vocabulario: Turtle, Bear, Doll, Block, Puzzle, Bunny, Game.",
+          "Frases: 'Let\'s play! / My favorite toy is the bear'.",
+          "Speaking English 1004 (págs. 6–10)."
+        ],
+        actions: [
+          { type: "speaking", target: "1004", label: "🗣️ Speaking 1004 (Pág. 6-10)" },
+          { type: "game", target: "D-6", label: "🎯 Bingo Juguetes (D-6)" }
+        ]
+      },
+      {
+        day: "Día 3 · Miércoles",
+        objective: "Baño, Aseo Personal y Opuestos",
+        activities: [
+          "Vocabulario: Tub, Shower, Toothbrush, Soap, Comb, Brush, Clean, Dirty.",
+          "Opuestos de tamaño: Big vs Little, Tall vs Short.",
+          "Speaking English 1004 (págs. 11–15)."
+        ],
+        actions: [
+          { type: "speaking", target: "1004", label: "🗣️ Aseo & Opuestos (Pág. 11-15)" }
+        ]
+      },
+      {
+        day: "Día 4 · Jueves",
+        objective: "Vehículos, Medios de Transporte y Tráfico",
+        activities: [
+          "Vocabulario: Bus, Car, Train, Jeep, Taxi, Street, Traffic light.",
+          "Preguntas: 'How do you go to school? I go by bus'.",
+          "Speaking English 1004 (págs. 16–20)."
+        ],
+        actions: [
+          { type: "speaking", target: "1004", label: "🗣️ Transportes (Pág. 16-20)" }
+        ]
+      },
+      {
+        day: "Día 5 · Viernes",
+        objective: "Presentación del Abecedario con Ace & Christi",
+        activities: [
+          "Ver el Video / Canción Oficial del Abecedario (Alphabet Song Video).",
+          "Presentación de las mascotas Ace y Christi.",
+          "Demostración de la letra Aa: Abner the Ape.",
+          "Registro en Star Chart por culminar las primeras 5 semanas de preparación."
+        ],
+        actions: [
+          { type: "phonics", target: "Ape", label: "🔧 Ver Letra Aa (Ape)" },
+          { type: "evaluator", target: "stars", label: "⭐ Star Chart Fase 1" }
+        ]
+      }
     ]
   }
 };
 
+// ============================================================
+// Generador Curricular Unificado para Semanas 6 a 17 (ABC Weeks 1–12)
+// Asocia cada semana a su letra, sonido, canciones, manual y PACEs físicas
+// ============================================================
+
+const ABC_WEEK_METADATA = {
+  1: {
+    manualPages: "ABC Vol. 1 págs. 219–282",
+    wbPace: "1001", asPace: "1001", spkPace: "1005",
+    wbTitle: "Word Building 1001 — Three Sounds of Aa",
+    asTitle: "Animal Science 1001 — Mammals & God's Creatures",
+    verse: "Genesis 1:25 — God made the beasts of the earth according to their kinds.",
+    keyTrait: "Attentiveness (Atención)"
+  },
+  2: {
+    manualPages: "ABC Vol. 1 págs. 283–338",
+    wbPace: "1002", asPace: "1002", spkPace: "1005",
+    wbTitle: "Word Building 1002 — Mm, Ss, Ff",
+    asTitle: "Animal Science 1002 — Water Animals & Sunfish",
+    verse: "Colossians 3:20 — Children, obey your parents in all things.",
+    keyTrait: "Obedience (Obediencia)"
+  },
+  3: {
+    manualPages: "ABC Vol. 1 págs. 339–403",
+    wbPace: "1003", asPace: "1003", spkPace: "1005",
+    wbTitle: "Word Building 1003 — Rr, Ee (Long & Short)",
+    asTitle: "Animal Science 1003 — Large Land Mammals",
+    verse: "1 Thessalonians 5:18 — In everything give thanks.",
+    keyTrait: "Thankfulness (Agradecimiento)"
+  },
+  4: {
+    manualPages: "ABC Vol. 1 págs. 405–472",
+    wbPace: "1004", asPace: "1004", spkPace: "1006",
+    wbTitle: "Word Building 1004 — Bb, Nn, Jj/Gg soft",
+    asTitle: "Animal Science 1004 — Prairie Mammals & Rodents",
+    verse: "Luke 6:38 — Give, and it will be given to you.",
+    keyTrait: "Giving (Generosidad)"
+  },
+  5: {
+    manualPages: "ABC Vol. 2 págs. 1–60",
+    wbPace: "1005", asPace: "1005", spkPace: "1006",
+    wbTitle: "Word Building 1005 — Gg hard, Tt, Pp",
+    asTitle: "Animal Science 1005 — Big Cats & Tropical Birds",
+    verse: "Proverbs 12:24 — The hand of the diligent shall bear rule.",
+    keyTrait: "Diligence (Diligencia)"
+  },
+  6: {
+    manualPages: "ABC Vol. 2 págs. 61–126",
+    wbPace: "1006", asPace: "1006", spkPace: "1006",
+    wbTitle: "Word Building 1006 — Ii (Long & Short), Dd, Hh",
+    asTitle: "Animal Science 1006 — River Mammals & Waterfowl",
+    verse: "1 Corinthians 13:4 — Love is patient, love is kind.",
+    keyTrait: "Love (Amor)"
+  },
+  7: {
+    manualPages: "ABC Vol. 2 págs. 127–196",
+    wbPace: "1007", asPace: "1007", spkPace: "1007",
+    wbTitle: "Word Building 1007 — Oo (Long & Short), Ll, Kk",
+    asTitle: "Animal Science 1007 — African Animals & Marsupials",
+    verse: "James 1:4 — Let patience have its perfect work.",
+    keyTrait: "Patience (Paciencia)"
+  },
+  8: {
+    manualPages: "ABC Vol. 2 págs. 197–260",
+    wbPace: "1008", asPace: "1008", spkPace: "1007",
+    wbTitle: "Word Building 1008 — Cc (Hard & Soft), Jj",
+    asTitle: "Animal Science 1008 — Rainforest Predators & Parrots",
+    verse: "Luke 16:10 — He that is faithful in that which is least is faithful also in much.",
+    keyTrait: "Faithfulness (Fidelidad)"
+  },
+  9: {
+    manualPages: "ABC Vol. 2 págs. 261–330",
+    wbPace: "1009", asPace: "1009", spkPace: "1007",
+    wbTitle: "Word Building 1009 — Ww, Uu (Long & Short), Vv",
+    asTitle: "Animal Science 1009 — Birds & Flying Creatures",
+    verse: "Psalm 104:12 — The birds of the sky nest by the waters; they sing among the branches.",
+    keyTrait: "Excellence (Excelencia)"
+  },
+  10: {
+    manualPages: "ABC Vol. 2 págs. 331–400",
+    wbPace: "1010", asPace: "1010", spkPace: "1008",
+    wbTitle: "Word Building 1010 — Qq, Xx, Yy (Vowel sound)",
+    asTitle: "Animal Science 1010 — Insects & God's Small Creatures",
+    verse: "Proverbs 30:25 — Ants are creatures of little strength, yet they store up their food.",
+    keyTrait: "Resourcefulness (Laboriosidad)"
+  },
+  11: {
+    manualPages: "ABC Vol. 2 págs. 401–464",
+    wbPace: "1011", asPace: "1011", spkPace: "1008",
+    wbTitle: "Word Building 1011 — Yy (Consonant), Zz",
+    asTitle: "Animal Science 1011 — Mountain Mammals & Grazers",
+    verse: "Leviticus 11:29 — God cares for all living creatures.",
+    keyTrait: "Responsibility (Responsabilidad)"
+  },
+  12: {
+    manualPages: "ABC Vol. 2 págs. 465–516",
+    wbPace: "1012", asPace: "1012", spkPace: "1008",
+    wbTitle: "Word Building 1012 — Comprehensive Phonics Review",
+    asTitle: "Animal Science 1012 — God's Animal Kingdom Celebration",
+    verse: "Psalm 150:6 — Let everything that has breath praise the Lord!",
+    keyTrait: "Praise & Mastery (Dominio y Gratitud)"
+  }
+};
+
+function buildAbcWeekSchedule(abcWeekNum) {
+  const meta = ABC_WEEK_METADATA[abcWeekNum] || ABC_WEEK_METADATA[1];
+  const items = (window.ABC_PHONICS_DATA || []).filter(i => i.week === abcWeekNum);
+  const weekNumber = abcWeekNum + 5;
+  const lettersStr = items.map(i => i.letter).join(', ');
+  const animalsStr = items.map(i => `${i.animal} (${i.letter})`).join(', ');
+
+  const primaryAnimal = items[0] || { animal: 'Ape', letter: 'Aa' };
+
+  return {
+    weekNum: weekNumber,
+    title: `Semana ${weekNumber} — ABCs Fonética: ${lettersStr}`,
+    phase: `Fase 2: Programa Central ABC (Semana ${abcWeekNum} de 12)`,
+    manualPages: meta.manualPages,
+    objectives: [
+      `Dominar los sonidos y canciones fonéticas de: ${lettersStr}.`,
+      `Aprender las historias bíblicas y animales mascota: ${animalsStr}.`,
+      `Trabajar las páginas del cuaderno físico ${meta.wbTitle} (Escritura y Sílabas "Para Leer").`,
+      `Conectar las criaturas de Dios en ${meta.asTitle}.`,
+      `Memorizar el versículo bíblico semanal (${meta.verse}) y aplicar el rasgo del carácter: ${meta.keyTrait}.`,
+      `Aplicar la regla obligatoria de las 5 repeticiones orales en voz alta para cada palabra.`
+    ],
+    paces: [
+      { subject: "wordBuilding", paceNum: meta.wbPace, label: `🔠 ${meta.wbTitle}`, color: "#7B72F0" },
+      { subject: "animalScience", paceNum: meta.asPace, label: `🐾 ${meta.asTitle}`, color: "#E17055" },
+      { subject: "speaking", paceNum: meta.spkPace, label: `🗣️ Speaking English ${meta.spkPace}`, color: "#4ECDC4" },
+      { subject: "abc", label: `🔤 Tarjetas Fonéticas (${lettersStr})`, color: "#FF6B6B" }
+    ],
+    dailyActivities: [
+      {
+        day: "Día 1 · Lunes",
+        objective: `Apertura, Presentación de ${animalsStr} e Historia del Animal`,
+        activities: [
+          `Apertura: Compromisos cristianos, Morning Prayer y versículo semanal.`,
+          `Presentación de tarjeta T&K de ${primaryAnimal.animal} (${primaryAnimal.letter}).`,
+          `Lectura de la historia en el manual y reproducción de la canción oficial.`,
+          `Técnica de la Tortuga 🐢 (pronunciar despacio letra por letra) y 5 repeticiones orales.`
+        ],
+        actions: [
+          { type: "phonics", target: primaryAnimal.animal, label: `🔤 Fonética: ${primaryAnimal.animal}` },
+          { type: "pace", subject: "wordBuilding", paceNum: meta.wbPace, label: `🔠 PACE WB ${meta.wbPace}` },
+          { type: "audio_animal", target: primaryAnimal.animal, label: `🎵 Canción de ${primaryAnimal.animal}` },
+          { type: "game", target: "D-1", label: "🤸 Simon Says (D-1)" }
+        ]
+      },
+      {
+        day: "Día 2 · Martes",
+        objective: `Canción de Repaso, Sonidos Adicionales y Trabajo en PACE Física Págs. 1–5`,
+        activities: [
+          `Repaso de la canción de ${lettersStr} cantando en grupo.`,
+          `Práctica de vocabulario ilustrado de la letra con audio en pantalla.`,
+          `Trabajo en cuaderno físico Word Building ${meta.wbPace} (páginas 1 a 5).`,
+          `Supervisión docente con bolígrafo rojo.`
+        ],
+        actions: [
+          { type: "pace", subject: "wordBuilding", paceNum: meta.wbPace, label: `🔠 Word Building ${meta.wbPace}` },
+          { type: "phonics", target: (items[1] || items[0]).animal, label: `🔤 Fonética: ${(items[1] || items[0]).animal}` },
+          { type: "game", target: "D-2", label: "🃏 Memory (D-2)" }
+        ]
+      },
+      {
+        day: "Día 3 · Miércoles",
+        objective: `Sílabas "Para Leer", Práctica de Escritura y PACE Págs. 6–10`,
+        activities: [
+          `Lectura guiada de sílabas y palabras compuestas ("Para Leer").`,
+          `Dictado de palabras nuevas en 'My Own Dictionary'.`,
+          `Trabajo en cuaderno físico Word Building ${meta.wbPace} (páginas 6 a 10).`,
+          `Juego de clasificación Pile Game (Apéndice D-3).`
+        ],
+        actions: [
+          { type: "pace", subject: "wordBuilding", paceNum: meta.wbPace, label: `🔠 Sílabas WB ${meta.wbPace}` },
+          { type: "game", target: "D-3", label: "📚 Pile Game (D-3)" },
+          { type: "goalcard", label: "🎯 Goal Card" }
+        ]
+      },
+      {
+        day: "Día 4 · Jueves",
+        objective: `Conexión con Animal Science ${meta.asPace}, Hábitat y Creación de Dios`,
+        activities: [
+          `Estudio del hábitat, dieta y características de ${animalsStr}.`,
+          `Trabajo en cuaderno físico Animal Science ${meta.asPace}.`,
+          `Preguntas de comprensión oral del supervisor antes de responder.`,
+          `Juego de Bingo fonético con las palabras de la semana (Apéndice D-6).`
+        ],
+        actions: [
+          { type: "pace", subject: "animalScience", paceNum: meta.asPace, label: `🐾 Animal Science ${meta.asPace}` },
+          { type: "game", target: "D-6", label: "🎯 Bingo (D-6)" }
+        ]
+      },
+      {
+        day: "Día 5 · Viernes",
+        objective: `Autoevaluación, Revisión de Metas y Estrellas en Star Chart`,
+        activities: [
+          `Práctica oral de las palabras de la semana (Score Checkup ≥80%).`,
+          `Revisión final de la Goal Card de la semana por el supervisor.`,
+          `Otorgar estrellas doradas en el Star Chart.`,
+          `Celebración de cierre semanal y oración.`
+        ],
+        actions: [
+          { type: "evaluator", target: "stars", label: "⭐ Star Chart Semanal" },
+          { type: "evaluator", target: "calc", label: "🧮 Calculadora de Puntaje" },
+          { type: "game", target: "D-7", label: "🥔 Hot Potato (D-7)" }
+        ]
+      }
+    ]
+  };
+}
+
+window.buildAbcWeekSchedule = buildAbcWeekSchedule;
+window.ABC_WEEK_METADATA = ABC_WEEK_METADATA;
+
+// ============================================================
+// Horario Fase 1 — Simplificado (oficial, del manual DLC)
+// Guía paso a paso de los 75 minutos de la sesión diaria.
+// jumpTo = sección de la app a la que conviene ir en ese paso.
+// ============================================================
+const DAILY_SCHEDULE_PHASE1 = [
+  { icon: "📖", title: "Opening", minutes: 10, activity: "Ejercicios de Apertura: Promesas, Versículo, Reflexión, Canción, Oración.", jumpTo: null },
+  { icon: "🎤", title: "Conversational Review", minutes: 15, activity: "Repetición del vocabulario aprendido (Regla de 5 repeticiones).", jumpTo: "speaking" },
+  { icon: "🔤", title: "New Vocabulary", minutes: 15, activity: "Introducción a nuevo sonido/letra y comandos básicos.", jumpTo: "abc" },
+  { icon: "📝", title: "PACEs / Activities", minutes: 15, activity: "Trabajo autónomo en cuaderno físico de Word Building / Animal Science.", jumpTo: "paces" },
+  { icon: "🎶", title: "Canciones & Juegos", minutes: 10, activity: "Reforzamiento lúdico con canciones originales y dinámicas del Apéndice D.", jumpTo: "supervisor" },
+  { icon: "🔍", title: "Close", minutes: 10, activity: "Revisión de Goal Card con bolígrafo rojo, entrega de estrellas y oración de cierre.", jumpTo: "evaluator" },
+];
+
+window.DAILY_SCHEDULE_PHASE1 = DAILY_SCHEDULE_PHASE1;
 window.SPEAKING_ENGLISH_PACES = SPEAKING_ENGLISH_PACES;
 window.WORD_BUILDING_PACES = WORD_BUILDING_PACES;
 window.ANIMAL_SCIENCE_PACES = ANIMAL_SCIENCE_PACES;
 window.WEEKLY_SCHEDULE = WEEKLY_SCHEDULE;
+

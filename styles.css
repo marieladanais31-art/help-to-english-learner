@@ -248,6 +248,80 @@ body {
 .stat-label { font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
 
 /* ============================================================
+   DAILY SCHEDULE (Guía Semanal — Horario de Hoy)
+   ============================================================ */
+.daily-schedule-progress-bar {
+  width: 100%; height: 10px; border-radius: 100px;
+  background: rgba(255,255,255,0.08); overflow: hidden;
+}
+.daily-schedule-progress-fill {
+  height: 100%; width: 0%; border-radius: 100px;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  transition: width 0.3s ease;
+}
+.daily-step {
+  display: flex; align-items: center; gap: 0.85rem;
+  background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+  border-left: 4px solid var(--primary); border-radius: var(--radius-sm);
+  padding: 0.75rem 0.9rem; cursor: pointer; transition: var(--transition);
+}
+.daily-step:hover { background: rgba(255,255,255,0.06); }
+.daily-step.done { border-left-color: var(--success, #10B981); opacity: 0.7; }
+.daily-step.done .daily-step-title { text-decoration: line-through; }
+.daily-step-check {
+  width: 26px; height: 26px; min-width: 26px; border-radius: 50%;
+  border: 2px solid var(--primary); display: flex; align-items: center; justify-content: center;
+  font-size: 0.9rem; color: transparent; flex-shrink: 0;
+}
+.daily-step.done .daily-step-check { background: var(--success, #10B981); border-color: var(--success, #10B981); color: white; }
+.daily-step-icon { font-size: 1.4rem; flex-shrink: 0; }
+.daily-step-body { flex-grow: 1; min-width: 0; }
+.daily-step-title { font-weight: 800; font-size: 0.92rem; color: var(--text); }
+.daily-step-min { font-weight: 700; color: var(--accent); font-size: 0.8rem; margin-left: 0.4rem; }
+.daily-step-desc { font-size: 0.8rem; color: var(--text-muted); margin-top: 0.1rem; }
+.daily-step-jump {
+  flex-shrink: 0; background: var(--primary); color: white; border: none;
+  padding: 0.4rem 0.9rem; border-radius: 100px; font-size: 0.78rem; font-weight: 700; cursor: pointer;
+}
+
+/* ============================================================
+   PLEDGES & CLASSROOM RULES (Speaking English)
+   ============================================================ */
+.pledge-cards-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem;
+}
+.pledge-card {
+  display: flex; align-items: center; gap: 1rem;
+  background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+  border-left: 5px solid var(--primary); border-radius: var(--radius-md);
+  padding: 1.1rem; cursor: pointer; transition: var(--transition);
+}
+.pledge-card:hover { background: rgba(255,255,255,0.07); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.pledge-card-icon { font-size: 2.4rem; flex-shrink: 0; }
+.pledge-card-body { flex-grow: 1; min-width: 0; }
+.pledge-card-title { font-weight: 800; font-size: 0.95rem; color: var(--accent); margin-bottom: 0.35rem; }
+.pledge-card-text { font-size: 0.82rem; font-style: italic; color: var(--text); line-height: 1.4; }
+.pledge-card-play { font-size: 1.3rem; flex-shrink: 0; opacity: 0.7; }
+
+.rule-cards-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.75rem;
+}
+.rule-card {
+  display: flex; align-items: center; gap: 0.75rem;
+  background: rgba(255,107,157,0.08); border: 1px solid rgba(255,107,157,0.25);
+  border-radius: var(--radius-md); padding: 0.85rem 1rem; cursor: pointer; transition: var(--transition);
+}
+.rule-card:hover { background: rgba(255,107,157,0.16); transform: translateY(-2px); }
+.rule-card-icon { font-size: 1.8rem; flex-shrink: 0; }
+.rule-card-text { font-weight: 700; font-size: 0.85rem; color: var(--text); }
+
+/* ============================================================
+   KARAOKE READ-ALOUD (Animal Science stories)
+   ============================================================ */
+.karaoke-word { transition: background 0.15s ease, color 0.15s ease; border-radius: 4px; padding: 0 0.05em; }
+.karaoke-word.active { background: var(--accent); color: #1a1a2e; font-weight: 700; }
+
+/* ============================================================
    PHONICS GRID (ABCs section)
    ============================================================ */
 .filter-bar { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
@@ -269,17 +343,31 @@ body {
 }
 .phonics-card {
   background: var(--card); border: 1px solid var(--border);
-  border-radius: var(--radius-md); padding: 1.25rem 1rem;
+  border-radius: var(--radius-md); padding: 1rem 0.85rem;
   text-align: center; cursor: pointer; transition: var(--transition);
   position: relative; overflow: hidden;
   border-top: 3px solid var(--card-accent, #7B72F0);
+  display: flex; flex-direction: column; align-items: center; justify-content: space-between;
 }
 .phonics-card:hover { transform: translateY(-4px) scale(1.02); box-shadow: var(--shadow-md); border-color: var(--card-accent, #7B72F0); }
 .phonics-card.hidden { display: none; }
-.phonics-emoji { font-size: 2.2rem; margin-bottom: 0.5rem; display: block; }
-.phonics-letter { font-size: 1.5rem; font-weight: 800; display: block; }
-.phonics-sound { font-size: 0.85rem; color: var(--text-muted); font-family: monospace; margin: 0.2rem 0; }
-.phonics-keyword { font-size: 0.8rem; color: var(--text-muted); }
+.phonics-card-img {
+  width: 76px; height: 76px; object-fit: contain;
+  margin: 0.35rem auto 0.4rem; display: block;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.35));
+  transition: transform 0.25s ease;
+}
+.phonics-card:hover .phonics-card-img { transform: scale(1.1); }
+.phonics-emoji { font-size: 2rem; margin-bottom: 0.3rem; display: block; }
+.phonics-letter { font-size: 1.45rem; font-weight: 800; display: block; line-height: 1.2; }
+.sound-symbol-badge {
+  font-size: 0.72rem; font-weight: 800; color: #FFD93D;
+  background: rgba(255,211,61,0.12); padding: 0.12rem 0.45rem;
+  border-radius: 6px; display: inline-block; margin: 0.2rem 0;
+}
+.phonics-sound { font-size: 0.82rem; color: var(--text-muted); font-family: monospace; margin: 0.1rem 0; }
+.phonics-keyword { font-size: 0.85rem; font-weight: 700; color: var(--text); }
+.phonics-guide-hint { font-size: 0.72rem; color: var(--text-dim); margin-top: 0.2rem; font-style: italic; }
 .phonics-type-badge {
   position: absolute; top: 6px; right: 6px; font-size: 0.6rem; font-weight: 700;
   padding: 0.15rem 0.45rem; border-radius: 100px; text-transform: uppercase; letter-spacing: 0.06em;
@@ -287,6 +375,129 @@ body {
 .type-short-vowel .phonics-type-badge { background: rgba(107,203,255,0.2); color: #6BCBFF; }
 .type-long-vowel .phonics-type-badge { background: rgba(255,211,61,0.2); color: #FFD93D; }
 .type-consonant .phonics-type-badge { background: rgba(78,203,113,0.2); color: #4ECB71; }
+.type-special .phonics-type-badge { background: rgba(236,72,153,0.2); color: #F472B6; }
+
+/* Mom Quick Guide Banner & Elements */
+.mom-guide-banner {
+  background: linear-gradient(135deg, rgba(255,107,157,0.12), rgba(91,79,233,0.22));
+  border: 2px solid var(--accent); border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem; margin: 1.5rem 0;
+  display: flex; align-items: center; justify-content: space-between;
+  cursor: pointer; transition: var(--transition);
+  box-shadow: 0 0 20px rgba(255,107,157,0.18);
+}
+.mom-guide-banner:hover { transform: translateY(-3px); box-shadow: 0 0 30px rgba(255,107,157,0.35); border-color: #FF8E72; }
+.mom-banner-text h3 { font-size: 1.15rem; color: var(--accent); margin-bottom: 0.25rem; font-weight: 800; }
+.mom-banner-text p { font-size: 0.85rem; color: var(--text-muted); margin: 0; }
+
+/* 5x Repetition Tracker */
+.rep-tracker {
+  display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+  margin: 1rem 0; padding: 0.85rem 1rem;
+  background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+  border-radius: var(--radius-md); flex-wrap: wrap;
+}
+.rep-bubble {
+  width: 38px; height: 38px; border-radius: 50%;
+  border: 2px solid var(--border); background: var(--card);
+  color: var(--text-muted); display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 0.95rem; cursor: pointer; transition: all 0.2s ease;
+}
+.rep-bubble.active {
+  background: var(--accent); border-color: var(--accent); color: white;
+  transform: scale(1.15); box-shadow: 0 0 12px var(--accent);
+}
+.rep-star-done {
+  font-size: 1.2rem; margin-left: 0.5rem; font-weight: 800; color: #FFD93D;
+}
+
+/* Vocabulary Interactive Card Grid */
+.vocab-card-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 0.65rem; margin-top: 0.75rem;
+}
+.vocab-interactive-card {
+  background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: 0.65rem 0.5rem;
+  text-align: center; cursor: pointer; transition: var(--transition);
+}
+.vocab-interactive-card:hover {
+  background: rgba(91,79,233,0.15); border-color: var(--primary); transform: translateY(-2px);
+}
+.vocab-word-en { font-weight: 800; font-size: 0.95rem; color: var(--text); }
+.vocab-word-es { font-size: 0.76rem; color: var(--accent); font-style: italic; margin-top: 0.15rem; }
+.vocab-word-hint { font-size: 0.7rem; color: var(--text-dim); margin-top: 0.15rem; font-family: monospace; }
+
+
+/* Speaking English Visual Board & Word Cards */
+.speaking-page-block {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+.speaking-board-preview {
+  margin: 1rem 0;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  background: #ffffff;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+}
+.speaking-board-img {
+  width: 100%;
+  max-width: 540px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+.speaking-words-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 0.75rem;
+  margin: 1rem 0;
+}
+.speaking-word-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 0.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+.speaking-word-card:hover {
+  background: rgba(91,79,233,0.14);
+  border-color: var(--primary);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(91,79,233,0.3);
+}
+.speaking-word-img {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+  border-radius: 6px;
+  margin-bottom: 0.4rem;
+  background: rgba(255,255,255,0.06);
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.3));
+}
+.speaking-word-title {
+  font-weight: 800;
+  font-size: 0.92rem;
+  color: var(--text);
+}
+.speaking-word-es {
+  font-size: 0.78rem;
+  color: var(--accent);
+  font-style: italic;
+  margin-top: 0.15rem;
+}
 
 /* ============================================================
    LETTER MODAL
@@ -711,31 +922,387 @@ body {
 .abc-connection-badge { display: inline-flex; align-items: center; gap: 0.4rem; background: rgba(91,79,233,0.12); border: 1px solid rgba(91,79,233,0.25); color: var(--primary-light); padding: 0.35rem 0.85rem; border-radius: 100px; font-size: 0.8rem; font-weight: 600; margin-bottom: 1rem; }
 
 /* ============================================================
-   WEEKLY GUIDE
+   WEEKLY GUIDE & UNIFIED HUB STYLES
    ============================================================ */
-.weekly-header {
-  background: var(--card); border: 1px solid var(--border);
-  border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 1.5rem;
+.weekly-selector-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow-sm);
 }
-.weekly-header h3 { font-size: 1.25rem; font-weight: 800; margin-bottom: 0.25rem; }
-.weekly-header .focus { font-size: 0.88rem; color: var(--accent); font-weight: 600; margin-bottom: 0.75rem; }
-.weekly-header .desc { font-size: 0.85rem; color: var(--text-muted); }
-.daily-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; }
-.daily-card {
-  background: var(--card2); border: 1px solid var(--border);
-  border-radius: var(--radius-md); padding: 1.25rem;
+
+.unified-week-hero {
+  background: linear-gradient(135deg, rgba(30, 36, 80, 0.95), rgba(37, 43, 92, 0.95));
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem;
+  margin-bottom: 2rem;
+  box-shadow: var(--shadow-md);
+  position: relative;
+  overflow: hidden;
 }
-.daily-card-day { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--primary-light); font-weight: 700; margin-bottom: 0.6rem; }
-.daily-activity { padding: 0.35rem 0; border-bottom: 1px solid var(--border2); font-size: 0.85rem; color: var(--text-muted); }
-.daily-activity:last-child { border-bottom: none; }
-.daily-activity::before { content: '• '; color: var(--primary-light); }
-.week-pattern { display: flex; flex-direction: column; gap: 0.6rem; }
-.pattern-item { background: var(--card2); border-radius: var(--radius-sm); padding: 0.75rem 1rem; font-size: 0.88rem; color: var(--text-muted); border-left: 3px solid var(--primary); }
+
+.unified-week-hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 4px;
+  background: linear-gradient(90deg, #5B4FE9, #FF6B9D, #FFD93D, #4ECDC4);
+}
+
+.week-hero-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.25rem;
+}
+
+.week-phase-badge {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+  background: rgba(255, 217, 61, 0.12);
+  border: 1px solid rgba(255, 217, 61, 0.3);
+  padding: 0.25rem 0.75rem;
+  border-radius: 100px;
+  margin-bottom: 0.4rem;
+}
+
+.week-hero-title {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1.25;
+}
+
+.week-manual-badge {
+  background: rgba(91, 79, 233, 0.12);
+  border: 1px solid rgba(91, 79, 233, 0.3);
+  border-radius: var(--radius-md);
+  padding: 0.6rem 1rem;
+  font-size: 0.85rem;
+  color: var(--primary-light);
+  line-height: 1.4;
+  max-width: 380px;
+}
+
+.weekly-objectives-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-md);
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.objectives-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.weekly-objectives-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  padding: 0;
+  margin: 0;
+}
+
+.weekly-obj-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  font-size: 0.9rem;
+  color: var(--text);
+  line-height: 1.45;
+}
+
+.weekly-obj-icon {
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+  font-size: 0.95rem;
+}
+
+.weekly-paces-bar {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.25rem;
+}
+
+.paces-bar-title {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.75rem;
+}
+
+.paces-pills-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.week-pace-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: var(--card2);
+  border: 1px solid var(--p-color, var(--primary));
+  color: var(--text);
+  padding: 0.55rem 1.1rem;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-main);
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.week-pace-pill:hover {
+  background: var(--p-color, var(--primary));
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.35);
+}
+
+.pill-arrow {
+  font-size: 0.78rem;
+  opacity: 0.8;
+  background: rgba(255,255,255,0.15);
+  padding: 0.15rem 0.45rem;
+  border-radius: 6px;
+}
+
+/* Daily Breakdown Grid */
+.unified-days-container {
+  margin-top: 2rem;
+}
+
+.daily-cards-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.unified-daily-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--primary);
+  border-radius: var(--radius-lg);
+  padding: 1.35rem 1.6rem;
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
+}
+
+.unified-daily-card:hover {
+  border-color: rgba(255,255,255,0.2);
+  box-shadow: var(--shadow-md);
+}
+
+.unified-daily-card.day-done {
+  border-left-color: var(--success);
+  background: linear-gradient(135deg, rgba(30, 36, 80, 0.7), rgba(46, 125, 78, 0.15));
+}
+
+.daily-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  border-bottom: 1px solid var(--border2);
+  padding-bottom: 0.75rem;
+  margin-bottom: 0.85rem;
+}
+
+.daily-card-day-badge {
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.daily-card-obj-text {
+  font-size: 0.95rem;
+  color: var(--text);
+  line-height: 1.4;
+}
+
+.daily-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  cursor: pointer;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border);
+  padding: 0.35rem 0.75rem;
+  border-radius: 100px;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+
+.daily-checkbox-label:hover {
+  background: rgba(78, 203, 113, 0.15);
+  color: var(--success);
+  border-color: var(--success);
+}
+
+.daily-checkbox-label input {
+  cursor: pointer;
+  accent-color: var(--success);
+}
+
+.daily-card-tasks {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  margin-bottom: 1rem;
+}
+
+.daily-task-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  font-size: 0.88rem;
+  color: var(--text);
+  line-height: 1.45;
+}
+
+.task-bullet {
+  color: var(--primary-light);
+  font-size: 0.8rem;
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+}
+
+.daily-actions-bar {
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.actions-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--accent);
+}
+
+.actions-buttons-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.day-action-btn {
+  background: var(--card2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 0.4rem 0.85rem;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-main);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.day-action-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.day-action-btn.action-phonics {
+  border-color: #FF6B9D;
+  color: #FF6B9D;
+  background: rgba(255, 107, 157, 0.08);
+}
+.day-action-btn.action-phonics:hover {
+  background: #FF6B9D;
+  color: #fff;
+}
+
+.day-action-btn.action-pace {
+  border-color: #7B72F0;
+  color: #7B72F0;
+  background: rgba(123, 114, 240, 0.08);
+}
+.day-action-btn.action-pace:hover {
+  background: #7B72F0;
+  color: #fff;
+}
+
+.day-action-btn.action-speaking {
+  border-color: #4ECDC4;
+  color: #4ECDC4;
+  background: rgba(78, 205, 196, 0.08);
+}
+.day-action-btn.action-speaking:hover {
+  background: #4ECDC4;
+  color: #111;
+}
+
+.day-action-btn.action-audio {
+  border-color: #FFD93D;
+  color: #FFD93D;
+  background: rgba(255, 217, 61, 0.08);
+}
+.day-action-btn.action-audio:hover {
+  background: #FFD93D;
+  color: #111;
+}
+
+.day-action-btn.action-game {
+  border-color: #55EFC4;
+  color: #55EFC4;
+  background: rgba(85, 239, 196, 0.08);
+}
+.day-action-btn.action-game:hover {
+  background: #55EFC4;
+  color: #111;
+}
+
+.day-action-btn.action-goal, .day-action-btn.action-eval {
+  border-color: #A29BFE;
+  color: #A29BFE;
+  background: rgba(162, 155, 254, 0.08);
+}
+.day-action-btn.action-goal:hover, .day-action-btn.action-eval:hover {
+  background: #A29BFE;
+  color: #fff;
+}
 
 /* ============================================================
    PRINT STYLES (Goal Card)
    ============================================================ */
 @media print {
-  .navbar, .footer, .modal-close, .btn-primary, .btn-secondary { display: none !important; }
+  .navbar, .footer, .modal-close, .btn-primary, .btn-secondary, .weekly-selector-card, #daily-schedule-card, .daily-actions-bar { display: none !important; }
   .goal-card-modal { box-shadow: none; border-radius: 0; }
 }

@@ -1,5 +1,5 @@
 // ============================================================
-// PACEs Grade 1 Data - Help to English Learner
+// PACEs Grade 1 Data - Helping English Learner
 // Based on A.C.E. School of Tomorrow Grade 1 Curriculum
 // PACEs 1001 - 1012 (each subject has 12 PACEs per level)
 // ============================================================
@@ -605,7 +605,7 @@ const SUPERVISOR_MANUAL = {
   },
   facilitationGuide: {
     title: "📖 Guía de Facilitación para el Supervisor (Manuales A.C.E. Tomo 1 y Tomo 2)",
-    legalNotice: "Esta plataforma ('Help to English Learner') es una herramienta interactiva de facilitación y apoyo pedagógico para el supervisor/mentor basada en los manuales oficiales de procedimientos A.C.E. Tomo 1 y Tomo 2. No sustituye ni reemplaza las PACEs® impresas del estudiante. El alumno trabaja directamente sobre sus cuadernos de trabajo físicos adquiridos de A.C.E. School of Tomorrow®.",
+    legalNotice: "Esta plataforma ('Helping English Learner') es una herramienta interactiva de facilitación y apoyo pedagógico para el supervisor/mentor basada en los manuales oficiales de procedimientos A.C.E. Tomo 1 y Tomo 2. No sustituye ni reemplaza las PACEs® impresas del estudiante. El alumno trabaja directamente sobre sus cuadernos de trabajo físicos adquiridos de A.C.E. School of Tomorrow®.",
     principles: [
       "1. ACOMPAÑAMIENTO DOCENTE & MODELADO ORAL: El supervisor utiliza esta interfaz para proyectar audios del CD, modelar la voz, dictar vocabulario y coordinar la conversación oral diaria.",
       "2. DISTINCIÓN VOCABULARIO ACTIVO VS PASIVO: El alumno no solo debe llenar espacios en blanco; primero debe COMPRENDER Y DISCUTIR el texto oralmente con el supervisor.",

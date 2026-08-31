@@ -123,9 +123,11 @@ const ENGLISH_BRIDGE_COMMAND_WEEKS = [
 ];
 
 function bridgeDailyCommands(commands) {
+  // Cada día practica los 10 comandos completos de la semana (con repetición
+  // real se afianza mejor que fragmentar en solo 2 por día).
   return {
-    monday: commands.slice(0, 2), tuesday: commands.slice(2, 4), wednesday: commands.slice(4, 6),
-    thursday: commands.slice(6, 8), friday: commands.slice(8, 10),
+    monday: commands, tuesday: commands, wednesday: commands,
+    thursday: commands, friday: commands,
   };
 }
 
