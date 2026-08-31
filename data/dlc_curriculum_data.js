@@ -1254,28 +1254,30 @@ window.ABC_WEEK_METADATA = ABC_WEEK_METADATA;
 
 const DAILY_SCHEDULE_PHASE1 = [
   {
-    icon: "🇺🇸",
-    title: "1. Opening Exercises & Pledges",
+    icon: "✝️",
+    title: "1. Opening Exercises (Ejercicios de Apertura)",
     minutes: 10,
-    activity: "Juramentos a las banderas (American Flag, Christian Flag), Juramento a la Biblia, Versículo semanal y Oración matutina.",
+    activity: "Pledge to the Christian Flag, Pledge to the Bible, Morning Prayer y Classroom Rules.",
+    actionType: "openOpeningModal",
     jumpTo: "supervisor",
     tab: "pledges",
-    buttonLabel: "Ver Pledges ➜"
+    buttonLabel: "Abrir Apertura & Pledges ➜"
   },
   {
     icon: "💬",
-    title: "2. Conversational Review",
+    title: "2. Conversational Review & TPR",
     minutes: 15,
-    activity: "Saludos cotidianos (Good morning!), calendario, clima, diálogo interactivo de preguntas y comandos de acción física (TPR: Sit down, Stand up, Touch your nose).",
+    activity: "Saludos cotidianos (Good morning!), calendario, clima, diálogo guiado y órdenes físicas TPR (Sit down, Stand up, Touch your nose).",
+    actionType: "openConversationalModal",
     jumpTo: "paces",
     tab: "speaking",
-    buttonLabel: "Ver Diálogos ➜"
+    buttonLabel: "Abrir Diálogos & Comandos ➜"
   },
   {
     icon: "🗣️",
     title: "3. New Vocabulary & Phonics",
     minutes: 20,
-    activity: "Presentación del nuevo vocabulario ilustrado o letra/animal ABC aplicando la Regla de las 5 Repeticiones orales en voz alta y técnica de la tortuga.",
+    activity: "Presentación del vocabulario ilustrado del día o letra/animal ABC aplicando la Regla de las 5 Repeticiones orales en voz alta y técnica de la tortuga.",
     jumpTo: "abc",
     buttonLabel: "Ver ABC & Vocabulario ➜"
   },

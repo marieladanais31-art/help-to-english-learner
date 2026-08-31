@@ -216,7 +216,9 @@ function goToPace(subject, paceNum) {
 }
 
 function handlePacePillClick(subject, paceNum, tab) {
-  if (subject === 'supervisor') {
+  if (tab === 'pledges') {
+    openOpeningExercisesModal();
+  } else if (subject === 'supervisor') {
     showSection('supervisor');
     if (tab) {
       const tabs = Array.from(document.querySelectorAll('.sup-tab'));
@@ -224,7 +226,7 @@ function handlePacePillClick(subject, paceNum, tab) {
       if (found) showSupTab(tab, found);
     }
   } else if (subject === 'evaluator') {
-    showSection('evaluator');
+    showSection('weekly');
   } else if (subject === 'abc') {
     showSection('abc');
   } else {
@@ -333,8 +335,186 @@ function openGameModal(gameId) {
   overlay.classList.add('open');
 }
 
+// ============================================================
+// MODAL: EJERCICIOS DE APERTURA (Pledges, Prayer & Rules)
+// ============================================================
+function openOpeningExercisesModal() {
+  const overlay = document.getElementById('modal-overlay');
+  const content = document.getElementById('modal-content');
+
+  const rules = [
+    { icon: "🥊", text: "No fighting", es: "No pelear" },
+    { icon: "🏃", text: "No running", es: "No correr en el aula" },
+    { icon: "😢", text: "No crying", es: "No llorar" },
+    { icon: "📢", text: "No shouting", es: "No gritar" },
+    { icon: "🪑", text: "Sit down during the lesson", es: "Sentarse durante la clase" },
+    { icon: "🤐", text: "No talking during the lesson", es: "Guardar silencio durante la clase" },
+  ];
+
+  const rulesHTML = rules.map(r => `
+    <div class="rule-card" onclick="speak('${r.text.replace(/'/g,"\\'")}')" style="cursor:pointer;padding:0.75rem;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:var(--radius-sm);display:flex;align-items:center;gap:0.6rem">
+      <span style="font-size:1.4rem">${r.icon}</span>
+      <div>
+        <div style="font-size:0.9rem;font-weight:700;color:var(--text)">🔊 ${r.text}</div>
+        <div style="font-size:0.75rem;color:var(--text-muted)">${r.es}</div>
+      </div>
+    </div>
+  `).join('');
+
+  content.innerHTML = `
+    <div style="border-bottom:1px solid var(--border);padding-bottom:0.85rem;margin-bottom:1rem;display:flex;align-items:center;justify-content:space-between">
+      <div style="display:flex;align-items:center;gap:0.75rem">
+        <span style="font-size:2.2rem">✝️</span>
+        <div>
+          <h2 style="font-size:1.35rem;color:var(--text);margin:0">Ejercicios de Apertura (Opening Exercises)</h2>
+          <span style="font-size:0.82rem;color:var(--accent);font-weight:700">A.C.E. School of Tomorrow · 10 Minutos Diarios</span>
+        </div>
+      </div>
+      <span style="font-size:0.82rem;background:rgba(255,211,61,0.15);color:var(--accent);padding:0.3rem 0.7rem;border-radius:100px;font-weight:700">⏱️ 10 min</span>
+    </div>
+
+    <!-- Guía para el Padre -->
+    <div style="background:rgba(91,79,233,0.08);border-left:4px solid var(--primary);padding:0.85rem 1rem;border-radius:var(--radius-sm);font-size:0.85rem;color:var(--text);line-height:1.5;margin-bottom:1.25rem">
+      💡 <strong>Pauta para el Padre / Supervisor:</strong> Pídale al estudiante ponerse de pie para los juramentos. Toque cada botón para escuchar el audio en inglés y haga que el niño repita en voz alta.
+    </div>
+
+    <!-- 1. Pledge to the Christian Flag -->
+    <div style="background:var(--card);border:1px solid var(--border);border-left:4px solid var(--primary);border-radius:var(--radius-sm);padding:1rem;margin-bottom:1rem">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.5rem;margin-bottom:0.5rem">
+        <h4 style="margin:0;font-size:1.05rem;color:var(--text);display:flex;align-items:center;gap:0.5rem">
+          <span>✝️</span> 1. Pledge to the Christian Flag (Bandera Cristiana)
+        </h4>
+        <button class="btn-primary" style="font-size:0.8rem;padding:0.35rem 0.85rem" onclick="speak('I pledge allegiance to the Christian flag, and to the Saviour for whose Kingdom it stands; one Saviour, crucified, risen and coming again with life and liberty to all who believe.', { rate: 0.85 })">
+          🔊 Escuchar en Inglés
+        </button>
+      </div>
+      <div style="background:rgba(255,255,255,0.03);padding:0.75rem;border-radius:6px;margin-bottom:0.5rem;font-family:monospace;font-size:0.88rem;color:var(--accent);line-height:1.45">
+        "I pledge allegiance to the Christian flag, and to the Saviour for whose Kingdom it stands; one Saviour, crucified, risen and coming again with life and liberty to all who believe."
+      </div>
+      <p style="font-size:0.82rem;color:var(--text-muted);margin:0">
+        <strong>Español:</strong> "Prometo lealtad a la bandera cristiana, y al Salvador cuyo Reino representa; un Salvador, crucificado, resucitado y que vendrá otra vez con vida y libertad para todos los que creen."
+      </p>
+    </div>
+
+    <!-- 2. Pledge to the Bible -->
+    <div style="background:var(--card);border:1px solid var(--border);border-left:4px solid #4ECDC4;border-radius:var(--radius-sm);padding:1rem;margin-bottom:1rem">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.5rem;margin-bottom:0.5rem">
+        <h4 style="margin:0;font-size:1.05rem;color:var(--text);display:flex;align-items:center;gap:0.5rem">
+          <span>📖</span> 2. Pledge to the Bible (La Santa Biblia)
+        </h4>
+        <button class="btn-primary" style="font-size:0.8rem;padding:0.35rem 0.85rem" onclick="speak('I pledge allegiance to the Bible, God\'s Holy Word, I will make it a lamp unto my feet and a light unto my path and will hide its words in my heart that I might not sin against God.', { rate: 0.85 })">
+          🔊 Escuchar en Inglés
+        </button>
+      </div>
+      <div style="background:rgba(255,255,255,0.03);padding:0.75rem;border-radius:6px;margin-bottom:0.5rem;font-family:monospace;font-size:0.88rem;color:var(--accent);line-height:1.45">
+        "I pledge allegiance to the Bible, God's Holy Word, I will make it a lamp unto my feet and a light unto my path and will hide its words in my heart that I might not sin against God."
+      </div>
+      <p style="font-size:0.82rem;color:var(--text-muted);margin:0">
+        <strong>Español:</strong> "Prometo lealtad a la Biblia, la Santa Palabra de Dios; la haré una lámpara a mis pies y una lumbrera a mi camino y guardaré sus palabras en mi corazón para no pecar contra Dios."
+      </p>
+    </div>
+
+    <!-- 3. Morning Prayer -->
+    <div style="background:rgba(255,217,61,0.06);border:1px solid rgba(255,217,61,0.25);border-radius:var(--radius-sm);padding:1rem;margin-bottom:1.25rem">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.5rem;margin-bottom:0.5rem">
+        <h4 style="margin:0;font-size:1.05rem;color:var(--accent);display:flex;align-items:center;gap:0.5rem">
+          <span>☀️</span> 3. Morning Prayer (Oración de la Mañana)
+        </h4>
+        <button class="btn-primary" style="font-size:0.8rem;padding:0.35rem 0.85rem" onclick="speak('Thank you, God, for the day. Thank You for our Learning Center. Help us work. Help us speak English. Help us play with our friends and not fight. In Jesus\' name, Amen.', { rate: 0.85 })">
+          🔊 Escuchar Oración
+        </button>
+      </div>
+      <div style="background:rgba(255,255,255,0.03);padding:0.75rem;border-radius:6px;margin-bottom:0.5rem;font-size:0.88rem;color:var(--text);line-height:1.45">
+        "Thank you, God, for the day. Thank You for our Learning Center. Help us work. Help us speak English. Help us play with our friends and not fight. In Jesus' name, Amen."
+      </div>
+      <p style="font-size:0.82rem;color:var(--text-muted);margin:0">
+        <strong>Español:</strong> "Gracias Dios por el día. Gracias por nuestro Learning Center. Ayúdanos a trabajar. Ayúdanos a hablar inglés. Ayúdanos a jugar con nuestros amigos y no pelear. En el nombre de Jesús, Amén."
+      </p>
+    </div>
+
+    <!-- 4. Classroom Rules & Commands -->
+    <div style="margin-bottom:1rem">
+      <h4 class="wb-section-label" style="font-size:0.95rem;color:var(--accent);margin-bottom:0.6rem">🏫 Reglas del Aula & Comandos (Toca para escuchar):</h4>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0.6rem">
+        ${rulesHTML}
+      </div>
+    </div>
+  `;
+
+  overlay.classList.add('open');
+}
 
 // ============================================================
+// MODAL: CONVERSATIONAL REVIEW & TPR COMMANDS
+// ============================================================
+function openConversationalReviewModal() {
+  const overlay = document.getElementById('modal-overlay');
+  const content = document.getElementById('modal-content');
+
+  const greetings = [
+    { q: "Good morning! How are you today?", a: "I am fine, thank you! And you?", es: "¡Buenos días! ¿Cómo estás hoy? / ¡Estoy bien, gracias! ¿Y tú?" },
+    { q: "What is your name?", a: "My name is [Nombre del niño].", es: "¿Cuál es tu nombre? / Mi nombre es..." },
+    { q: "How old are you?", a: "I am [edad] years old.", es: "¿Cuántos años tienes? / Tengo ... años." },
+    { q: "What day is today?", a: "Today is Monday / Tuesday / Wednesday / Thursday / Friday.", es: "¿Qué día es hoy? / Hoy es..." },
+    { q: "How is the weather today?", a: "It is sunny ☀️ / It is cloudy ☁️ / It is rainy 🌧️.", es: "¿Cómo está el clima hoy? / Está soleado / nublado / lluvioso." }
+  ];
+
+  const greetingsHTML = greetings.map(g => `
+    <div style="padding:0.85rem;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:var(--radius-sm);margin-bottom:0.6rem">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:0.5rem">
+        <div>
+          <div style="font-weight:800;color:var(--accent);font-size:0.92rem">🗣️ Pregunta: "${g.q}"</div>
+          <div style="font-weight:700;color:var(--text);font-size:0.9rem;margin-top:0.25rem">💬 Respuesta: "${g.a}"</div>
+          <div style="font-size:0.78rem;color:var(--text-muted);margin-top:0.25rem"><em>${g.es}</em></div>
+        </div>
+        <button class="word-btn" style="font-size:0.75rem;padding:0.3rem 0.6rem;white-space:nowrap" onclick="speak('${g.q.replace(/'/g,"\\'")}')">🔊 Preguntar</button>
+      </div>
+    </div>
+  `).join('');
+
+  const tprCommands = [
+    "Stand up!", "Sit down!", "Touch your head!", "Touch your nose!",
+    "Point to the door!", "Point to the window!", "Clap your hands!",
+    "Open your book!", "Close your book!", "Pick up your pencil!"
+  ];
+
+  const tprHTML = tprCommands.map(cmd => `
+    <button class="command-btn" onclick="speak('${cmd.replace(/'/g,"\\'")}')" style="cursor:pointer">🔊 ${cmd}</button>
+  `).join('');
+
+  content.innerHTML = `
+    <div style="border-bottom:1px solid var(--border);padding-bottom:0.85rem;margin-bottom:1rem;display:flex;align-items:center;justify-content:space-between">
+      <div style="display:flex;align-items:center;gap:0.75rem">
+        <span style="font-size:2.2rem">💬</span>
+        <div>
+          <h2 style="font-size:1.35rem;color:var(--text);margin:0">Conversational Review & Comandos TPR</h2>
+          <span style="font-size:0.82rem;color:var(--primary-light);font-weight:700">15 Minutos de Interacción Oral Diaria</span>
+        </div>
+      </div>
+      <span style="font-size:0.82rem;background:rgba(255,211,61,0.15);color:var(--accent);padding:0.3rem 0.7rem;border-radius:100px;font-weight:700">⏱️ 15 min</span>
+    </div>
+
+    <div style="background:rgba(255,107,157,0.08);border:1px solid rgba(255,107,157,0.25);border-radius:var(--radius-sm);padding:0.85rem 1rem;font-size:0.85rem;color:var(--text);line-height:1.45;margin-bottom:1rem">
+      ⭐ <strong>Regla de las 5 Repeticiones:</strong> El padre modela la pregunta o comando, y el estudiante responde en voz alta <strong>5 veces</strong> con entusiasmo.
+    </div>
+
+    <!-- Diálogos & Calendario -->
+    <div style="margin-bottom:1.25rem">
+      <h4 class="wb-section-label" style="font-size:0.95rem;color:var(--accent);margin-bottom:0.6rem">🗣️ Diálogos Diarios, Calendario y Clima:</h4>
+      ${greetingsHTML}
+    </div>
+
+    <!-- Comandos TPR -->
+    <div style="margin-bottom:1rem">
+      <h4 class="wb-section-label" style="font-size:0.95rem;color:var(--accent);margin-bottom:0.6rem">🤸 Comandos de Acción Física (TPR — Total Physical Response):</h4>
+      <p style="font-size:0.82rem;color:var(--text-muted);margin-bottom:0.5rem">El padre dice el comando y el niño realiza la acción física de inmediato:</p>
+      <div class="commands-list">${tprHTML}</div>
+    </div>
+  `;
+
+  overlay.classList.add('open');
+}
+
 // ============================================================
 // ABCs PHONICS SECTION & MOM'S GUIDE
 // ============================================================
@@ -1109,11 +1289,31 @@ function renderDailySchedule() {
         <span class="daily-step-title">${s.title}</span><span class="daily-step-min">${s.minutes} min</span>
         <div class="daily-step-desc">${s.activity}</div>
       </div>
-      ${s.jumpTo ? `<button class="daily-step-jump" onclick="event.stopPropagation(); showSection('${s.jumpTo}')">Ir ➜</button>` : ''}
+      <button class="daily-step-jump" onclick="event.stopPropagation(); handleDailyStepAction(${i})">${s.buttonLabel || 'Abrir ➜'}</button>
     </div>
   `).join('');
 
   updateDailyScheduleProgress(state);
+}
+
+function handleDailyStepAction(index) {
+  if (index === 0) {
+    openOpeningExercisesModal();
+  } else if (index === 1) {
+    openConversationalReviewModal();
+  } else if (index === 2) {
+    showSection('abc');
+  } else if (index === 3) {
+    showSection('paces');
+  } else if (index === 4) {
+    showSection('supervisor');
+    const tabs = document.querySelectorAll('.sup-tab');
+    if (tabs[4]) showSupTab('games', tabs[4]);
+  } else if (index === 5) {
+    showSection('supervisor');
+    const tabs = document.querySelectorAll('.sup-tab');
+    if (tabs[2]) showSupTab('facilitation', tabs[2]);
+  }
 }
 
 function toggleDailyStep(i) {
@@ -1218,6 +1418,12 @@ function showWeek(n, btn) {
     `).join('');
 
     const actionsHTML = (day.actions || []).map(act => {
+      if (act.type === 'pledges' || act.type === 'opening') {
+        return `<button class="day-action-btn action-speaking" onclick="openOpeningExercisesModal()">${act.label}</button>`;
+      }
+      if (act.type === 'conversational') {
+        return `<button class="day-action-btn action-speaking" onclick="openConversationalReviewModal()">${act.label}</button>`;
+      }
       if (act.type === 'phonics') {
         return `<button class="day-action-btn action-phonics" onclick="openPhonicsModalByAnimal('${act.target}')">${act.label}</button>`;
       }
@@ -1236,11 +1442,8 @@ function showWeek(n, btn) {
       if (act.type === 'game') {
         return `<button class="day-action-btn action-game" onclick="openGameModal('${act.target}')">${act.label}</button>`;
       }
-      if (act.type === 'goalcard') {
-        return `<button class="day-action-btn action-goal" onclick="showSection('evaluator')">${act.label}</button>`;
-      }
-      if (act.type === 'evaluator') {
-        return `<button class="day-action-btn action-eval" onclick="showSection('evaluator')">${act.label}</button>`;
+      if (act.type === 'goalcard' || act.type === 'evaluator') {
+        return `<button class="day-action-btn action-goal" onclick="showSection('weekly')">${act.label}</button>`;
       }
       return `<button class="day-action-btn" onclick="showSection('paces')">${act.label}</button>`;
     }).join('');
@@ -1366,7 +1569,7 @@ function showSupTab(tab, btn) {
     html = `
       <div class="sup-panel">
         <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1rem">
-          <span style="font-size:2.2rem">🇺🇸</span>
+          <span style="font-size:2.2rem">✝️</span>
           <div>
             <h3 style="margin:0;font-size:1.4rem">Juramentos Oficiales &amp; Ejercicios de Apertura (Opening Exercises)</h3>
             <span style="font-size:0.85rem;color:var(--accent);font-weight:700">A.C.E. School of Tomorrow · Primeros 10 Minutos Diarios</span>
@@ -1374,32 +1577,14 @@ function showSupTab(tab, btn) {
         </div>
 
         <p style="color:var(--text-muted);font-size:0.9rem;line-height:1.5;margin-bottom:1.25rem">
-          Cada mañana, el supervisor/padre inicia la jornada con los tres juramentos solemnes, versículo bíblico y oración matutina. Pídale al niño que se ponga de pie con respeto. Toca el botón <strong>"🔊 Escuchar en Inglés"</strong> para modelar la pronunciación correcta.
+          Cada mañana, el supervisor/padre inicia la jornada con los dos juramentos solemnes, versículo bíblico y oración matutina. Pídale al niño que se ponga de pie con respeto. Toca el botón <strong>"🔊 Escuchar en Inglés"</strong> para modelar la pronunciación correcta.
         </p>
 
-        <!-- 1. Pledge to the American Flag -->
-        <div style="background:var(--card);border:1px solid var(--border);border-left:4px solid #E17055;border-radius:var(--radius-sm);padding:1.1rem;margin-bottom:1.25rem">
-          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.5rem;margin-bottom:0.6rem">
-            <h4 style="margin:0;font-size:1.1rem;color:var(--text);display:flex;align-items:center;gap:0.5rem">
-              <span>🇺🇸</span> 1. Pledge to the American Flag (Bandera de EE.UU.)
-            </h4>
-            <button class="btn-primary" style="font-size:0.8rem;padding:0.35rem 0.8rem" onclick="speak('I pledge allegiance to the flag of the United States of America, and to the republic for which it stands, one nation under God, indivisible, with liberty and justice for all.', { rate: 0.85 })">
-              🔊 Escuchar en Inglés
-            </button>
-          </div>
-          <div style="background:rgba(255,255,255,0.03);padding:0.85rem;border-radius:6px;margin-bottom:0.6rem;font-family:monospace;font-size:0.92rem;color:var(--accent);line-height:1.45">
-            "I pledge allegiance to the flag of the United States of America, and to the republic for which it stands, one nation under God, indivisible, with liberty and justice for all."
-          </div>
-          <p style="font-size:0.84rem;color:var(--text-muted);margin:0">
-            <strong>Traducción para el Padre:</strong> "Prometo lealtad a la bandera de los Estados Unidos de América y a la república que representa, una nación bajo Dios, indivisible, con libertad y justicia para todos."
-          </p>
-        </div>
-
-        <!-- 2. Pledge to the Christian Flag -->
+        <!-- 1. Pledge to the Christian Flag -->
         <div style="background:var(--card);border:1px solid var(--border);border-left:4px solid var(--primary);border-radius:var(--radius-sm);padding:1.1rem;margin-bottom:1.25rem">
           <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.5rem;margin-bottom:0.6rem">
             <h4 style="margin:0;font-size:1.1rem;color:var(--text);display:flex;align-items:center;gap:0.5rem">
-              <span>✝️</span> 2. Pledge to the Christian Flag (Bandera Cristiana)
+              <span>✝️</span> 1. Pledge to the Christian Flag (Bandera Cristiana)
             </h4>
             <button class="btn-primary" style="font-size:0.8rem;padding:0.35rem 0.8rem" onclick="speak('I pledge allegiance to the Christian flag, and to the Savior for Whose Kingdom it stands; one brotherhood, uniting all true Christians in service and in love.', { rate: 0.85 })">
               🔊 Escuchar en Inglés
@@ -1413,11 +1598,11 @@ function showSupTab(tab, btn) {
           </p>
         </div>
 
-        <!-- 3. Pledge to the Bible -->
+        <!-- 2. Pledge to the Bible -->
         <div style="background:var(--card);border:1px solid var(--border);border-left:4px solid #4ECDC4;border-radius:var(--radius-sm);padding:1.1rem;margin-bottom:1.25rem">
           <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.5rem;margin-bottom:0.6rem">
             <h4 style="margin:0;font-size:1.1rem;color:var(--text);display:flex;align-items:center;gap:0.5rem">
-              <span>📖</span> 3. Pledge to the Bible (La Santa Biblia)
+              <span>📖</span> 2. Pledge to the Bible (La Santa Biblia)
             </h4>
             <button class="btn-primary" style="font-size:0.8rem;padding:0.35rem 0.8rem" onclick="speak('I pledge allegiance to the Bible, God\'s Holy Word; I will make it a lamp unto my feet, and a light unto my path; I will hide its words in my heart, that I might not sin against God.', { rate: 0.85 })">
               🔊 Escuchar en Inglés
@@ -1431,15 +1616,40 @@ function showSupTab(tab, btn) {
           </p>
         </div>
 
-        <!-- 4. Morning Prayer -->
-        <div style="background:rgba(255,217,61,0.06);border:1px solid rgba(255,217,61,0.25);border-radius:var(--radius-sm);padding:1.1rem">
-          <h4 style="margin:0 0 0.5rem;font-size:1.05rem;color:var(--accent)">☀️ Oración Matutina (Morning Prayer)</h4>
+        <!-- 3. Morning Prayer -->
+        <div style="background:rgba(255,217,61,0.06);border:1px solid rgba(255,217,61,0.25);border-radius:var(--radius-sm);padding:1.1rem;margin-bottom:1.25rem">
+          <h4 style="margin:0 0 0.5rem;font-size:1.05rem;color:var(--accent)">☀️ 3. Oración Matutina (Morning Prayer)</h4>
           <p style="font-size:0.85rem;color:var(--text-muted);line-height:1.5;margin-bottom:0.6rem">
             "Dear Heavenly Father, thank You for this brand new day. Help me to listen, to obey, and to learn with joy. Bless my family and my studies today. In Jesus' Name, Amen."
           </p>
           <button class="btn-primary" style="font-size:0.8rem;padding:0.35rem 0.8rem" onclick="speak('Dear Heavenly Father, thank You for this brand new day. Help me to listen, to obey, and to learn with joy. Bless my family and my studies today. In Jesus\' Name, Amen.', { rate: 0.85 })">
             🔊 Escuchar Oración en Inglés
           </button>
+        </div>
+
+        <!-- 4. Classroom Rules & Commands -->
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:1.1rem">
+          <h4 style="margin:0 0 0.75rem;font-size:1.05rem;color:var(--accent)">🏫 4. Classroom Rules (Reglas del Aula — Toca para escuchar):</h4>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0.6rem">
+            <div class="rule-card" onclick="speak('No fighting')" style="cursor:pointer;padding:0.6rem;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:6px;display:flex;align-items:center;gap:0.5rem">
+              <span>🥊</span> <div><strong>🔊 No fighting</strong><div style="font-size:0.75rem;color:var(--text-muted)">No pelear</div></div>
+            </div>
+            <div class="rule-card" onclick="speak('No running')" style="cursor:pointer;padding:0.6rem;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:6px;display:flex;align-items:center;gap:0.5rem">
+              <span>🏃</span> <div><strong>🔊 No running</strong><div style="font-size:0.75rem;color:var(--text-muted)">No correr</div></div>
+            </div>
+            <div class="rule-card" onclick="speak('No crying')" style="cursor:pointer;padding:0.6rem;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:6px;display:flex;align-items:center;gap:0.5rem">
+              <span>😢</span> <div><strong>🔊 No crying</strong><div style="font-size:0.75rem;color:var(--text-muted)">No llorar</div></div>
+            </div>
+            <div class="rule-card" onclick="speak('No shouting')" style="cursor:pointer;padding:0.6rem;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:6px;display:flex;align-items:center;gap:0.5rem">
+              <span>📢</span> <div><strong>🔊 No shouting</strong><div style="font-size:0.75rem;color:var(--text-muted)">No gritar</div></div>
+            </div>
+            <div class="rule-card" onclick="speak('Sit down during the lesson')" style="cursor:pointer;padding:0.6rem;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:6px;display:flex;align-items:center;gap:0.5rem">
+              <span>🪑</span> <div><strong>🔊 Sit down</strong><div style="font-size:0.75rem;color:var(--text-muted)">Sentarse en la clase</div></div>
+            </div>
+            <div class="rule-card" onclick="speak('No talking during the lesson')" style="cursor:pointer;padding:0.6rem;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:6px;display:flex;align-items:center;gap:0.5rem">
+              <span>🤐</span> <div><strong>🔊 Silence</strong><div style="font-size:0.75rem;color:var(--text-muted)">Guardar silencio</div></div>
+            </div>
+          </div>
         </div>
       </div>
     `;
@@ -1480,7 +1690,7 @@ function showSupTab(tab, btn) {
         <h4 style="margin-top:1.5rem;margin-bottom:0.75rem" class="wb-section-label">1. Rol del Maestro / Padre en los 75 Minutos Diarios</h4>
         <div style="background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:var(--radius-sm);padding:1rem;margin-bottom:1rem;font-size:0.88rem;line-height:1.5">
           <ul style="padding-left:1.2rem;margin:0">
-            <li style="margin-bottom:0.4rem"><strong>1. Apertura (10 min):</strong> Ponerse de pie y recitar los compromisos <em>Pledge to American Flag, Pledge to Christian Flag, Pledge to Bible</em> y <em>Morning Prayer</em>.</li>
+            <li style="margin-bottom:0.4rem"><strong>1. Apertura (10 min):</strong> Ponerse de pie y recitar los compromisos <em>Pledge to Christian Flag, Pledge to Bible</em> y <em>Morning Prayer</em>.</li>
             <li style="margin-bottom:0.4rem"><strong>2. Conversational Review (15 min):</strong> Saludos (<em>Good morning! How are you?</em>), diálogo del día y comandos físicos (<em>Sit down, Stand up, Touch your head</em>).</li>
             <li style="margin-bottom:0.4rem"><strong>3. New Vocabulary / Phonics (20 min):</strong> Proyectar la tarjeta del animal, escuchar el MP3 y repetir cada término <strong>5 veces en voz alta</strong>.</li>
             <li style="margin-bottom:0.4rem"><strong>4. Cuaderno Físico PACE (15 min):</strong> Trabajo guiado en el cuaderno físico asignado (Speaking English / Word Building / Animal Science).</li>
