@@ -161,10 +161,7 @@ function showSection(name) {
     showSubject(currentSubjectKey);
   }
   if (name === 'supervisor' && !document.getElementById('supervisor-content').children.length) {
-    showSupTab('facilitation', document.querySelector('.sup-tab'));
-  }
-  if (name === 'evaluator' && !document.getElementById('star-chart').children.length) {
-    renderStarChart();
+    showSupTab('guide-chanak', document.querySelector('.sup-tab'));
   }
 }
 
@@ -394,11 +391,10 @@ function filterPhonics(type, btn) {
 }
 
 // ============================================================
-// LETTER MODAL — with Real Image, 5x Repetition Tracker & Spanish Mom Guide
+// LETTER MODAL — Tarjeta Oficial, Canción MP3 y Vocabulario Ilustrado
 // ============================================================
 function openLetterModal(item) {
   currentModalItem = item;
-  currentModalRepCount = 0;
   const overlay = document.getElementById('modal-overlay');
   const content = document.getElementById('modal-content');
   
@@ -406,93 +402,56 @@ function openLetterModal(item) {
   const songsMap = window.ABC_SONGS_BY_ANIMAL_LOWER || {};
   const songFile = item.mp3 || songsMap[item.animal.toLowerCase()] || (window.ABC_SONGS_MAP && window.ABC_SONGS_MAP[item.animal]);
   const audioHTML = songFile ? `
-    <div style="margin:1rem 0;padding:1rem;background:rgba(255,255,255,0.05);border-radius:var(--radius-md);text-align:center;border:1px solid var(--border)">
-      <p style="font-size:0.88rem;color:var(--accent);font-weight:700;margin-bottom:0.5rem">🎵 Canción MP3 Original de ${item.animal} (${item.letter})</p>
-      <audio id="modal-animal-audio" controls style="width:100%;max-width:340px;height:40px;border-radius:20px" src="assets/songs/${songFile}"></audio>
+    <div style="margin:1rem 0;padding:1.1rem;background:linear-gradient(135deg, rgba(91,79,233,0.12), rgba(255,217,61,0.08));border-radius:var(--radius-md);text-align:center;border:1px solid var(--border)">
+      <p style="font-size:0.95rem;color:var(--accent);font-weight:800;margin-bottom:0.6rem">🎵 Canción MP3 Original de ${item.animal} (${item.letter})</p>
+      <audio id="modal-animal-audio" controls autoplay style="width:100%;max-width:360px;height:42px;border-radius:20px" src="assets/songs/${songFile}"></audio>
     </div>
   ` : '';
 
-  // Vocabulary cards HTML
+  // Vocabulary cards HTML with pronunciation
   const vocabList = item.vocab || (item.words || []).map(w => ({ word: w, es: '', hint: '', icon: '🔤' }));
   const vocabGridHTML = vocabList.map(v => `
-    <div class="vocab-interactive-card" onclick="playWordSound('${v.word.replace(/'/g,"\\'")}')">
-      <div style="font-size:1.4rem;margin-bottom:0.2rem">${v.icon || '🔤'}</div>
-      <div class="vocab-word-en">🔊 ${v.word}</div>
-      ${v.es ? `<div class="vocab-word-es">${v.es}</div>` : ''}
-      ${v.hint ? `<div class="vocab-word-hint">/${v.hint}/</div>` : ''}
+    <div class="vocab-interactive-card" onclick="speak('${v.word.replace(/'/g,"\\'")}')" style="cursor:pointer">
+      <div style="font-size:1.6rem;margin-bottom:0.25rem">${v.icon || '🔤'}</div>
+      <div class="vocab-word-en" style="font-weight:800;color:var(--accent)">🔊 ${v.word}</div>
+      ${v.es ? `<div class="vocab-word-es" style="font-size:0.82rem;color:var(--text-muted)">${v.es}</div>` : ''}
+      ${v.hint ? `<div class="vocab-word-hint" style="font-size:0.75rem;color:var(--primary-light)">/${v.hint}/</div>` : ''}
     </div>
   `).join('');
 
   content.innerHTML = `
     <!-- Top Header -->
-    <div style="display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;border-bottom:1px solid var(--border);padding-bottom:1rem">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;border-bottom:1px solid var(--border);padding-bottom:0.85rem;margin-bottom:1rem">
       <div>
-        <div class="modal-letter-hero" style="color:${item.color};text-align:left;font-size:3rem;margin:0">${item.letter}</div>
-        <div style="display:flex;gap:0.5rem;align-items:center;margin-top:0.25rem">
+        <div class="modal-letter-hero" style="color:${item.color};text-align:left;font-size:2.8rem;margin:0;line-height:1">${item.letter}</div>
+        <div style="display:flex;gap:0.5rem;align-items:center;margin-top:0.35rem">
           <span class="sound-symbol-badge" style="font-size:0.85rem">${item.soundSymbol || item.sound}</span>
-          <span style="font-family:monospace;color:var(--accent);font-size:1.1rem">${item.sound}</span>
-          <span style="font-size:1rem;font-weight:700;color:var(--text)">· ${item.keyword}</span>
+          <span style="font-family:monospace;color:var(--accent);font-size:1.1rem;font-weight:700">${item.sound}</span>
+          <span style="font-size:1.05rem;font-weight:800;color:var(--text)">· ${item.keyword}</span>
         </div>
       </div>
-      <div style="text-align:right">
-        ${item.cardImage ? `<img src="${item.cardImage}" alt="${item.keyword}" style="width:110px;height:auto;object-fit:contain;border-radius:8px;filter:drop-shadow(0 4px 10px rgba(0,0,0,0.4))" />` : `<span style="font-size:3rem">${item.emoji}</span>`}
-      </div>
-    </div>
-
-    <!-- Guía para Mamá (en Español) -->
-    <div style="margin:1rem 0;padding:1rem;background:linear-gradient(135deg, rgba(255,107,157,0.1), rgba(91,79,233,0.15));border-left:4px solid var(--accent);border-radius:var(--radius-sm);font-size:0.88rem;color:var(--text);line-height:1.5">
-      <p style="font-weight:800;color:var(--accent);margin-bottom:0.35rem">💡 Guía Rápida para Mamá (¿Cómo pronunciar este sonido?):</p>
-      <p style="margin:0">${item.soundGuideMom || 'Pídale al niño que escuche el audio y repita con la voz clara 5 veces.'}</p>
-    </div>
-
-    <!-- Técnica de la Tortuga — contextualizada a este sonido, con su propia imagen -->
-    <div style="margin:1rem 0;padding:1rem;background:rgba(78,205,196,0.06);border:1px solid rgba(78,205,196,0.25);border-radius:var(--radius-md);text-align:center">
-      <p class="modal-section-title" style="margin-top:0">🐢 Técnica de la Tortuga: sonar "${item.keyword}" despacio</p>
-      <div style="display:flex;align-items:center;justify-content:center;gap:0.75rem;flex-wrap:wrap;margin-bottom:0.6rem">
-        ${item.cardImage ? `<img src="${item.cardImage}" alt="${item.keyword}" style="width:76px;height:auto;object-fit:contain;border-radius:6px" />` : `<span style="font-size:2rem">${item.emoji}</span>`}
-        <div>${item.keyword.toUpperCase().split('').map(ch => `<span style="display:inline-block;padding:0.25rem 0.5rem;margin:0.15rem;background:rgba(78,205,196,0.15);border:1px solid rgba(78,205,196,0.4);border-radius:8px;font-weight:800;color:var(--accent);font-size:1.05rem">${ch}</span>`).join('<span style="color:var(--text-dim)">–</span>')}</div>
-      </div>
-      <p style="font-size:0.78rem;color:var(--text-muted);margin-bottom:0.6rem">Paso 1: cada letra despacio como tortuga 🐢. Paso 2: únelas rápido como conejo 🐇.</p>
-      <div style="display:flex;gap:0.5rem;justify-content:center;flex-wrap:wrap">
-        <button class="btn-primary" style="font-size:0.8rem;padding:0.4rem 0.9rem" onclick="playTurtleWord('${item.keyword.replace(/'/g,"\\'")}')">🐢 Escuchar Lento</button>
-        <button class="btn-primary" style="font-size:0.8rem;padding:0.4rem 0.9rem" onclick="speak('${item.keyword.replace(/'/g,"\\'")}')">🐇 Escuchar Normal</button>
-      </div>
-    </div>
-
-    <!-- Interactive 5x Repetition Tracker -->
-    <div style="background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:var(--radius-md);padding:1rem;margin:1rem 0;text-align:center">
-      <p style="font-size:0.85rem;font-weight:800;color:var(--accent);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.5rem">
-        ⭐ Regla de las 5 Repeticiones (Toca cada círculo para contar y escuchar)
-      </p>
-      <div class="rep-tracker" id="modal-rep-tracker">
-        <button class="rep-bubble" onclick="stepRepetition(1, '${item.letter.charAt(0)}', '${item.sound.replace(/[\/\[\]]/g,'')}', '${item.animal}')">1</button>
-        <button class="rep-bubble" onclick="stepRepetition(2, '${item.letter.charAt(0)}', '${item.sound.replace(/[\/\[\]]/g,'')}', '${item.animal}')">2</button>
-        <button class="rep-bubble" onclick="stepRepetition(3, '${item.letter.charAt(0)}', '${item.sound.replace(/[\/\[\]]/g,'')}', '${item.animal}')">3</button>
-        <button class="rep-bubble" onclick="stepRepetition(4, '${item.letter.charAt(0)}', '${item.sound.replace(/[\/\[\]]/g,'')}', '${item.animal}')">4</button>
-        <button class="rep-bubble" onclick="stepRepetition(5, '${item.letter.charAt(0)}', '${item.sound.replace(/[\/\[\]]/g,'')}', '${item.animal}')">5</button>
-        <span id="modal-rep-done-msg" class="rep-star-done" style="display:none">🎉 ¡Excelente! +1 Star ⭐</span>
-      </div>
-      <button class="btn-primary" style="font-size:0.85rem;padding:0.4rem 1rem" onclick="stepRepetition(null, '${item.letter.charAt(0)}', '${item.sound.replace(/[\/\[\]]/g,'')}', '${item.animal}')">
-        🔊 Escuchar Sonido y Contar Repetición
+      <button class="btn-primary" style="font-size:0.85rem;padding:0.45rem 1rem" onclick="speak('${item.letter.charAt(0)} says ${item.sound.replace(/[\/\[\]]/g,'')}. ${item.animal}.')">
+        🔊 Escuchar Sonido
       </button>
     </div>
 
-    <!-- Official Flashcard & Animal Artwork Preview -->
+    <!-- Official Flashcard (Direct at the Top) -->
     ${item.cardImage ? `
-      <div style="margin:1rem 0;text-align:center">
-        <p style="font-size:0.82rem;font-weight:700;color:var(--text-muted);margin-bottom:0.4rem">🗂️ Tarjeta Oficial de Lectura (Flashcard del Programa ABC):</p>
-        <img src="${item.cardImage}" alt="Tarjeta ${item.animal}" style="width:100%;max-width:380px;border-radius:var(--radius-md);border:1px solid var(--border);box-shadow:var(--shadow-md)" />
+      <div style="margin:0.75rem 0 1.25rem;text-align:center">
+        <p style="font-size:0.82rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:0.5rem">🗂️ Tarjeta Oficial de Lectura (Flashcard del Programa ABC):</p>
+        <img src="${item.cardImage}" alt="Tarjeta Oficial ${item.animal}" style="width:100%;max-width:440px;border-radius:var(--radius-md);border:1px solid var(--border);box-shadow:var(--shadow-md)" />
       </div>
     ` : ''}
 
+    <!-- Audio Player -->
     ${audioHTML}
 
-    <!-- Animal Creation Story, Habitat & Behavior -->
-    <div style="margin:1rem 0;padding:1rem;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:var(--radius-md)">
-      <p class="modal-section-title" style="margin-top:0">📖 Historia del Animal & Creación de Dios</p>
-      <div class="modal-story" style="margin-bottom:0.75rem">"${item.story}"</div>
+    <!-- Animal Story & God's Creation -->
+    <div style="margin:1rem 0;padding:1.1rem;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:var(--radius-md)">
+      <p class="modal-section-title" style="margin-top:0;font-size:0.95rem;color:var(--accent)">📖 Historia del Animal &amp; Creación de Dios</p>
+      <div class="modal-story" style="margin-bottom:0.75rem;font-size:0.92rem;line-height:1.5">"${item.story}"</div>
       ${item.habitat ? `
-        <div style="padding:0.75rem;background:rgba(78,205,196,0.08);border-radius:var(--radius-sm);font-size:0.85rem;color:var(--text);line-height:1.4">
+        <div style="padding:0.75rem 1rem;background:rgba(78,205,196,0.08);border-left:3px solid var(--accent);border-radius:var(--radius-sm);font-size:0.85rem;color:var(--text);line-height:1.45">
           <p style="margin-bottom:0.3rem">🏞️ <strong>¿Dónde vive? (Habitat):</strong> ${item.habitat}</p>
           <p style="margin:0">🐾 <strong>¿Qué hace?:</strong> ${item.behavior}</p>
         </div>
@@ -500,24 +459,29 @@ function openLetterModal(item) {
     </div>
 
     <!-- Song Chant -->
-    <p class="modal-section-title">🎵 Rima Fonética (Chant)</p>
-    <div class="modal-song" onclick="speak('${item.song.replace(/'/g,"\\'")}')">
+    <p class="modal-section-title" style="font-size:0.95rem;color:var(--accent)">🎵 Rima Fonética (Chant)</p>
+    <div class="modal-song" onclick="speak('${item.song.replace(/'/g,"\\'")}')" style="cursor:pointer">
       🎵 ${item.song}<br/>
-      <small style="color:var(--accent);cursor:pointer;font-weight:700">▶ Toca aquí para escuchar la rima</small>
+      <small style="color:var(--accent);font-weight:700">▶ Toca aquí para escuchar la rima</small>
     </div>
 
-    <!-- Illustrated Vocabulary Grid -->
-    <p class="modal-section-title">📝 Vocabulario Ilustrado (Toca cada palabra para escuchar en inglés):</p>
+    <!-- Illustrated Vocabulary Grid (Direct and Interactive) -->
+    <p class="modal-section-title" style="margin-top:1.25rem;font-size:0.95rem;color:var(--accent)">📝 Vocabulario Ilustrado (Toca cada tarjeta para escuchar en inglés):</p>
     <div class="vocab-card-grid">
       ${vocabGridHTML}
     </div>
 
-    <div class="modal-week" style="margin-top:1.5rem">📅 Semana ${item.week || '—'} · Cuaderno Físico Word Building & Animal Science</div>
+    <!-- Guía de Pronunciación para Padres -->
+    ${item.soundGuideMom ? `
+      <div style="margin:1.25rem 0 0.5rem;padding:0.85rem 1rem;background:rgba(255,107,157,0.08);border:1px solid rgba(255,107,157,0.25);border-radius:var(--radius-sm);font-size:0.85rem;color:var(--text-muted)">
+        💡 <strong>Guía para Padres:</strong> ${item.soundGuideMom}
+      </div>
+    ` : ''}
+
+    <div class="modal-week" style="margin-top:1.25rem">📅 Semana ${item.week || '—'} · Cuaderno Físico Word Building &amp; Animal Science</div>
   `;
 
   overlay.classList.add('open');
-  // Auto-play the letter sound
-  setTimeout(() => speak(`${item.letter.charAt(0)} says ${item.sound.replace(/[\/\[\]]/g,'')}.  ${item.animal}.`), 300);
 }
 
 function stepRepetition(step, letterChar, soundClean, animal) {
@@ -1356,11 +1320,14 @@ function showWeek(n, btn) {
 }
 
 // ============================================================
-// PACES EXPLORER (Speaking, Word Building, Animal Science, Grade 1)
+// PACES EXPLORER (Speaking, Word Building, Animal Science)
 // ============================================================
 let currentSubjectKey = 'speaking';
 
 function showSubject(key, btn) {
+  if (!['speaking', 'wordBuilding', 'animalScience'].includes(key)) {
+    key = 'speaking';
+  }
   currentSubjectKey = key;
   document.querySelectorAll('.subject-tab').forEach(b => {
     b.classList.toggle('active', b.getAttribute('onclick') && b.getAttribute('onclick').includes(`'${key}'`));
@@ -1370,12 +1337,10 @@ function showSubject(key, btn) {
   const vSpeaking = document.getElementById('paces-view-speaking');
   const vWb = document.getElementById('paces-view-wordBuilding');
   const vAs = document.getElementById('paces-view-animalScience');
-  const vStd = document.getElementById('paces-view-standard');
 
   if (vSpeaking) vSpeaking.style.display = (key === 'speaking') ? 'block' : 'none';
   if (vWb) vWb.style.display = (key === 'wordBuilding') ? 'block' : 'none';
   if (vAs) vAs.style.display = (key === 'animalScience') ? 'block' : 'none';
-  if (vStd) vStd.style.display = (key === 'english' || key === 'math' || key === 'science' || key === 'socialStudies') ? 'block' : 'none';
 
   if (key === 'speaking') {
     if (!document.getElementById('speaking-content').children.length) initSpeakingSection();
@@ -1383,66 +1348,11 @@ function showSubject(key, btn) {
     if (!document.getElementById('wb-content').children.length) initWordBuilding();
   } else if (key === 'animalScience') {
     if (!document.getElementById('as-content').children.length) initAnimalScience();
-  } else {
-    renderPaceList(key);
   }
 }
 
-function renderPaceList(key) {
-  const data = window.PACES_GRADE1;
-  if (!data || !data[key]) return;
-  const subject = data[key];
-  const list = document.getElementById('pace-list');
-  list.innerHTML = '';
-
-  subject.paces.forEach(pace => {
-    const item = document.createElement('div');
-    item.className = 'pace-item';
-    item.style.setProperty('--subject-color', subject.color);
-
-    const checkupsHTML = (pace.checkups || []).map(c => `
-      <div class="checkup-badge">
-        <strong>${c.title}</strong><br/>
-        <span>${c.focus}</span> · <strong>${c.questions} questions</strong>
-      </div>
-    `).join('');
-
-    const objectivesHTML = (pace.objectives || []).map(o => `<li>${o}</li>`).join('');
-    const activitiesHTML = (pace.activities || []).map(a => `<div class="activity-item">${a}</div>`).join('');
-    const keyConcepts = (pace.key_concepts || []).map(c => `<span class="concept-chip">${c}</span>`).join('');
-
-    item.innerHTML = `
-      <div class="pace-header" onclick="togglePace(this)" aria-expanded="false">
-        <div class="pace-header-left">
-          <span class="pace-num">${pace.number}</span>
-          <span class="pace-title">${subject.icon} ${pace.title}</span>
-        </div>
-        <span class="pace-toggle">▾</span>
-      </div>
-      <div class="pace-body">
-        ${pace.objectives ? `<div class="pace-objectives"><p class="wb-section-label">Learning Objectives</p><ul>${objectivesHTML}</ul></div>` : ''}
-        ${pace.key_concepts ? `<div style="margin-top:0.75rem"><p class="wb-section-label">Key Concepts</p><div>${keyConcepts}</div></div>` : ''}
-        ${pace.checkups && pace.checkups.length ? `<div style="margin-bottom:1rem;margin-top:0.75rem"><p class="wb-section-label">Checkups</p><div class="pace-checkups">${checkupsHTML}</div></div>` : ''}
-        ${pace.selfTest ? `<div class="self-test-bar">📊 <strong>Self-Test:</strong> ${pace.selfTest.questions} questions <span class="score-chip">Pass: ${pace.selfTest.passingScore}%</span> ${pace.selfTest.focus ? `<span style="font-size:0.82rem;color:var(--text-muted)">${pace.selfTest.focus}</span>` : ''}</div>` : ''}
-        ${pace.characterTrait ? `<div class="character-block"><strong>✝️ ${pace.characterTrait}</strong><br/><em>${pace.verse || ''}</em></div>` : ''}
-        ${(pace.activities || []).length ? `<div><p class="wb-section-label">Activities</p><div class="activities-list">${activitiesHTML}</div></div>` : ''}
-      </div>
-    `;
-    list.appendChild(item);
-  });
-}
-
-function togglePace(header) {
-  const body = header.nextElementSibling;
-  const toggle = header.querySelector('.pace-toggle');
-  const isOpen = body.classList.contains('open');
-  body.classList.toggle('open', !isOpen);
-  toggle.textContent = isOpen ? '▾' : '▴';
-  header.setAttribute('aria-expanded', String(!isOpen));
-}
-
 // ============================================================
-// SUPERVISOR SECTION
+// SUPERVISOR SECTION — Guías, Pledges, Juegos y Facilitación
 // ============================================================
 function showSupTab(tab, btn) {
   document.querySelectorAll('.sup-tab').forEach(b => b.classList.remove('active'));
@@ -1452,7 +1362,88 @@ function showSupTab(tab, btn) {
   if (!manual) return;
 
   let html = '';
-  if (tab === 'facilitation') {
+  if (tab === 'pledges') {
+    html = `
+      <div class="sup-panel">
+        <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1rem">
+          <span style="font-size:2.2rem">🇺🇸</span>
+          <div>
+            <h3 style="margin:0;font-size:1.4rem">Juramentos Oficiales &amp; Ejercicios de Apertura (Opening Exercises)</h3>
+            <span style="font-size:0.85rem;color:var(--accent);font-weight:700">A.C.E. School of Tomorrow · Primeros 10 Minutos Diarios</span>
+          </div>
+        </div>
+
+        <p style="color:var(--text-muted);font-size:0.9rem;line-height:1.5;margin-bottom:1.25rem">
+          Cada mañana, el supervisor/padre inicia la jornada con los tres juramentos solemnes, versículo bíblico y oración matutina. Pídale al niño que se ponga de pie con respeto. Toca el botón <strong>"🔊 Escuchar en Inglés"</strong> para modelar la pronunciación correcta.
+        </p>
+
+        <!-- 1. Pledge to the American Flag -->
+        <div style="background:var(--card);border:1px solid var(--border);border-left:4px solid #E17055;border-radius:var(--radius-sm);padding:1.1rem;margin-bottom:1.25rem">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.5rem;margin-bottom:0.6rem">
+            <h4 style="margin:0;font-size:1.1rem;color:var(--text);display:flex;align-items:center;gap:0.5rem">
+              <span>🇺🇸</span> 1. Pledge to the American Flag (Bandera de EE.UU.)
+            </h4>
+            <button class="btn-primary" style="font-size:0.8rem;padding:0.35rem 0.8rem" onclick="speak('I pledge allegiance to the flag of the United States of America, and to the republic for which it stands, one nation under God, indivisible, with liberty and justice for all.', { rate: 0.85 })">
+              🔊 Escuchar en Inglés
+            </button>
+          </div>
+          <div style="background:rgba(255,255,255,0.03);padding:0.85rem;border-radius:6px;margin-bottom:0.6rem;font-family:monospace;font-size:0.92rem;color:var(--accent);line-height:1.45">
+            "I pledge allegiance to the flag of the United States of America, and to the republic for which it stands, one nation under God, indivisible, with liberty and justice for all."
+          </div>
+          <p style="font-size:0.84rem;color:var(--text-muted);margin:0">
+            <strong>Traducción para el Padre:</strong> "Prometo lealtad a la bandera de los Estados Unidos de América y a la república que representa, una nación bajo Dios, indivisible, con libertad y justicia para todos."
+          </p>
+        </div>
+
+        <!-- 2. Pledge to the Christian Flag -->
+        <div style="background:var(--card);border:1px solid var(--border);border-left:4px solid var(--primary);border-radius:var(--radius-sm);padding:1.1rem;margin-bottom:1.25rem">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.5rem;margin-bottom:0.6rem">
+            <h4 style="margin:0;font-size:1.1rem;color:var(--text);display:flex;align-items:center;gap:0.5rem">
+              <span>✝️</span> 2. Pledge to the Christian Flag (Bandera Cristiana)
+            </h4>
+            <button class="btn-primary" style="font-size:0.8rem;padding:0.35rem 0.8rem" onclick="speak('I pledge allegiance to the Christian flag, and to the Savior for Whose Kingdom it stands; one brotherhood, uniting all true Christians in service and in love.', { rate: 0.85 })">
+              🔊 Escuchar en Inglés
+            </button>
+          </div>
+          <div style="background:rgba(255,255,255,0.03);padding:0.85rem;border-radius:6px;margin-bottom:0.6rem;font-family:monospace;font-size:0.92rem;color:var(--accent);line-height:1.45">
+            "I pledge allegiance to the Christian flag, and to the Savior for Whose Kingdom it stands; one brotherhood, uniting all true Christians in service and in love."
+          </div>
+          <p style="font-size:0.84rem;color:var(--text-muted);margin:0">
+            <strong>Traducción para el Padre:</strong> "Prometo lealtad a la bandera cristiana y al Salvador cuyo Reino representa; una hermandad que une a todos los verdaderos cristianos en servicio y en amor."
+          </p>
+        </div>
+
+        <!-- 3. Pledge to the Bible -->
+        <div style="background:var(--card);border:1px solid var(--border);border-left:4px solid #4ECDC4;border-radius:var(--radius-sm);padding:1.1rem;margin-bottom:1.25rem">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.5rem;margin-bottom:0.6rem">
+            <h4 style="margin:0;font-size:1.1rem;color:var(--text);display:flex;align-items:center;gap:0.5rem">
+              <span>📖</span> 3. Pledge to the Bible (La Santa Biblia)
+            </h4>
+            <button class="btn-primary" style="font-size:0.8rem;padding:0.35rem 0.8rem" onclick="speak('I pledge allegiance to the Bible, God\'s Holy Word; I will make it a lamp unto my feet, and a light unto my path; I will hide its words in my heart, that I might not sin against God.', { rate: 0.85 })">
+              🔊 Escuchar en Inglés
+            </button>
+          </div>
+          <div style="background:rgba(255,255,255,0.03);padding:0.85rem;border-radius:6px;margin-bottom:0.6rem;font-family:monospace;font-size:0.92rem;color:var(--accent);line-height:1.45">
+            "I pledge allegiance to the Bible, God's Holy Word; I will make it a lamp unto my feet, and a light unto my path; I will hide its words in my heart, that I might not sin against God."
+          </div>
+          <p style="font-size:0.84rem;color:var(--text-muted);margin:0">
+            <strong>Traducción para el Padre:</strong> "Prometo lealtad a la Biblia, la Santa Palabra de Dios; la haré una lámpara a mis pies y una lumbrera a mi camino; guardaré sus palabras en mi corazón para no pecar contra Dios."
+          </p>
+        </div>
+
+        <!-- 4. Morning Prayer -->
+        <div style="background:rgba(255,217,61,0.06);border:1px solid rgba(255,217,61,0.25);border-radius:var(--radius-sm);padding:1.1rem">
+          <h4 style="margin:0 0 0.5rem;font-size:1.05rem;color:var(--accent)">☀️ Oración Matutina (Morning Prayer)</h4>
+          <p style="font-size:0.85rem;color:var(--text-muted);line-height:1.5;margin-bottom:0.6rem">
+            "Dear Heavenly Father, thank You for this brand new day. Help me to listen, to obey, and to learn with joy. Bless my family and my studies today. In Jesus' Name, Amen."
+          </p>
+          <button class="btn-primary" style="font-size:0.8rem;padding:0.35rem 0.8rem" onclick="speak('Dear Heavenly Father, thank You for this brand new day. Help me to listen, to obey, and to learn with joy. Bless my family and my studies today. In Jesus\' Name, Amen.', { rate: 0.85 })">
+            🔊 Escuchar Oración en Inglés
+          </button>
+        </div>
+      </div>
+    `;
+  } else if (tab === 'facilitation') {
     const guide = manual.facilitationGuide;
     if (!guide) return;
     const principlesHTML = (guide.principles || []).map(p => `<li style="margin-bottom:0.5rem">${p}</li>`).join('');
@@ -1483,37 +1474,23 @@ function showSupTab(tab, btn) {
         </p>
 
         <div style="background:rgba(91,79,233,0.08);border-left:4px solid var(--primary);padding:1rem;border-radius:var(--radius-sm);margin-bottom:1.5rem;font-size:0.88rem;line-height:1.5">
-          🎯 <strong>Propósito General:</strong> Helping English Learner acompaña los cuadernos de trabajo físicos (PACEs® impresas) y los manuales A.C.E.® (Volúmenes 1, 2, 3 y 4 Apéndice). La plataforma sirve como pantalla del maestro para proyectar audios MP3 originales, guiar la fonética, dictar vocabulario y coordinar las dinámicas de grupo.
+          🎯 <strong>Propósito General:</strong> Helping English Learner acompaña los cuadernos de trabajo físicos (PACEs® impresas) y los manuales A.C.E.® (Speaking English, Word Building y Animal Science). La plataforma sirve como pantalla interactiva para proyectar audios MP3 originales, guiar la fonética, dictar vocabulario y coordinar las dinámicas de grupo.
         </div>
 
-        <h4 style="margin-top:1.5rem;margin-bottom:0.75rem" class="wb-section-label">1. Rol del Maestro / Supervisor en el Learning Center</h4>
+        <h4 style="margin-top:1.5rem;margin-bottom:0.75rem" class="wb-section-label">1. Rol del Maestro / Padre en los 75 Minutos Diarios</h4>
         <div style="background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:var(--radius-sm);padding:1rem;margin-bottom:1rem;font-size:0.88rem;line-height:1.5">
           <ul style="padding-left:1.2rem;margin:0">
-            <li style="margin-bottom:0.4rem"><strong>Apertura (10 min):</strong> Verificación de la Goal Card física en el escritorio (Office). Recitado de compromisos <em>Pledge to the Christian Flag, Pledge to the Bible</em> y <em>Morning Prayer</em>.</li>
-            <li style="margin-bottom:0.4rem"><strong>Modelado Oral (15 min):</strong> Proyectar audios MP3 de animales o pistas del CD. Aplicar strictly la <strong>Regla de las 5 Repeticiones en voz alta</strong>.</li>
-            <li style="margin-bottom:0.4rem"><strong>Preguntas Pre-Escritura (10 min):</strong> Interrogar oralmente al estudiante (<em>What is this? Who is this? When did it happen?</em>) antes de que responda los espacios en blanco en su PACE física.</li>
-            <li style="margin-bottom:0.4rem"><strong>Juegos del Apéndice D (15 min):</strong> Ejecutar una dinámica grupal (Simon Says, Bingo, Go Fish, etc.) para fijar el vocabulario diario.</li>
+            <li style="margin-bottom:0.4rem"><strong>1. Apertura (10 min):</strong> Ponerse de pie y recitar los compromisos <em>Pledge to American Flag, Pledge to Christian Flag, Pledge to Bible</em> y <em>Morning Prayer</em>.</li>
+            <li style="margin-bottom:0.4rem"><strong>2. Conversational Review (15 min):</strong> Saludos (<em>Good morning! How are you?</em>), diálogo del día y comandos físicos (<em>Sit down, Stand up, Touch your head</em>).</li>
+            <li style="margin-bottom:0.4rem"><strong>3. New Vocabulary / Phonics (20 min):</strong> Proyectar la tarjeta del animal, escuchar el MP3 y repetir cada término <strong>5 veces en voz alta</strong>.</li>
+            <li style="margin-bottom:0.4rem"><strong>4. Cuaderno Físico PACE (15 min):</strong> Trabajo guiado en el cuaderno físico asignado (Speaking English / Word Building / Animal Science).</li>
+            <li style="margin-bottom:0.4rem"><strong>5. Juegos del Apéndice D (10 min):</strong> Dinámica activa (Simon Says, Bingo, Memory) para fijar el vocabulario.</li>
+            <li style="margin-bottom:0.4rem"><strong>6. Cierre (5 min):</strong> Revisión del cuaderno con bolígrafo rojo y oración final.</li>
           </ul>
-        </div>
-
-        <h4 style="margin-top:1.5rem;margin-bottom:0.75rem" class="wb-section-label">2. Rol de la Familia / Padre en Casa</h4>
-        <div style="background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:var(--radius-sm);padding:1rem;margin-bottom:1rem;font-size:0.88rem;line-height:1.5">
-          <ul style="padding-left:1.2rem;margin:0">
-            <li style="margin-bottom:0.4rem"><strong>Refuerzo en el Hogar (15-20 min diarios):</strong> Usar la sección <em>Daily Routine</em> para afianzar la pronunciación de las palabras de la semana.</li>
-            <li style="margin-bottom:0.4rem"><strong>My Own Dictionary:</strong> Supervisar que el alumno de 9 años en adelante anote sus palabras nuevas diariamente.</li>
-            <li style="margin-bottom:0.4rem"><strong>Chanak Coins & Hábitos del Carácter:</strong> Monitorear la constancia y motivación mediante los privilegios de Chanak Coins.</li>
-          </ul>
-        </div>
-
-        <h4 style="margin-top:1.5rem;margin-bottom:0.75rem" class="wb-section-label">3. Protocolo de Diagnóstico y Ubicación (Tomo 1 y Tomo 2 A.C.E.)</h4>
-        <div style="background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:var(--radius-sm);padding:1rem;margin-bottom:1.5rem;font-size:0.88rem;line-height:1.5">
-          <p style="margin-bottom:0.5rem">• <strong>Menores de 5 años:</strong> Kindergarten with Ace and Christi + actividades orales de Speaking English.</p>
-          <p style="margin-bottom:0.5rem">• <strong>Alumnos de 5 a 8 años:</strong> Reading Readiness Test en idioma nativo (umbral ≥80%) → Speaking English → ABCs.</p>
-          <p style="margin:0">• <strong>Alumnos de 9 años en adelante:</strong> Evaluar las 12 pruebas de Speaking English. En materias de contenido (Science / Social Studies), prescribir de <strong>6 a 12 PACEs por debajo</strong> del nivel pasivo de lectura para asegurar fluidez conversacional con el maestro.</p>
         </div>
 
         <div style="margin-top:1.5rem">
-          <button class="btn-primary" onclick="showSupTab('schedule', document.querySelectorAll('.sup-tab')[2])">📋 Ver Asignación de Páginas Físicas por Semana</button>
+          <button class="btn-primary" onclick="showSupTab('pledges', document.querySelectorAll('.sup-tab')[1])">🇺🇸 Ver Pledges &amp; Juramentos Oficiales</button>
         </div>
       </div>
     `;
@@ -1530,9 +1507,6 @@ function showSupTab(tab, btn) {
         <div id="schedule-week-content"></div>
       </div>
     `;
-  } else if (tab === 'goalcard') {
-    const steps = manual.goalCard.instructions.map(s => `<li>${s}</li>`).join('');
-    html = `<div class="sup-panel"><h3>🎯 Daily Goal Card</h3><p style="color:var(--text-muted);margin-bottom:1.5rem;font-size:0.9rem">${manual.goalCard.title}</p><ol class="step-list">${steps}</ol><div style="margin-top:1.75rem"><button class="btn-primary" onclick="showSection('evaluator')">🎯 Open Goal Card Generator</button></div></div>`;
   } else if (tab === 'learning-center') {
     const rules = manual.learningCenter.rules.map((r, i) => `<div class="rule-item"><div class="rule-num">${i + 1}</div><div class="rule-text">${r}</div></div>`).join('');
     html = `<div class="sup-panel"><h3>🏫 Learning Center Rules</h3><p style="color:var(--text-muted);margin-bottom:1.5rem;font-size:0.9rem">${manual.learningCenter.title}</p>${rules}</div>`;
@@ -1541,7 +1515,7 @@ function showSupTab(tab, btn) {
     html = `<div class="sup-panel"><h3>✝️ Character Trait Program</h3><p style="color:var(--text-muted);margin-bottom:1.5rem;font-size:0.9rem">${manual.characterTraits.description}</p><table class="character-table"><thead><tr><th>Month</th><th>Trait</th><th>Bible Verse</th></tr></thead><tbody>${rows}</tbody></table></div>`;
   } else if (tab === 'placement') {
     const steps = manual.readinessTest.steps.map(s => `<li>${s}</li>`).join('');
-    html = `<div class="sup-panel"><h3>📊 Placement & Readiness Test</h3><p style="color:var(--text-muted);margin-bottom:1.5rem;font-size:0.9rem">${manual.readinessTest.title}</p><ul class="step-by-step">${steps}</ul><div style="margin-top:1.75rem"><button class="btn-primary" onclick="showSection('evaluator')">🧮 Open Score Calculator</button></div></div>`;
+    html = `<div class="sup-panel"><h3>📊 Placement & Readiness Test</h3><p style="color:var(--text-muted);margin-bottom:1.5rem;font-size:0.9rem">${manual.readinessTest.title}</p><ul class="step-by-step">${steps}</ul></div>`;
   } else if (tab === 'games') {
     const games = window.APPENDIX_D_GAMES || [];
     const gamesHTML = games.map(g => `
@@ -1614,121 +1588,19 @@ function showScheduleWeek(i, btn) {
 }
 
 // ============================================================
-// EVALUATOR — SCORE CALCULATOR
-// ============================================================
-function calculateScore() {
-  const correct = parseInt(document.getElementById('calc-correct').value);
-  const total = parseInt(document.getElementById('calc-total').value);
-  const type = document.getElementById('calc-type').value;
-  const result = document.getElementById('calc-result');
-
-  if (isNaN(correct) || isNaN(total) || total === 0) {
-    result.style.display = 'block'; result.className = 'calc-result fail';
-    result.innerHTML = '⚠️ Please enter valid numbers.'; return;
-  }
-
-  const pct = Math.round((correct / total) * 100);
-  const thresholds = { checkup: 80, selftest: 80, posttest: 90, readiness: 80 };
-  const threshold = thresholds[type] || 80;
-  const passed = pct >= threshold;
-
-  result.style.display = 'block';
-  result.className = 'calc-result ' + (passed ? 'pass' : 'fail');
-  result.innerHTML = `<div style="font-size:2.5rem;margin-bottom:0.5rem">${pct}%</div><div>${correct} / ${total} correct</div><div style="margin-top:0.5rem;font-size:0.9rem">${passed ? `✅ PASSED! (${threshold}% required) — Student may advance.` : `❌ DID NOT PASS. (Needed ${threshold}%) — Review and retest.`}</div>`;
-}
-
-// ============================================================
-// GOAL CARD GENERATOR
-// ============================================================
-function generateGoalCard() {
-  const name = document.getElementById('goal-student-name').value || '_______________';
-  const date = document.getElementById('goal-date').value
-    ? new Date(document.getElementById('goal-date').value + 'T00:00:00').toLocaleDateString('en-US', { weekday:'long', month:'long', day:'numeric', year:'numeric' })
-    : new Date().toLocaleDateString('en-US', { weekday:'long', month:'long', day:'numeric', year:'numeric' });
-
-  const rows = [];
-  document.querySelectorAll('.goal-subject-row').forEach(row => {
-    rows.push({ subject: row.getAttribute('data-subject'), val: row.querySelector('input').value || '—' });
-  });
-
-  const rowsHTML = rows.map(r => `<div class="goal-card-row"><span>${r.subject}:</span><span class="goal-val">${r.val}</span><span class="goal-card-check">☐</span></div>`).join('');
-
-  document.getElementById('goal-card-preview').innerHTML = `
-    <div class="goal-card-print">
-      <div class="goal-card-title">🌟 Daily Goal Card</div>
-      <div class="goal-card-subtitle">Helping English Learner — A.C.E. School of Tomorrow</div>
-      <div class="goal-card-date"><span>👤 Student: <strong>${name}</strong></span><span>📅 ${date}</span></div>
-      ${rowsHTML}
-      <div class="goal-card-row" style="border-bottom:none;margin-top:0.5rem"><span>Supervisor:</span><span class="goal-val">___________________</span><span class="goal-card-check">☐</span></div>
-      <div class="goal-card-stars">⭐⭐⭐⭐⭐</div>
-    </div>
-  `;
-  document.getElementById('goal-modal-overlay').style.display = 'flex';
-}
-
-function closeGoalModal() {
-  document.getElementById('goal-modal-overlay').style.display = 'none';
-}
-
-// ============================================================
-// STAR CHART
-// ============================================================
-let starStates = {};
-
-function renderStarChart() {
-  const chart = document.getElementById('star-chart');
-  chart.innerHTML = ''; starStates = {};
-  for (let i = 1; i <= 50; i++) {
-    const cell = document.createElement('div');
-    cell.className = 'star-cell'; cell.id = `star-${i}`;
-    cell.textContent = '☆'; cell.title = `Star ${i}`;
-    cell.setAttribute('role','button'); cell.setAttribute('tabindex','0');
-    starStates[i] = false;
-    cell.addEventListener('click', () => toggleStar(i, cell));
-    cell.addEventListener('keydown', e => { if(e.key==='Enter'||e.key===' ') toggleStar(i,cell); });
-    chart.appendChild(cell);
-  }
-  updateStarTotal();
-}
-
-function toggleStar(id, cell) {
-  starStates[id] = !starStates[id];
-  cell.textContent = starStates[id] ? '⭐' : '☆';
-  cell.classList.toggle('awarded', starStates[id]);
-  updateStarTotal();
-}
-
-function updateStarTotal() {
-  const total = Object.values(starStates).filter(Boolean).length;
-  document.getElementById('star-total').textContent = `⭐ Total Stars: ${total}`;
-}
-
-function resetStars() {
-  Object.keys(starStates).forEach(id => starStates[id] = false);
-  document.querySelectorAll('.star-cell').forEach(c => { c.textContent = '☆'; c.classList.remove('awarded'); });
-  updateStarTotal();
-}
-
-function printStarChart() {
-  const name = document.getElementById('star-student-name').value || 'Student';
-  const total = Object.values(starStates).filter(Boolean).length;
-  const win = window.open('','_blank');
-  win.document.write(`<html><head><title>Star Chart — ${name}</title><style>body{font-family:sans-serif;text-align:center;padding:2rem}h1{font-size:1.5rem;margin-bottom:0.5rem}.grid{display:grid;grid-template-columns:repeat(10,1fr);gap:0.5rem;max-width:500px;margin:1rem auto}.star{font-size:1.5rem}.info{color:#666;font-size:0.9rem;margin-top:1rem}</style></head><body><h1>⭐ Star Chart — ${name}</h1><p class="info">Stars Awarded: ${total} / 50</p><div class="grid">${Object.entries(starStates).map(([id,a])=>`<div class="star">${a?'⭐':'☆'}</div>`).join('')}</div><p class="info">Helping English Learner · A.C.E. School of Tomorrow</p></body></html>`);
-  win.document.close(); win.print();
-}
-
-// ============================================================
 // INIT
 // ============================================================
 document.addEventListener('DOMContentLoaded', () => {
   initVoice();
   showSection('weekly');
-  const dateInput = document.getElementById('goal-date');
-  if (dateInput) dateInput.value = new Date().toISOString().split('T')[0];
 });
 
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') { closeModal(); closeGoalModal(); document.getElementById('mobile-nav').classList.remove('open'); }
+  if (e.key === 'Escape') {
+    closeModal();
+    const nav = document.getElementById('mobile-nav');
+    if (nav) nav.classList.remove('open');
+  }
 });
 
 // ============================================================

@@ -20,9 +20,8 @@
     <div class="nav-links">
       <button class="nav-btn active" id="nav-weekly" onclick="showSection('weekly')">📅 Plan Semanal & Diario</button>
       <button class="nav-btn" id="nav-abc" onclick="showSection('abc')">🔤 ABCs & Fonética</button>
-      <button class="nav-btn" id="nav-paces" onclick="showSection('paces')">📚 Explorador de PACEs</button>
+      <button class="nav-btn" id="nav-paces" onclick="showSection('paces')">📚 Guía de Trabajo en PACEs</button>
       <button class="nav-btn" id="nav-supervisor" onclick="showSection('supervisor')">👩‍🏫 Supervisor & Guías</button>
-      <button class="nav-btn" id="nav-evaluator" onclick="showSection('evaluator')">✅ Evaluador & Metas</button>
     </div>
     <button class="hamburger" id="hamburger" onclick="toggleMobileNav()">☰</button>
   </nav>
@@ -31,9 +30,8 @@
   <div class="mobile-nav" id="mobile-nav">
     <button class="mobile-nav-btn" onclick="showSection('weekly');toggleMobileNav()">📅 Plan Semanal & Diario</button>
     <button class="mobile-nav-btn" onclick="showSection('abc');toggleMobileNav()">🔤 ABCs & Fonética</button>
-    <button class="mobile-nav-btn" onclick="showSection('paces');toggleMobileNav()">📚 Explorador de PACEs</button>
+    <button class="mobile-nav-btn" onclick="showSection('paces');toggleMobileNav()">📚 Guía de Trabajo en PACEs</button>
     <button class="mobile-nav-btn" onclick="showSection('supervisor');toggleMobileNav()">👩‍🏫 Supervisor & Guías</button>
-    <button class="mobile-nav-btn" onclick="showSection('evaluator');toggleMobileNav()">✅ Evaluador & Metas</button>
     <button class="mobile-nav-btn" onclick="showSection('home');toggleMobileNav()">🏠 Presentación / Inicio</button>
   </div>
 
@@ -51,10 +49,10 @@
         <div class="hero-content">
           <div class="hero-badge">✨ A.C.E. School of Tomorrow · Chanak Academy</div>
           <h1 class="hero-title">Helping<br/><span class="gradient-text">English Learner</span></h1>
-          <p class="hero-subtitle">Profesor virtual de refuerzo y acompañamiento interactivo para <strong>ABCs with Ace & Christi</strong>, Speaking English, Fonética Ilustrada y Manual del Supervisor.</p>
+          <p class="hero-subtitle">Profesor virtual y guía paso a paso para padres y supervisores en <strong>ABCs with Ace &amp; Christi</strong>, Speaking English, Fonética Ilustrada y Dinámicas del Manual.</p>
           <div class="hero-btns">
-            <button class="btn-primary" onclick="showSection('weekly')">📅 Abrir Plan Semanal & Diario</button>
-            <button class="btn-secondary" onclick="showSection('abc')">🔤 Empezar con el ABC</button>
+            <button class="btn-primary" onclick="showSection('weekly')">📅 Abrir Plan Semanal &amp; Diario</button>
+            <button class="btn-secondary" onclick="showSection('abc')">🔤 Ver ABCs &amp; Fonética</button>
           </div>
         </div>
         <div class="hero-image">
@@ -63,47 +61,40 @@
       </div>
 
       <!-- Module Cards -->
-      <div class="modules-grid">
+      <div class="modules-grid" style="grid-template-columns:repeat(auto-fit, minmax(240px, 1fr))">
         <div class="module-card card-weekly" onclick="showSection('weekly')" role="button" tabindex="0">
           <div class="module-icon">📅</div>
-          <h3>Plan Semanal & Diario</h3>
-          <p>Hub Unificado: Semanas 1 a 17, objetivos pedagógicos, horario diario Fase 1 y enlaces directos a cada PACE</p>
-          <div class="module-tag">Semanas 1–17 · Objetivos · Día a Día</div>
+          <h3>Plan Semanal &amp; Diario</h3>
+          <p>Horario de 75 min paso a paso (Opening, Pledges, Conversational Review, Vocabulario y Dinámicas) para las 17 semanas del manual.</p>
+          <div class="module-tag">Semanas 1–17 · 75 min Diarios · Guía Fácil</div>
         </div>
         <div class="module-card card-abc" onclick="showSection('abc')" role="button" tabindex="0">
           <div class="module-icon">🔤</div>
-          <h3>ABCs & Fonética</h3>
-          <p>26 letras, 36 sonidos/animales, canciones originales MP3, historias de la Creación y regla de 5 repeticiones</p>
-          <div class="module-tag">26 letras · 36 animales · 5x Repeticiones</div>
+          <h3>ABCs &amp; Fonética</h3>
+          <p>26 letras, 36 animales/sonidos, canciones MP3 originales, historias bíblicas de la Creación y vocabulario ilustrado con audio.</p>
+          <div class="module-tag">26 Letras · 36 Animales · Canciones MP3</div>
         </div>
         <div class="module-card card-paces" onclick="showSection('paces')" role="button" tabindex="0">
           <div class="module-icon">📚</div>
-          <h3>Explorador de PACEs</h3>
-          <p>Acceso integral a Speaking English, Word Building, Animal Science y asignaturas de 1er Grado (1001–1012)</p>
+          <h3>Guía de Trabajo en PACEs</h3>
+          <p>Acceso directo y claro a las 3 materias del programa: Speaking English (CD Audio), Word Building y Animal Science.</p>
           <div class="module-tag">Speaking · Word Building · Animal Science</div>
         </div>
         <div class="module-card card-supervisor" onclick="showSection('supervisor')" role="button" tabindex="0">
           <div class="module-icon">👩‍🏫</div>
-          <h3>Manual del Supervisor</h3>
-          <p>Guía de facilitación docente, normas del Learning Center, diagnóstico y protocolo de juegos Apéndice D</p>
+          <h3>Supervisor &amp; Guías</h3>
+          <p>Pautas de facilitación para padres, organización del Learning Center y catálogo de juegos activos del Apéndice D.</p>
           <div class="module-tag">Facilitación · Dinámicas Apéndice D</div>
-        </div>
-        <div class="module-card card-evaluator" onclick="showSection('evaluator')" role="button" tabindex="0">
-          <div class="module-icon">✅</div>
-          <h3>Evaluador & Metas</h3>
-          <p>Calculadora de puntaje para Checkups y Tests, generador de Daily Goal Cards y Star Chart interactivo</p>
-          <div class="module-tag">Calculadora · Goal Cards · Star Chart</div>
         </div>
       </div>
 
       <!-- Quick Stats Banner -->
       <div class="stats-banner">
         <div class="stat"><span class="stat-num">26</span><span class="stat-label">Letras</span></div>
-        <div class="stat"><span class="stat-num">17</span><span class="stat-label">Semanas del Manual</span></div>
-        <div class="stat"><span class="stat-num">36</span><span class="stat-label">PACEs ABC Core</span></div>
-        <div class="stat"><span class="stat-num">24</span><span class="stat-label">Pistas Audio CD</span></div>
-        <div class="stat"><span class="stat-num">80%</span><span class="stat-label">Aprobación</span></div>
-        <div class="stat"><span class="stat-num">90%</span><span class="stat-label">Avanzar</span></div>
+        <div class="stat"><span class="stat-num">36</span><span class="stat-label">Sonidos &amp; Canciones</span></div>
+        <div class="stat"><span class="stat-num">17</span><span class="stat-label">Semanas de Guía</span></div>
+        <div class="stat"><span class="stat-num">24</span><span class="stat-label">Pistas de Audio CD</span></div>
+        <div class="stat"><span class="stat-num">8</span><span class="stat-label">Juegos Apéndice D</span></div>
       </div>
     </section>
 
@@ -111,27 +102,27 @@
     <section id="section-weekly" class="section active">
       <div class="section-header">
         <h2>📅 Plan Semanal &amp; Diario — Manual Oficial A.C.E.</h2>
-        <p>Hub Unificado: Organización pedagógica por semana (1–17) y por día con objetivos requeridos, páginas del manual y accesos directos a PACEs y fonética.</p>
+        <p>Guía fácil e intuitiva para padres y supervisores: sesión diaria estructurada de 75 minutos, objetivos claros por semana y enlaces directos a las PACEs.</p>
       </div>
 
       <!-- Selector de Semanas 1 a 17 -->
       <div class="weekly-selector-card">
         <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.75rem;margin-bottom:0.75rem">
           <h3 style="font-size:1.1rem;color:var(--accent);margin:0">📍 Selecciona la Semana del Manual:</h3>
-          <span style="font-size:0.82rem;color:var(--text-muted)">17 Semanas Fase 1 y 2 · DLC &amp; ABC Core</span>
+          <span style="font-size:0.82rem;color:var(--text-muted)">17 Semanas (Semanas 1–5: Fase 1 DLC · Semanas 6–17: Fase 2 ABC Core)</span>
         </div>
         <div class="filter-bar" id="weekly-tabs" style="gap:0.4rem;overflow-x:auto;padding-bottom:0.4rem">
           <!-- populated by JS: Semana 1 … Semana 17 -->
         </div>
       </div>
 
-      <!-- Horario de Hoy — Guía Paso a Paso (75 min) -->
+      <!-- Horario de la Sesión Diaria — Guía Paso a Paso (75 min) -->
       <div id="daily-schedule-card" style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.25rem 1.5rem;margin-bottom:1.5rem;box-shadow:var(--shadow-md)">
         <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.75rem;margin-bottom:0.5rem">
-          <h3 style="font-size:1.15rem;color:var(--accent);margin:0">🕐 Horario de la Sesión Diaria — Fase 1 (75 min)</h3>
-          <span id="daily-schedule-progress-label" style="font-size:0.85rem;color:var(--text-muted)">0 / 6 completado</span>
+          <h3 style="font-size:1.15rem;color:var(--accent);margin:0">🕐 Horario de la Sesión Diaria (75 min)</h3>
+          <span id="daily-schedule-progress-label" style="font-size:0.85rem;color:var(--text-muted)">0 / 6 pasos</span>
         </div>
-        <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1rem">Sigue estos 6 pasos en orden. Toca cada casilla al terminar el paso o toca "Ir" para abrir esa herramienta directamente en la app:</p>
+        <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1rem">Sigue estos 6 pasos en orden cada día. Haz clic en "Ver Guía / Ir" para abrir el contenido o juramentos correspondientes:</p>
         <div class="daily-schedule-progress-bar"><div class="daily-schedule-progress-fill" id="daily-schedule-progress-fill"></div></div>
         <div id="daily-schedule-steps" style="margin-top:1rem;display:flex;flex-direction:column;gap:0.6rem">
           <!-- populated by JS -->
@@ -148,21 +139,21 @@
     <section id="section-abc" class="section">
       <div class="section-header">
         <h2>🔤 ABCs with Ace &amp; Christi — Fonética &amp; Canciones</h2>
-        <p>Programa fonético multisensorial: 26 letras, 36 animales/sonidos, canciones originales MP3, técnica de la tortuga y regla de 5 repeticiones.</p>
+        <p>Toca cualquier tarjeta para ver directamente la foto del animal, escuchar su canción original MP3, aprender su rima y practicar su vocabulario.</p>
       </div>
 
       <!-- YouTube / Song Player Banner -->
       <div style="margin-bottom:2rem;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.25rem;box-shadow:var(--shadow-md)">
         <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.75rem;margin-bottom:0.75rem">
           <h3 style="font-size:1.15rem;color:var(--accent);margin:0;display:flex;align-items:center;gap:0.5rem">
-            🎵 <span>Alphabet Song Video — Ace &amp; Christi Theme</span>
+            🎵 <span>Alphabet Song Video — Canción Oficial del Abecedario</span>
           </h3>
           <a href="https://www.youtube.com/watch?v=cJum7rm9vzA" target="_blank" rel="noopener noreferrer" class="btn-primary" style="font-size:0.82rem;padding:0.4rem 1rem;text-decoration:none;display:inline-flex;align-items:center;gap:0.4rem">
             ▶ Ver en YouTube ↗
           </a>
         </div>
         <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1rem">
-          Canción oficial del abecedario. Reproduce el video o haz clic en cualquier tarjeta de abajo para escuchar su canción y practicar la regla de las 5 repeticiones:
+          Canción oficial de Ace &amp; Christi. Toca cualquier animal abajo para abrir su ficha completa con audio MP3 y vocabulario:
         </p>
         <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:var(--radius-md);background:#0f172a">
           <iframe 
@@ -185,7 +176,7 @@
       </div>
 
       <div class="week-info" id="week-info">
-        <span>📅 12 Semanas del Programa ABC · 3-4 letras por semana · 5 Repeticiones por sonido · Score ≥90% para avanzar</span>
+        <span>📅 12 Semanas del Programa ABC · 3-4 letras por semana · Toca cada tarjeta para escuchar la canción y el vocabulario</span>
       </div>
 
       <!-- Phonics Grid -->
@@ -194,35 +185,23 @@
       </div>
     </section>
 
-    <!-- ==================== EXPLORADOR DE PACES UNIFICADO ==================== -->
+    <!-- ==================== GUÍA DE TRABAJO EN PACES ==================== -->
     <section id="section-paces" class="section">
       <div class="section-header">
-        <h2>📚 Explorador Integral de PACEs (1001–1012)</h2>
-        <p>Accede directamente al contenido de cada PACE: Speaking English con audio del CD, Word Building con sílabas, Animal Science con criaturas de Dios, y materias de 1er Grado.</p>
+        <h2>📚 Guía de Trabajo en PACEs</h2>
+        <p>Explicación visual e interactiva de los 3 cuadernos de trabajo físico del programa: Speaking English (CD Audio), Word Building (Sílabas y Letras) y Animal Science (Criaturas de Dios).</p>
       </div>
 
       <!-- Subject Selector -->
       <div class="subject-tabs" id="subject-tabs">
         <button class="subject-tab active" style="--color:#4ECDC4" onclick="showSubject('speaking', this)">
-          🗣️ Speaking English
+          🗣️ Speaking English (1001–1006)
         </button>
         <button class="subject-tab" style="--color:#A29BFE" onclick="showSubject('wordBuilding', this)">
-          🔠 Word Building
+          🔠 Word Building (1001–1012)
         </button>
         <button class="subject-tab" style="--color:#E17055" onclick="showSubject('animalScience', this)">
-          🐾 Animal Science
-        </button>
-        <button class="subject-tab" style="--color:#6BCBFF" onclick="showSubject('english', this)">
-          📝 English (Grado 1)
-        </button>
-        <button class="subject-tab" style="--color:#FF6B6B" onclick="showSubject('math', this)">
-          🔢 Math (Grado 1)
-        </button>
-        <button class="subject-tab" style="--color:#55EFC4" onclick="showSubject('science', this)">
-          🔬 Science (Grado 1)
-        </button>
-        <button class="subject-tab" style="--color:#FDCB6E" onclick="showSubject('socialStudies', this)">
-          🌎 Social Studies (Grado 1)
+          🐾 Animal Science (1001–1012)
         </button>
       </div>
 
@@ -254,24 +233,19 @@
           <div class="filter-bar" id="as-pace-tabs"></div>
           <div class="as-content" id="as-content"></div>
         </div>
-
-        <!-- Grade 1 Standard PACEs list (English, Math, Science, Social Studies) -->
-        <div id="paces-view-standard" style="display:block">
-          <div class="pace-list" id="pace-list"></div>
-        </div>
       </div>
     </section>
 
     <!-- ==================== SUPERVISOR SECTION ==================== -->
     <section id="section-supervisor" class="section">
       <div class="section-header">
-        <h2>👩‍🏫 Manual del Supervisor &amp; Dinámicas</h2>
-        <p>Guía de facilitación pedagógica, protocolo de diagnóstico, organización del Learning Center y catálogo de juegos del Apéndice D.</p>
+        <h2>👩‍🏫 Supervisor &amp; Guías para Padres</h2>
+        <p>Pautas sencillas de facilitación, organización del Learning Center, juramentos oficiales y catálogo de juegos del Apéndice D.</p>
       </div>
 
       <div class="supervisor-tabs">
         <button class="sup-tab active" onclick="showSupTab('facilitation', this)">📖 Guía de Facilitación</button>
-        <button class="sup-tab" onclick="showSupTab('guide-chanak', this)">🎓 Guía Maestro-Padre Chanak</button>
+        <button class="sup-tab" onclick="showSupTab('pledges', this)">🇺🇸 Juramentos (Pledges)</button>
         <button class="sup-tab" onclick="showSupTab('schedule', this)">📋 Páginas Físicas por Semana</button>
         <button class="sup-tab" onclick="showSupTab('learning-center', this)">🏫 Learning Center</button>
         <button class="sup-tab" onclick="showSupTab('character', this)">✝️ Character Traits</button>
@@ -284,103 +258,7 @@
       </div>
     </section>
 
-    <!-- ==================== EVALUATOR SECTION ==================== -->
-    <section id="section-evaluator" class="section">
-      <div class="section-header">
-        <h2>✅ Evaluador, Goal Cards &amp; Star Chart</h2>
-        <p>Calcula puntajes de Checkups y Self-Tests, planifica el trabajo diario con Goal Cards y registra estrellas de logro.</p>
-      </div>
-
-      <div class="evaluator-grid">
-        <!-- Score Calculator -->
-        <div class="eval-card">
-          <h3>🧮 Calculadora de Puntaje (Checkups &amp; Tests)</h3>
-          <p>Ingresa respuestas correctas y totales para verificar si aprueba (≥80% o ≥90% en Post-Test)</p>
-          <div class="calc-form">
-            <div class="calc-row">
-              <label>Respuestas Correctas:</label>
-              <input type="number" id="calc-correct" min="0" max="100" placeholder="Ej. 18" />
-            </div>
-            <div class="calc-row">
-              <label>Total Preguntas:</label>
-              <input type="number" id="calc-total" min="1" max="100" placeholder="Ej. 20" />
-            </div>
-            <div class="calc-row">
-              <label>Tipo de Evaluación:</label>
-              <select id="calc-type">
-                <option value="checkup">Checkup (Aprobación: 80%)</option>
-                <option value="selftest">Self-Test (Aprobación: 80%)</option>
-                <option value="posttest">Post-Test / PACE Test (Aprobación: 90%)</option>
-                <option value="readiness">Readiness Test (Aprobación: 80%)</option>
-              </select>
-            </div>
-            <button class="btn-primary" onclick="calculateScore()">Calcular Puntaje</button>
-            <div class="calc-result" id="calc-result" style="display:none"></div>
-          </div>
-        </div>
-
-        <!-- Goal Card Generator -->
-        <div class="eval-card">
-          <h3>🎯 Daily Goal Card (Plan de Trabajo Diario)</h3>
-          <p>Genera la tarjeta de metas diarias para el escritorio (Office) del estudiante</p>
-          <div class="goal-form">
-            <input type="text" id="goal-student-name" placeholder="Nombre del Estudiante" />
-            <input type="date" id="goal-date" />
-            <div id="goal-subjects">
-              <div class="goal-subject-row" data-subject="Speaking">
-                <span>🗣️ Speaking English:</span>
-                <input type="text" placeholder="Meta de págs. (ej. pp. 1-5)" />
-              </div>
-              <div class="goal-subject-row" data-subject="Word Building">
-                <span>🔠 Word Building:</span>
-                <input type="text" placeholder="Meta de págs. (ej. pp. 1-4)" />
-              </div>
-              <div class="goal-subject-row" data-subject="Animal Science">
-                <span>🐾 Animal Science:</span>
-                <input type="text" placeholder="Meta de págs. (ej. pp. 1-3)" />
-              </div>
-              <div class="goal-subject-row" data-subject="English">
-                <span>📝 English PACE:</span>
-                <input type="text" placeholder="Meta de págs." />
-              </div>
-              <div class="goal-subject-row" data-subject="Math">
-                <span>🔢 Math PACE:</span>
-                <input type="text" placeholder="Meta de págs." />
-              </div>
-            </div>
-            <button class="btn-primary" onclick="generateGoalCard()">📄 Vista Previa de Goal Card</button>
-          </div>
-        </div>
-
-        <!-- Star Chart -->
-        <div class="eval-card eval-card-full">
-          <h3>⭐ Cuadro de Estrellas Interactivo (Star Chart)</h3>
-          <p>Monitorea logros por cada PACE completada. Haz clic en las estrellas para otorgarlas o quitarlas.</p>
-          <div class="star-chart-header">
-            <input type="text" id="star-student-name" placeholder="Nombre del Alumno" class="star-name-input" />
-            <button class="btn-secondary" onclick="resetStars()">↺ Reiniciar</button>
-            <button class="btn-primary" onclick="printStarChart()">🖨️ Imprimir Cuadro</button>
-          </div>
-          <div class="star-chart" id="star-chart">
-            <!-- populated by JS -->
-          </div>
-          <div class="star-total" id="star-total">⭐ Total de Estrellas Ganadas: 0</div>
-        </div>
-      </div>
-
-      <!-- Goal Card Preview Modal -->
-      <div class="modal-overlay" id="goal-modal-overlay" onclick="closeGoalModal()" style="display:none">
-        <div class="goal-card-modal" id="goal-card-modal" onclick="event.stopPropagation()">
-          <button class="modal-close" onclick="closeGoalModal()">✕</button>
-          <div id="goal-card-preview"></div>
-          <div style="text-align:center;margin-top:1.5rem">
-            <button class="btn-primary" onclick="window.print()">🖨️ Imprimir Goal Card</button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Letter / Phonics / Game / Speaking Modal -->
+    <!-- Letter / Phonics / Game / Speaking / Pledges Modal -->
     <div class="modal-overlay" id="modal-overlay" onclick="closeModal()">
       <div class="letter-modal" id="letter-modal" onclick="event.stopPropagation()">
         <button class="modal-close" onclick="closeModal()">✕</button>
@@ -391,17 +269,16 @@
   </main>
 
   <footer class="footer">
-    <p>🌟 Helping English Learner — <strong>Profesor virtual de refuerzo estructurado por semanas y días para A.C.E. ABC for English Learners.</strong></p>
+    <p>🌟 Helping English Learner — <strong>Profesor virtual y guía estructurada por semanas y días para A.C.E. ABC for English Learners.</strong></p>
   </footer>
 
   <!-- ======== SCRIPTS ======== -->
-  <script src="data/vocab_emoji_map.js?v=2.0"></script>
-  <script src="data/abc_phonics_data.js?v=2.0"></script>
-  <script src="data/paces_grade1_data.js?v=2.0"></script>
-  <script src="data/dlc_curriculum_data.js?v=2.0"></script>
-  <script src="data/english_bridge_data.js?v=2.0"></script>
-  <script src="data/songs_and_games_data.js?v=2.0"></script>
-  <script src="app.js?v=2.0"></script>
+  <script src="data/vocab_emoji_map.js?v=2.1"></script>
+  <script src="data/abc_phonics_data.js?v=2.1"></script>
+  <script src="data/dlc_curriculum_data.js?v=2.1"></script>
+  <script src="data/english_bridge_data.js?v=2.1"></script>
+  <script src="data/songs_and_games_data.js?v=2.1"></script>
+  <script src="app.js?v=2.1"></script>
 </body>
 </html>
 
