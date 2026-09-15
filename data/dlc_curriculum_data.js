@@ -1235,18 +1235,18 @@ const WEEKLY_SCHEDULE = {
 };
 
 const ABC_WEEK_METADATA = {
-  1: { wbPace: "1001", asPace: "1001", spPace: "1005", focus: "Aa (Long /eɪ/), Aa (Short /æ/), Aa (Broad /ɑː/)" },
-  2: { wbPace: "1002", asPace: "1002", spPace: "1005", focus: "Bb (/b/), Cc (/k/), Dd (/d/)" },
-  3: { wbPace: "1003", asPace: "1003", spPace: "1005", focus: "Ee (Long /iː/), Ee (Short /ɛ/), Ff (/f/), Gg (/ɡ/)" },
-  4: { wbPace: "1004", asPace: "1004", spPace: "1006", focus: "Hh (/h/), Ii (Long /aɪ/), Ii (Short /ɪ/)" },
-  5: { wbPace: "1005", asPace: "1005", spPace: "1006", focus: "Jj (/dʒ/), Kk (/k/), Ll (/l/), Mm (/m/)" },
-  6: { wbPace: "1006", asPace: "1006", spPace: "1006", focus: "Nn (/n/), Oo (Long /oʊ/), Oo (Short /ɒ/), Oo (Broad /uː/)" },
-  7: { wbPace: "1007", asPace: "1007", spPace: "1007", focus: "Pp (/p/), Qq (/kw/), Rr (/r/), Ss (/s/)" },
-  8: { wbPace: "1008", asPace: "1008", spPace: "1007", focus: "Tt (/t/), Uu (Long /juː/), Uu (Short /ʌ/), Uu (Broad /ʊ/)" },
-  9: { wbPace: "1009", asPace: "1009", spPace: "1007", focus: "Vv (/v/), Ww (/w/), Xx (/ks/)" },
-  10: { wbPace: "1010", asPace: "1010", spPace: "1008", focus: "Yy (/j/ & /aɪ/), Zz (/z/)" },
-  11: { wbPace: "1011", asPace: "1011", spPace: "1008", focus: "Dígrafos: Th (/θ/ & /ð/), Sh (/ʃ/), Ch (/tʃ/), Wh (/hw/)" },
-  12: { wbPace: "1012", asPace: "1012", spPace: "1008", focus: "Diptongos: Ou/Ow (/aʊ/), Oi/Oy (/ɔɪ/), Oo (/uː/ & /ʊ/), Er/Ir/Ur (/ɜːr/)" }
+  1: { wbPace: "1001", asPace: "1001", spPace: "1005", focus: "Aa Long (Ape), Aa Short (Antelope), Aa Broad (Armadillo)" },
+  2: { wbPace: "1002", asPace: "1002", spPace: "1005", focus: "Mm (Mule), Ss (Sunfish), Ff (Fox)" },
+  3: { wbPace: "1003", asPace: "1003", spPace: "1005", focus: "Rr (Rabbit), Ee Long (Emu), Ee Short (Elephant)" },
+  4: { wbPace: "1004", asPace: "1004", spPace: "1006", focus: "Bb (Buffalo), Nn (Nightingale), Gg Soft (Gerbil)" },
+  5: { wbPace: "1005", asPace: "1005", spPace: "1006", focus: "Gg Hard (Goldfish), Tt (Tiger), Pp (Peacock)" },
+  6: { wbPace: "1006", asPace: "1006", spPace: "1006", focus: "Ii Long (Ibex), Ii Short (Inchworm), Dd (Duck)" },
+  7: { wbPace: "1007", asPace: "1007", spPace: "1007", focus: "Hh (Hippopotamus), Oo Long (Okapi), Oo Broad (Ostrich)" },
+  8: { wbPace: "1008", asPace: "1008", spPace: "1007", focus: "Ll (Lizard), Kk (Kangaroo), Cc Hard (Cockatoo)" },
+  9: { wbPace: "1009", asPace: "1009", spPace: "1007", focus: "Cc Soft (Civet), Jj (Jaguar), Ww (Walrus)" },
+  10: { wbPace: "1010", asPace: "1010", spPace: "1008", focus: "Uu Long (Unicorn), Uu Short (Umbrella Bird), Vv (Vole)" },
+  11: { wbPace: "1011", asPace: "1011", spPace: "1008", focus: "Qq (Quail), Xx (Ox), Yy Long i (Butterfly)" },
+  12: { wbPace: "1012", asPace: "1012", spPace: "1008", focus: "Yy Consonant (Yak), Zz (Zebra) y Repaso General" }
 };
 
 function buildAbcWeekSchedule(abcWeekNum) {
@@ -1255,6 +1255,10 @@ function buildAbcWeekSchedule(abcWeekNum) {
   const allPhonics = window.ABC_PHONICS_DATA || [];
   const items = allPhonics.filter(p => p.week === abcWeekNum);
   const animalsStr = items.map(p => `${p.emoji} ${p.animal} (${p.letter})`).join(', ');
+
+  const animal1 = items[0] || { animal: "Ape", letter: "Aa", storyTitle: "Aging Ape" };
+  const animal2 = items[1] || items[0] || { animal: "Antelope", letter: "Aa", storyTitle: "Abbie Antelope" };
+  const animal3 = items[2] || null;
 
   return {
     weekNum: globalWeekNum,
@@ -1276,73 +1280,89 @@ function buildAbcWeekSchedule(abcWeekNum) {
     dailyActivities: [
       {
         day: "Día 1 · Lunes",
-        objective: `Presentación de ${items[0] ? items[0].animal : 'Letra'} (${items[0] ? items[0].letter : ''}) y Canción MP3`,
+        objective: `1er Animal ABC (${animal1.animal} — ${animal1.letter}), Canción MP3, Historia Animal Science y WB ${meta.wbPace} (págs. 1–3)`,
         activities: [
-          `Opening: Juramento a las banderas, a la Biblia y oración matutina.`,
-          `Presentación del animal: ${items[0] ? items[0].animal : ''} con su tarjeta oficial de lectura.`,
-          `Reproducción de la canción MP3 oficial y práctica de la rima (Chant).`,
-          `Práctica oral con la técnica de la tortuga (unión lenta de sonidos).`
+          `Opening: Juramento a la bandera cristiana, a la Biblia y oración matutina.`,
+          `🔤 Fonética ABC: Presentación de la tarjeta oficial de ${animal1.animal} (${animal1.letter}) y palabras clave.`,
+          `🎵 Canción Oficial MP3: Reproducir y cantar la rima oficial de ${animal1.animal}.`,
+          `🐾 Historia Animal Science: Lectura de la historia "${animal1.storyTitle || animal1.animal}" (ver video guiado en YouTube).`,
+          `🔠 Word Building: Inicio de páginas 1 a 3 del cuaderno físico PACE ${meta.wbPace}.`
         ],
         actions: [
-          { type: "phonics", target: items[0] ? items[0].animal : '', label: `🔤 Fonética: ${items[0] ? items[0].animal : ''}` },
-          { type: "audio_animal", target: items[0] ? items[0].animal : '', label: `🎵 Canción ${items[0] ? items[0].animal : ''}` },
+          { type: "phonics", target: animal1.animal, label: `🔤 Tarjeta: ${animal1.animal}` },
+          { type: "audio_animal", target: animal1.animal, label: `🎵 Canción: ${animal1.animal}` },
+          { type: "story_video", target: animal1.animal, label: `🐾 Historia & Video` },
           { type: "pace", subject: "wordBuilding", paceNum: meta.wbPace, label: `🔠 Word Building ${meta.wbPace}` }
         ]
       },
       {
         day: "Día 2 · Martes",
-        objective: `Segundo Sonido/Animal y Trabajo en PACE Word Building Págs. 1–5`,
+        objective: `2do Animal ABC (${animal2.animal} — ${animal2.letter}), Canción MP3, Historia Animal Science y WB ${meta.wbPace} (págs. 4–8)`,
         activities: [
-          `Repaso del sonido del lunes y presentación de ${items[1] ? items[1].animal : (items[0] ? items[0].animal : '')}.`,
-          `Escuchar la canción MP3 del segundo animal.`,
-          `Trabajo en cuaderno físico Word Building ${meta.wbPace} (páginas 1 a 5).`,
-          `Juego de memoria con tarjetas de palabras (Apéndice D-2).`
+          `Repaso del fonema del lunes y presentación del 2do animal: ${animal2.animal} (${animal2.letter}).`,
+          `🎵 Canción Oficial MP3: Cantar la rima de ${animal2.animal}.`,
+          `🐾 Historia Animal Science: Lectura de "${animal2.storyTitle || animal2.animal}" (ver video) y preguntas de conversación en inglés.`,
+          `🔠 Word Building: Trabajo en páginas 4 a 8 del cuaderno físico PACE ${meta.wbPace}.`,
+          `Juego de memoria fonética con tarjetas (Apéndice D-2).`
         ],
         actions: [
+          { type: "phonics", target: animal2.animal, label: `🔤 Tarjeta: ${animal2.animal}` },
+          { type: "audio_animal", target: animal2.animal, label: `🎵 Canción: ${animal2.animal}` },
+          { type: "story_video", target: animal2.animal, label: `🐾 Historia & Video` },
           { type: "pace", subject: "wordBuilding", paceNum: meta.wbPace, label: `🔠 Word Building ${meta.wbPace}` },
-          { type: "phonics", target: (items[1] || items[0] || {}).animal || '', label: `🔤 Fonética: ${(items[1] || items[0] || {}).animal || ''}` },
           { type: "game", target: "D-2", label: "🃏 Memory (D-2)" }
         ]
       },
       {
         day: "Día 3 · Miércoles",
-        objective: `Sílabas "Para Leer", Práctica de Escritura y PACE Págs. 6–10`,
+        objective: `${animal3 ? `3er Animal (${animal3.animal} — ${animal3.letter}), Canción MP3, ` : ''}Sílabas "Para Leer" y WB (págs. 9–13)`,
         activities: [
-          `Lectura guiada de sílabas y palabras compuestas ("Para Leer").`,
-          `Dictado de palabras nuevas en 'My Own Dictionary'.`,
-          `Trabajo en cuaderno físico Word Building ${meta.wbPace} (páginas 6 a 10).`,
+          `Lectura guiada de sílabas compuestas y sección 'Para Leer' de Word Building.`,
+          animal3 ? `🔤 Fonética y Canción MP3 del 3er animal: ${animal3.animal} (${animal3.letter}).` : `Repaso de sonidos combinados y canciones de la semana.`,
+          animal3 ? `🐾 Historia Animal Science: Lectura de "${animal3.storyTitle || animal3.animal}" con video de YouTube.` : `Práctica oral con la técnica de la tortuga (fusión de sonidos).`,
+          `🔠 Word Building: Páginas 9 a 13 del cuaderno físico PACE ${meta.wbPace}.`,
           `Juego de clasificación Pile Game (Apéndice D-3).`
         ],
         actions: [
-          { type: "pace", subject: "wordBuilding", paceNum: meta.wbPace, label: `🔠 Sílabas WB ${meta.wbPace}` },
+          ...(animal3 ? [
+            { type: "phonics", target: animal3.animal, label: `🔤 Tarjeta: ${animal3.animal}` },
+            { type: "audio_animal", target: animal3.animal, label: `🎵 Canción: ${animal3.animal}` },
+            { type: "story_video", target: animal3.animal, label: `🐾 Historia & Video` }
+          ] : [
+            { type: "pace", subject: "wordBuilding", paceNum: meta.wbPace, label: `🔠 Sílabas WB` },
+            { type: "audio_animal", target: animal1.animal, label: `🎵 Canción 1` }
+          ]),
+          { type: "pace", subject: "wordBuilding", paceNum: meta.wbPace, label: `🔠 WB ${meta.wbPace} págs. 9–13` },
           { type: "game", target: "D-3", label: "📚 Pile Game (D-3)" }
         ]
       },
       {
         day: "Día 4 · Jueves",
-        objective: `Conexión con Animal Science ${meta.asPace}, Hábitat y Creación de Dios`,
+        objective: `Cuaderno Físico Animal Science PACE ${meta.asPace}, Hábitat y Creación de Dios + WB (págs. 14–18)`,
         activities: [
-          `Estudio del hábitat, dieta y características de los animales de la semana.`,
-          `Trabajo en cuaderno físico Animal Science ${meta.asPace}.`,
-          `Preguntas de comprensión oral del supervisor.`,
+          `🐾 Animal Science PACE ${meta.asPace}: Estudio del hábitat, dieta, características y diseño de Dios para cada criatura.`,
+          `💬 Preguntas de comprensión oral en inglés con audio (Questions for Parents & Kids).`,
+          `🔠 Word Building: Páginas 14 a 18 del cuaderno físico y práctica de escritura.`,
           `Juego de Bingo fonético con las palabras de la semana (Apéndice D-6).`
         ],
         actions: [
           { type: "pace", subject: "animalScience", paceNum: meta.asPace, label: `🐾 Animal Science ${meta.asPace}` },
+          { type: "pace", subject: "wordBuilding", paceNum: meta.wbPace, label: `🔠 Word Building ${meta.wbPace}` },
           { type: "game", target: "D-6", label: "🎯 Bingo (D-6)" }
         ]
       },
       {
         day: "Día 5 · Viernes",
-        objective: `Revisión Semanal de Cuadernos y Cierre`,
+        objective: `Evaluación Semanal (Self Test / Checkup), Revisión de Cuadernos y Cierre`,
         activities: [
-          `Práctica oral de las palabras de la semana en voz alta.`,
-          `Revisión final de las páginas de Word Building y Animal Science por el supervisor.`,
-          `Corrección con bolígrafo rojo asegurando dominio total.`,
-          `Celebración de cierre semanal y oración de gratitud.`
+          `Repaso oral de las palabras y sonidos de la semana en voz alta.`,
+          `🔠 Word Building: Checkup / Self Test de páginas finales del PACE ${meta.wbPace}.`,
+          `🐾 Animal Science: Revisión final de páginas completadas.`,
+          `Calificación por el supervisor con bolígrafo rojo asegurando dominio total (≥90%).`,
+          `Oración de cierre y felicitación por el avance semanal.`
         ],
         actions: [
-          { type: "pace", subject: "wordBuilding", paceNum: meta.wbPace, label: `🔠 Repasar WB ${meta.wbPace}` },
+          { type: "pace", subject: "wordBuilding", paceNum: meta.wbPace, label: `🔠 Checkup WB ${meta.wbPace}` },
           { type: "pace", subject: "animalScience", paceNum: meta.asPace, label: `🐾 Repasar AS ${meta.asPace}` },
           { type: "game", target: "D-7", label: "🥔 Hot Potato (D-7)" }
         ]
@@ -1377,12 +1397,12 @@ const DAILY_SCHEDULE_PHASE1 = [
   },
   {
     icon: "🗣️",
-    title: "3. New Vocabulary (Speaking & Phonics)",
+    title: "3. New Vocabulary & Phonics Lesson (Lección del Día)",
     minutes: 20,
-    activity: "Presentación del vocabulario ilustrado del día (Speaking English en Semanas 1–5 / Fonética ABC en Semanas 6–17) con la Regla de las 5 Repeticiones.",
+    activity: "Semanas 1–5: Vocabulario ilustrado Speaking English. Semanas 6–17: Lección Integrada ABC (Fonética, Canción MP3, Historia Animal Science y Trabajo en Word Building).",
     actionType: "openVocabStep",
     jumpTo: "paces",
-    buttonLabel: "Ver Vocabulario del Día ➜"
+    buttonLabel: "Ver Lección del Día ➜"
   },
   {
     icon: "📖",

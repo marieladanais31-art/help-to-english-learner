@@ -923,6 +923,143 @@ function openStoryVideo(videoId, title) {
   overlay.classList.add('open');
 }
 
+function openStoryVideoByAnimal(animalName) {
+  const videoId = ANIMAL_STORY_VIDEOS[animalName];
+  if (videoId) {
+    const phonicsData = window.ABC_PHONICS_DATA || [];
+    const animal = phonicsData.find(a => a.animal.toLowerCase() === animalName.toLowerCase()) || { animal: animalName, storyTitle: animalName + ' Story' };
+    openStoryVideo(videoId, `${animal.animal} — ${animal.storyTitle || 'Animal Story'}`);
+  } else {
+    showSection('paces');
+    const tabs = document.querySelectorAll('.pace-tab');
+    if (tabs[2]) showPaceTab('animal-science', tabs[2]);
+  }
+}
+
+function openAbcDailyLessonModal(weekNum) {
+  const abcWeekNum = weekNum - 5;
+  const meta = (window.ABC_WEEK_METADATA || {})[abcWeekNum] || { wbPace: "1001", asPace: "1001", focus: "Fonética ABC" };
+  const allPhonics = window.ABC_PHONICS_DATA || [];
+  const items = allPhonics.filter(p => p.week === abcWeekNum);
+
+  const overlay = document.getElementById('modal-overlay');
+  const content = document.getElementById('modal-content');
+  if (!overlay || !content) return;
+
+  const animalsHTML = items.map((animal) => {
+    const videoId = ANIMAL_STORY_VIDEOS[animal.animal];
+    const storyTitle = animal.storyTitle || `${animal.animal} Story`;
+    const q1 = `What happened to ${animal.animal} in the story?`;
+    const q2 = `How did ${animal.animal} feel at first and in the end?`;
+    const q3 = `What character lesson can we learn from this story?`;
+
+    return `
+      <div style="background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:var(--radius-md);padding:1.15rem;margin-bottom:1.15rem">
+        <!-- 1. ABC Phonics Card -->
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.75rem;margin-bottom:0.75rem">
+          <div style="display:flex;align-items:center;gap:0.75rem">
+            <span style="font-size:2rem">${animal.emoji}</span>
+            <div>
+              <h4 style="margin:0;font-size:1.1rem;color:var(--accent)">🔤 1. Tarjeta Fonética: ${animal.animal} (${animal.letter})</h4>
+              <span style="font-size:0.8rem;color:var(--primary-light)">Sonido: <strong>${animal.sound}</strong> ${animal.soundSymbol || ''} · Guía: ${animal.soundGuideMom || ''}</span>
+            </div>
+          </div>
+          <button class="btn-secondary" style="font-size:0.78rem;padding:0.35rem 0.75rem" onclick="speak('${jsAttrEscape(animal.animal)}. ${jsAttrEscape(animal.words ? animal.words.slice(0, 5).join(', ') : '')}', {rate:0.75})">
+            🔊 Escuchar Fonema & Palabras
+          </button>
+        </div>
+
+        <!-- Words chips -->
+        ${animal.words ? `
+          <div style="margin-bottom:0.75rem">
+            <span style="font-size:0.75rem;font-weight:700;color:var(--text-dim);text-transform:uppercase">Palabras clave (Repetir 5 veces):</span>
+            <div style="display:flex;flex-wrap:wrap;gap:0.35rem;margin-top:0.3rem">
+              ${animal.words.map(w => `<span class="concept-chip" style="cursor:pointer" onclick="speak('${jsAttrEscape(w)}')">🔊 ${w}</span>`).join('')}
+            </div>
+          </div>
+        ` : ''}
+
+        <!-- 2. MP3 Song Player -->
+        ${animal.mp3 ? `
+          <div style="background:rgba(255,211,61,0.08);border:1px solid rgba(255,211,61,0.25);border-radius:var(--radius-sm);padding:0.75rem;margin-bottom:0.85rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.6rem">
+            <div>
+              <div style="font-weight:700;font-size:0.85rem;color:var(--accent)">🎵 2. Canción Oficial MP3: ${animal.animal}</div>
+              <div style="font-size:0.78rem;color:var(--text-muted);font-style:italic">"${animal.song || ''}"</div>
+            </div>
+            <audio controls style="height:34px;border-radius:20px;max-width:260px" src="assets/songs/${animal.mp3}"></audio>
+          </div>
+        ` : ''}
+
+        <!-- 3. Animal Science Story & Video -->
+        <div style="background:rgba(78,205,196,0.08);border-left:3px solid var(--accent);border-radius:var(--radius-sm);padding:0.85rem">
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.5rem;margin-bottom:0.4rem">
+            <span style="font-weight:700;font-size:0.85rem;color:var(--accent)">🐾 3. Historia Animal Science: "${storyTitle}" ${animal.storyPages ? `(págs. ${animal.storyPages})` : ''}</span>
+            ${videoId ? `
+              <button class="btn-primary" style="font-size:0.78rem;padding:0.3rem 0.75rem;border-radius:15px;background:linear-gradient(135deg,#FF6B6B,#EE5A24);border:none;color:#fff;font-weight:700;cursor:pointer;box-shadow:0 2px 8px rgba(255,107,107,0.3)" onclick="openStoryVideo('${videoId}', '${jsAttrEscape(animal.animal)} — ${jsAttrEscape(storyTitle)}')">
+                ▶️ Ver Video de la Historia
+              </button>
+            ` : ''}
+          </div>
+          <p style="font-size:0.82rem;color:var(--text);line-height:1.45;margin:0 0 0.5rem;font-style:italic">${animal.storySummary || 'Lectura de la historia del animal y formación de carácter.'}</p>
+          
+          <!-- Questions for Parents in English -->
+          <div style="background:rgba(0,0,0,0.15);border-radius:6px;padding:0.6rem">
+            <span style="font-size:0.75rem;font-weight:700;color:var(--primary-light)">💬 Preguntas en Inglés para conversar con tu hijo:</span>
+            <div style="display:flex;flex-direction:column;gap:0.35rem;margin-top:0.35rem">
+              <div style="font-size:0.78rem;color:var(--text);display:flex;align-items:center;gap:0.4rem">
+                <button class="command-btn" style="padding:0.15rem 0.4rem;font-size:0.72rem" onclick="speak('${jsAttrEscape(q1)}', {rate:0.8})">🔊 Q1</button>
+                <span>1. ${q1}</span>
+              </div>
+              <div style="font-size:0.78rem;color:var(--text);display:flex;align-items:center;gap:0.4rem">
+                <button class="command-btn" style="padding:0.15rem 0.4rem;font-size:0.72rem" onclick="speak('${jsAttrEscape(q2)}', {rate:0.8})">🔊 Q2</button>
+                <span>2. ${q2}</span>
+              </div>
+              <div style="font-size:0.78rem;color:var(--text);display:flex;align-items:center;gap:0.4rem">
+                <button class="command-btn" style="padding:0.15rem 0.4rem;font-size:0.72rem" onclick="speak('${jsAttrEscape(q3)}', {rate:0.8})">🔊 Q3</button>
+                <span>3. ${q3}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  content.innerHTML = `
+    <div style="border-bottom:1px solid var(--border);padding-bottom:0.75rem;margin-bottom:1rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.5rem">
+      <div>
+        <span style="font-size:0.8rem;background:var(--primary);color:#fff;padding:0.25rem 0.6rem;border-radius:12px;font-weight:700">PUNTO 3 · LECCIÓN DEL DÍA</span>
+        <h2 style="font-size:1.35rem;color:var(--text);margin:0.4rem 0 0.2rem">🎓 Lección Integrada ABC — Semana ${weekNum}</h2>
+        <span style="font-size:0.82rem;color:var(--text-muted)">A.C.E. ABCs with Ace & Christi (Semana ${abcWeekNum} de 12)</span>
+      </div>
+    </div>
+
+    <!-- 4. Word Building PACE Physical Work Banner -->
+    <div style="background:rgba(91,79,233,0.12);border:1px solid var(--primary);border-radius:var(--radius-sm);padding:0.85rem 1rem;margin-bottom:1.25rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.75rem">
+      <div>
+        <div style="font-weight:700;font-size:0.95rem;color:var(--primary-light)">🔠 4. Trabajo en Cuaderno Físico Word Building ${meta.wbPace}</div>
+        <div style="font-size:0.82rem;color:var(--text-muted)">Completa las páginas asignadas y practica las sílabas de Word Building PACE ${meta.wbPace}.</div>
+      </div>
+      <div style="display:flex;gap:0.5rem">
+        <button class="btn-primary" style="font-size:0.82rem;padding:0.4rem 0.85rem" onclick="closeModal(); goToPace('wordBuilding', '${meta.wbPace}')">
+          Abrir Word Building ${meta.wbPace} ➜
+        </button>
+        <button class="btn-secondary" style="font-size:0.82rem;padding:0.4rem 0.85rem" onclick="closeModal(); goToPace('animalScience', '${meta.asPace}')">
+          Abrir Animal Science ${meta.asPace} ➜
+        </button>
+      </div>
+    </div>
+
+    <!-- List of Animals for this Week (Phonics + Song + Animal Science) -->
+    <div>
+      <h3 style="font-size:1rem;color:var(--accent);margin-bottom:0.75rem">🐾 Animales, Fonemas y Canciones de la Semana:</h3>
+      ${animalsHTML}
+    </div>
+  `;
+
+  overlay.classList.add('open');
+}
+
 // ============================================================
 // SPEAKING ENGLISH SECTION — Visual Flashcards & Interactive Cards
 // ============================================================
@@ -1602,8 +1739,8 @@ function handleDailyStepAction(index) {
       const paceNum = week === 1 ? '1001' : (week === 2 ? '1002' : (week === 3 ? '1003' : (week === 4 ? '1004' : '1005')));
       goToPace('speaking', paceNum);
     } else {
-      // In Weeks 6 to 17, go to ABC & Phonics!
-      showSection('abc');
+      // In Weeks 6 to 17, open the integrated ABC Daily Lesson modal (ABC, Song, Animal Science Story/Video, Word Building):
+      openAbcDailyLessonModal(week);
     }
   } else if (index === 3) {
     showSection('paces');
@@ -1741,6 +1878,9 @@ function showWeek(n, btn) {
       }
       if (act.type === 'audio_animal') {
         return `<button class="day-action-btn action-audio" onclick="playAnimalSongDirect('${act.target}')">${act.label}</button>`;
+      }
+      if (act.type === 'story_video') {
+        return `<button class="day-action-btn action-speaking" onclick="openStoryVideoByAnimal('${act.target}')">${act.label}</button>`;
       }
       if (act.type === 'game') {
         return `<button class="day-action-btn action-game" onclick="openGameModal('${act.target}')">${act.label}</button>`;
