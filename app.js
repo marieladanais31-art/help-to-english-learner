@@ -1048,51 +1048,7 @@ function renderSpeakingPace(pace) {
     `;
   }).join('');
 
-  const pledges = [
-    { icon: "✝️", title: "Pledge to the Christian Flag", text: "I pledge allegiance to the Christian flag, and to the Saviour for whose Kingdom it stands; one Saviour, crucified, risen and coming again with life and liberty to all who believe.", color: "var(--primary)" },
-    { icon: "📖", title: "Pledge to the Bible", text: "I pledge allegiance to the Bible, God's Holy Word, I will make it a lamp unto my feet and a light unto my path and will hide its words in my heart that I might not sin against God.", color: "var(--success)" },
-    { icon: "🙏", title: "Morning Prayer", text: "Thank you, God, for the day. Thank You for our Learning Center. Help us work. Help us speak English. Help us play with our friends and not fight. In Jesus' name, Amen.", color: "var(--warning)" },
-  ];
-  const pledgeCardsHTML = pledges.map(p => `
-    <div class="pledge-card" style="border-left-color:${p.color}" onclick="speak('${p.text.replace(/'/g,"\\'")}', {rate:0.75})">
-      <div class="pledge-card-icon">${p.icon}</div>
-      <div class="pledge-card-body">
-        <div class="pledge-card-title">${p.title}</div>
-        <div class="pledge-card-text">"${p.text}"</div>
-      </div>
-      <div class="pledge-card-play">🔊</div>
-    </div>
-  `).join('');
-
-  const rules = [
-    { icon: "🥊", text: "No fighting" },
-    { icon: "🏃", text: "No running" },
-    { icon: "😢", text: "No crying" },
-    { icon: "📢", text: "No shouting" },
-    { icon: "🪑", text: "Sit down during the lesson" },
-    { icon: "🤐", text: "No talking during the lesson" },
-  ];
-  const rulesCardsHTML = rules.map(r => `
-    <div class="rule-card" onclick="speak('${r.text.replace(/'/g,"\\'")}')">
-      <span class="rule-card-icon">${r.icon}</span>
-      <span class="rule-card-text">🔊 ${r.text}</span>
-    </div>
-  `).join('');
-
   container.innerHTML = `
-    <!-- Daily Conversational Calendar & Pledges -->
-    <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.5rem;margin-bottom:1.5rem;box-shadow:var(--shadow-md)">
-      <h3 style="font-size:1.2rem;color:var(--accent);margin-bottom:0.75rem">🗣️ Calendario Conversacional Diario & Compromisos (Manuales DLC)</h3>
-      <p style="font-size:0.88rem;color:var(--text-muted);margin-bottom:1rem">Rutina oral de apertura para el supervisor según las guías semanales — toca cada tarjeta para escucharla:</p>
-
-      <div class="pledge-cards-grid">${pledgeCardsHTML}</div>
-
-      <div style="margin-top:1.25rem">
-        <p style="font-size:0.85rem;font-weight:700;color:var(--accent);margin-bottom:0.6rem">🏫 Classroom Rules & Commands (Repetir 5 veces) — toca cada regla:</p>
-        <div class="rule-cards-grid">${rulesCardsHTML}</div>
-      </div>
-    </div>
-
     <div class="speaking-pace-card">
       <div class="speaking-pace-title">${pace.title}</div>
       <div class="speaking-pace-theme">🎯 ${pace.theme} · Guía visual e interactiva para el supervisor y el alumno</div>

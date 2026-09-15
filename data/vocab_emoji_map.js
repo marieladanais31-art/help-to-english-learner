@@ -11,10 +11,10 @@
 
 const VOCAB_EMOJI_MAP = {
   "chair": "🪑",
-  "table": "🛋️",
+  "table": "🟫",
   "door": "🚪",
   "window": "🪟",
-  "floor": "🧱",
+  "floor": "🪵",
   "head": "🗣️",
   "shoulders": "💪",
   "knees": "🦵",
