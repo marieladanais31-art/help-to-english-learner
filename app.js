@@ -276,8 +276,9 @@ function showSection(name) {
     if (!currentSubjectKey) currentSubjectKey = 'speaking';
     showSubject(currentSubjectKey);
   }
-  if (name === 'supervisor' && !document.getElementById('supervisor-content').children.length) {
-    showSupTab('guide-chanak', document.querySelector('.sup-tab'));
+  if (name === 'supervisor') {
+    const tabs = document.querySelectorAll('.sup-tab');
+    showSupTab('facilitation', tabs[0] || document.querySelector('.sup-tab'));
   }
 }
 
@@ -1802,54 +1803,158 @@ function showSupTab(tab, btn) {
         </div>
       </div>
     `;
-  } else if (tab === 'facilitation') {
-    const guide = manual.facilitationGuide;
-    if (!guide) return;
-    const principlesHTML = (guide.principles || []).map(p => `<li style="margin-bottom:0.5rem">${p}</li>`).join('');
-    const stepsHTML = (guide.dailyRoutineSteps || []).map(s => `
-      <div style="background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:var(--radius-sm);padding:0.85rem 1rem;margin-bottom:0.6rem">
-        <p style="font-weight:700;font-size:0.9rem;color:var(--accent);margin-bottom:0.3rem">${s.step}</p>
-        <p style="font-size:0.85rem;color:var(--text-muted);margin:0">${s.detail}</p>
-      </div>
-    `).join('');
+  } else if (tab === 'facilitation' || tab === 'guide-chanak') {
     html = `
       <div class="sup-panel">
-        <h3>${guide.title}</h3>
-        <div style="background:rgba(255,211,61,0.08);border:1px solid rgba(255,211,61,0.25);border-radius:var(--radius-sm);padding:0.85rem 1rem;margin-bottom:1.5rem;font-size:0.85rem;color:var(--text-muted);line-height:1.5">
-          ⚖️ ${guide.legalNotice}
-        </div>
-        <h4 style="margin-bottom:0.75rem" class="wb-section-label">Principios de Facilitación</h4>
-        <ul style="padding-left:1.2rem;margin-bottom:1.5rem;font-size:0.88rem;color:var(--text);line-height:1.5">${principlesHTML}</ul>
-        <h4 style="margin-bottom:0.75rem" class="wb-section-label">Rutina Diaria Paso a Paso</h4>
-        ${stepsHTML}
-      </div>
-    `;
-  } else if (tab === 'guide-chanak') {
-    html = `
-      <div class="sup-panel">
-        <h3>🎓 Guía de Uso para el Maestro - Padre de Familia (Chanak International Academy)</h3>
-        <p style="color:var(--text-muted);margin-bottom:1.5rem;font-size:0.9rem">
-          Instrucciones de implementación de <strong>Helping English Learner</strong> como profesor virtual de refuerzo interactivo para estudiantes matriculados en Chanak International Academy (FLDOE #134620).
-        </p>
-
-        <div style="background:rgba(91,79,233,0.08);border-left:4px solid var(--primary);padding:1rem;border-radius:var(--radius-sm);margin-bottom:1.5rem;font-size:0.88rem;line-height:1.5">
-          🎯 <strong>Propósito General:</strong> Helping English Learner acompaña los cuadernos de trabajo físicos (PACEs® impresas) y los manuales A.C.E.® (Speaking English, Word Building y Animal Science). La plataforma sirve como pantalla interactiva para proyectar audios MP3 originales, guiar la fonética, dictar vocabulario y coordinar las dinámicas de grupo.
+        <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1.25rem">
+          <span style="font-size:2.4rem">🎓</span>
+          <div>
+            <h3 style="margin:0;font-size:1.45rem">Guía del Maestro &amp; Facilitación para el Trabajo en Casa</h3>
+            <span style="font-size:0.85rem;color:var(--accent);font-weight:700">Cómo usar la App Helping English Learner en conjunto con los Manuales Físicos y Cuadernos A.C.E.</span>
+          </div>
         </div>
 
-        <h4 style="margin-top:1.5rem;margin-bottom:0.75rem" class="wb-section-label">1. Rol del Maestro / Padre en los 75 Minutos Diarios</h4>
-        <div style="background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:var(--radius-sm);padding:1rem;margin-bottom:1rem;font-size:0.88rem;line-height:1.5">
-          <ul style="padding-left:1.2rem;margin:0">
-            <li style="margin-bottom:0.4rem"><strong>1. Apertura (10 min):</strong> Ponerse de pie y recitar los compromisos <em>Pledge to Christian Flag, Pledge to Bible</em> y <em>Morning Prayer</em>.</li>
-            <li style="margin-bottom:0.4rem"><strong>2. Conversational Review (15 min):</strong> Saludos (<em>Good morning! How are you?</em>), diálogo del día y comandos físicos (<em>Sit down, Stand up, Touch your head</em>).</li>
-            <li style="margin-bottom:0.4rem"><strong>3. New Vocabulary / Phonics (20 min):</strong> Proyectar la tarjeta del animal, escuchar el MP3 y repetir cada término <strong>5 veces en voz alta</strong>.</li>
-            <li style="margin-bottom:0.4rem"><strong>4. Cuaderno Físico PACE (15 min):</strong> Trabajo guiado en el cuaderno físico asignado (Speaking English / Word Building / Animal Science).</li>
-            <li style="margin-bottom:0.4rem"><strong>5. Juegos del Apéndice D (10 min):</strong> Dinámica activa (Simon Says, Bingo, Memory) para fijar el vocabulario.</li>
-            <li style="margin-bottom:0.4rem"><strong>6. Cierre (5 min):</strong> Revisión del cuaderno con bolígrafo rojo y oración final.</li>
-          </ul>
+        <div style="background:rgba(91,79,233,0.08);border-left:4px solid var(--primary);padding:1rem 1.25rem;border-radius:var(--radius-sm);margin-bottom:1.5rem;font-size:0.9rem;line-height:1.6">
+          🎯 <strong>¿Cuál es el rol de cada material en casa?</strong><br/>
+          • 💻 <strong>La App (Helping English Learner):</strong> Es el <em>Profesor Nativo Virtual en pantalla</em>. Modela la pronunciación en inglés de cada palabra, reproduce las canciones oficiales MP3 de los animales y pistas de audio del CD, guía los juramentos y registra el avance del día sin perderse.<br/>
+          • 📖 <strong>Manuales del Supervisor (Vol. 1 y Vol. 2):</strong> Son la guía pedagógica de mamá/papá para saber qué pauta seguir y qué preguntas hacer antes de que el niño escriba.<br/>
+          • 📝 <strong>Cuadernos Físicos (PACEs impresas):</strong> Son los cuadernos donde el estudiante escribe a mano con lápiz, traza letras, une con líneas y realiza sus ejercicios de <em>Speaking English (1001–1006)</em>, <em>Word Building (1001–1012)</em> y <em>Animal Science (1001–1012)</em>.
         </div>
 
-        <div style="margin-top:1.5rem">
-          <button class="btn-primary" onclick="showSupTab('pledges', document.querySelectorAll('.sup-tab')[1])">🇺🇸 Ver Pledges &amp; Juramentos Oficiales</button>
+        <!-- Sección 1: Cómo usar cada parte de la App -->
+        <h4 class="wb-section-label" style="font-size:1.1rem;color:var(--accent);margin-top:1.5rem;margin-bottom:0.75rem">📱 1. Cómo usar cada sección de la App en tu día a día</h4>
+        
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;margin-bottom:1.5rem">
+          <div style="background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:var(--radius-sm);padding:1rem">
+            <h5 style="margin:0 0 0.5rem;font-size:1rem;color:var(--text);display:flex;align-items:center;gap:0.4rem">
+              <span>📅</span> 1. Plan Semanal &amp; Diario
+            </h5>
+            <p style="font-size:0.85rem;color:var(--text-muted);line-height:1.5;margin:0">
+              • Selecciona la semana en la barra superior (Semanas 1–5 para Speaking English inicial / Semanas 6–17 para el programa ABC).<br/>
+              • En el <strong>Horario de Hoy (75 min)</strong>, toca el botón <em>Abrir ➜</em> de cada paso para acceder directamente al audio o actividad correspondiente.<br/>
+              • Al finalizar las tareas del día en el cuaderno físico, marca la casilla <strong>"Marcar Listo"</strong> para guardar el progreso.
+            </p>
+          </div>
+
+          <div style="background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:var(--radius-sm);padding:1rem">
+            <h5 style="margin:0 0 0.5rem;font-size:1rem;color:var(--text);display:flex;align-items:center;gap:0.4rem">
+              <span>🔤</span> 2. ABCs &amp; Fonética (36 Sonidos)
+            </h5>
+            <p style="font-size:0.85rem;color:var(--text-muted);line-height:1.5;margin:0">
+              • Toca la tarjeta de cualquier animal para abrir la <strong>Tarjeta Oficial de Lectura (Flashcard)</strong>.<br/>
+              • Escucha la canción original en MP3 y practica la rima fonética tocando el texto.<br/>
+              • Toca cada una de las tarjetas de vocabulario ilustrado para escuchar la pronunciación nativa y modelar la <strong>Regla de las 5 Repeticiones</strong> en voz alta.
+            </p>
+          </div>
+
+          <div style="background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:var(--radius-sm);padding:1rem">
+            <h5 style="margin:0 0 0.5rem;font-size:1rem;color:var(--text);display:flex;align-items:center;gap:0.4rem">
+              <span>📚</span> 3. Guía de Trabajo en PACEs
+            </h5>
+            <p style="font-size:0.85rem;color:var(--text-muted);line-height:1.5;margin:0">
+              • <strong>Speaking English (1001–1006):</strong> Proyecta las tarjetas de vocabulario y activa el reproductor de pistas de CD para las lecciones orales.<br/>
+              • <strong>Word Building (1001–1012):</strong> Guía de sonidos, sílabas y palabras para escribir en la PACE física.<br/>
+              • <strong>Animal Science (1001–1012):</strong> Historias de la creación de Dios con lectura guiada en karaoke.
+            </p>
+          </div>
+
+          <div style="background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:var(--radius-sm);padding:1rem">
+            <h5 style="margin:0 0 0.5rem;font-size:1rem;color:var(--text);display:flex;align-items:center;gap:0.4rem">
+              <span>👩‍🏫</span> 4. Supervisor &amp; Pledges
+            </h5>
+            <p style="font-size:0.85rem;color:var(--text-muted);line-height:1.5;margin:0">
+              • Contiene los juramentos oficiales (Bandera Cristiana, Santa Biblia, Oración Matutina) con audio para abrir la clase cada mañana.<br/>
+              • Catálogo completo de juegos del <strong>Apéndice D</strong> para reforzar vocabulario de forma dinámica.<br/>
+              • Tabla de páginas físicas exactas para cada semana.
+            </p>
+          </div>
+        </div>
+
+        <!-- Sección 2: Rutina Diaria de 75 Minutos -->
+        <h4 class="wb-section-label" style="font-size:1.1rem;color:var(--accent);margin-top:1.5rem;margin-bottom:0.75rem">⏱️ 2. Rutina Diaria de 75 Minutos en Casa</h4>
+        
+        <div style="background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:var(--radius-sm);padding:1.1rem;margin-bottom:1.5rem">
+          <div style="display:flex;flex-direction:column;gap:0.85rem">
+            <div style="display:flex;align-items:flex-start;gap:0.75rem">
+              <span style="background:rgba(255,211,61,0.15);color:var(--accent);padding:0.25rem 0.6rem;border-radius:6px;font-weight:800;font-size:0.82rem;white-space:nowrap">Paso 1 · 10 min</span>
+              <div>
+                <strong style="color:var(--text)">Apertura &amp; Juramentos (Opening Exercises):</strong>
+                <p style="font-size:0.85rem;color:var(--text-muted);margin:0.2rem 0 0">Ponerse de pie con respeto. Recitar el <em>Pledge to the Christian Flag</em>, <em>Pledge to the Bible</em>, la <em>Oración Matutina</em> y repasar las <em>Reglas del Aula</em> usando los botones de voz del app.</p>
+              </div>
+            </div>
+
+            <div style="display:flex;align-items:flex-start;gap:0.75rem">
+              <span style="background:rgba(78,205,196,0.15);color:#4ECDC4;padding:0.25rem 0.6rem;border-radius:6px;font-weight:800;font-size:0.82rem;white-space:nowrap">Paso 2 · 15 min</span>
+              <div>
+                <strong style="color:var(--text)">Conversational Review &amp; Comandos TPR:</strong>
+                <p style="font-size:0.85rem;color:var(--text-muted);margin:0.2rem 0 0">Saludos (<em>Good morning! How are you?</em>), diálogo del día, preguntas sobre el calendario y el clima, y órdenes físicas de acción (<em>Stand up, Sit down, Touch your head, Point to the door</em>).</p>
+              </div>
+            </div>
+
+            <div style="display:flex;align-items:flex-start;gap:0.75rem">
+              <span style="background:rgba(255,107,157,0.15);color:#FF6B9D;padding:0.25rem 0.6rem;border-radius:6px;font-weight:800;font-size:0.82rem;white-space:nowrap">Paso 3 · 20 min</span>
+              <div>
+                <strong style="color:var(--text)">Nuevo Vocabulario Oral o Fonética ABC:</strong>
+                <p style="font-size:0.85rem;color:var(--text-muted);margin:0.2rem 0 0">En las Semanas 1 a 5, proyectar el vocabulario ilustrado de Speaking English en la app. En las Semanas 6 a 17, proyectar la tarjeta del animal ABC, escuchar el MP3 y aplicar la <strong>Regla de las 5 Repeticiones</strong> en voz alta con la técnica de la tortuga (🐢).</p>
+              </div>
+            </div>
+
+            <div style="display:flex;align-items:flex-start;gap:0.75rem">
+              <span style="background:rgba(91,79,233,0.15);color:#A29BFE;padding:0.25rem 0.6rem;border-radius:6px;font-weight:800;font-size:0.82rem;white-space:nowrap">Paso 4 · 15 min</span>
+              <div>
+                <strong style="color:var(--text)">Trabajo en el Cuaderno Físico (PACE de Papel):</strong>
+                <p style="font-size:0.85rem;color:var(--text-muted);margin:0.2rem 0 0">El estudiante abre su cuaderno físico asignado (Speaking English / Word Building / Animal Science) y realiza las páginas del día con lápiz de forma individual.</p>
+              </div>
+            </div>
+
+            <div style="display:flex;align-items:flex-start;gap:0.75rem">
+              <span style="background:rgba(255,217,61,0.15);color:var(--accent);padding:0.25rem 0.6rem;border-radius:6px;font-weight:800;font-size:0.82rem;white-space:nowrap">Paso 5 · 10 min</span>
+              <div>
+                <strong style="color:var(--text)">Juegos del Apéndice D &amp; Canciones:</strong>
+                <p style="font-size:0.85rem;color:var(--text-muted);margin:0.2rem 0 0">Dinámica lúdica activa (Simon Says, Memory, Word Hunt, Bingo) para fijar el vocabulario aprendido en un ambiente alegre.</p>
+              </div>
+            </div>
+
+            <div style="display:flex;align-items:flex-start;gap:0.75rem">
+              <span style="background:rgba(16,185,129,0.15);color:#10B981;padding:0.25rem 0.6rem;border-radius:6px;font-weight:800;font-size:0.82rem;white-space:nowrap">Paso 6 · 5 min</span>
+              <div>
+                <strong style="color:var(--text)">Cierre, Revisión con Bolígrafo Rojo &amp; Oración:</strong>
+                <p style="font-size:0.85rem;color:var(--text-muted);margin:0.2rem 0 0">El padre/supervisor revisa el trabajo físico en el momento con bolígrafo rojo, el estudiante corrige errores de inmediato, se felicita su esfuerzo y se concluye con una breve oración de gratitud.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sección 3: Reglas de Oro para Padres -->
+        <h4 class="wb-section-label" style="font-size:1.1rem;color:var(--accent);margin-top:1.5rem;margin-bottom:0.75rem">⭐ 3. Reglas de Oro del Supervisor en Casa</h4>
+        
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin-bottom:1.5rem">
+          <div style="background:rgba(255,107,157,0.06);border:1px solid rgba(255,107,157,0.2);border-radius:var(--radius-sm);padding:1rem">
+            <strong style="color:#FF6B9D;font-size:0.95rem">🔁 Regla de las 5 Repeticiones</strong>
+            <p style="font-size:0.85rem;color:var(--text-muted);line-height:1.5;margin:0.4rem 0 0">
+              Nunca permitas que el niño solo escuche en silencio. Cada vez que la app o el padre pronuncie una palabra o comando, el niño debe <strong>repetir 5 veces en voz alta</strong> con claridad y buena postura.
+            </p>
+          </div>
+
+          <div style="background:rgba(78,205,196,0.06);border:1px solid rgba(78,205,196,0.2);border-radius:var(--radius-sm);padding:1rem">
+            <strong style="color:#4ECDC4;font-size:0.95rem">🗣️ Vocabulario Activo vs Pasivo</strong>
+            <p style="font-size:0.85rem;color:var(--text-muted);line-height:1.5;margin:0.4rem 0 0">
+              No es suficiente con que el niño reconozca la palabra al verla (pasivo). Debe ser capaz de <strong>responder oralmente</strong> a las preguntas del supervisor (*What is this? It is a chair*).
+            </p>
+          </div>
+
+          <div style="background:rgba(255,211,61,0.06);border:1px solid rgba(255,211,61,0.2);border-radius:var(--radius-sm);padding:1rem">
+            <strong style="color:var(--accent);font-size:0.95rem">✏️ Corrección Inmediata (Mastery Learning)</strong>
+            <p style="font-size:0.85rem;color:var(--text-muted);line-height:1.5;margin:0.4rem 0 0">
+              Revisa el cuaderno de papel el mismo día. Si hay un error, haz un círculo con bolígrafo rojo y pídele al niño que lo borre y corrija antes de avanzar a la página siguiente.
+            </p>
+          </div>
+        </div>
+
+        <div style="text-align:center;margin-top:1.5rem">
+          <button class="btn-primary" style="padding:0.6rem 1.4rem;font-size:0.95rem" onclick="showSupTab('pledges', document.querySelectorAll('.sup-tab')[1])">
+            ✝️ Ir a Juramentos &amp; Apertura (Pledges) ➜
+          </button>
         </div>
       </div>
     `;
