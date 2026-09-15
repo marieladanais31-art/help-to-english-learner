@@ -8,9 +8,40 @@
 // VOICE ENGINE — High-quality, natural sounding speech
 // ============================================================
 let selectedVoice = null;
+let currentUtterance = null;
+let currentPlayingAudio = null;
+let speechTimeoutId = null;
+
+function stopAllAudio() {
+  if (speechTimeoutId) {
+    clearTimeout(speechTimeoutId);
+    speechTimeoutId = null;
+  }
+  if (currentPlayingAudio) {
+    try {
+      currentPlayingAudio.pause();
+      currentPlayingAudio.currentTime = 0;
+    } catch (e) {}
+    currentPlayingAudio = null;
+  }
+  const modalAudio = document.getElementById('modal-animal-audio');
+  if (modalAudio) {
+    try {
+      modalAudio.pause();
+      modalAudio.currentTime = 0;
+    } catch (e) {}
+  }
+  if ('speechSynthesis' in window) {
+    try {
+      window.speechSynthesis.cancel();
+    } catch (e) {}
+  }
+  currentUtterance = null;
+}
 
 function initVoice() {
   const trySetVoice = () => {
+    if (!('speechSynthesis' in window)) return;
     const voices = window.speechSynthesis.getVoices();
     if (!voices.length) return;
 
@@ -30,30 +61,96 @@ function initVoice() {
 
     for (const name of preferred) {
       const v = voices.find(v => v.name.includes(name));
-      if (v) { selectedVoice = v; console.log('🎙️ Voice:', v.name); return; }
+      if (v) { selectedVoice = v; return; }
     }
-    // Fallback: any English female
+    // Fallback: any English female or standard English
     selectedVoice = voices.find(v => v.lang.startsWith('en') && (v.name.includes('Female') || v.name.includes('female')))
       || voices.find(v => v.lang.startsWith('en'))
       || voices[0];
-    if (selectedVoice) console.log('🎙️ Voice fallback:', selectedVoice.name);
   };
 
   trySetVoice();
-  window.speechSynthesis.onvoiceschanged = trySetVoice;
+  if ('speechSynthesis' in window) {
+    window.speechSynthesis.onvoiceschanged = trySetVoice;
+  }
+
+  // Mobile Audio Unlock
+  const unlockAudio = () => {
+    if ('speechSynthesis' in window) {
+      try {
+        window.speechSynthesis.resume();
+      } catch (e) {}
+    }
+    document.removeEventListener('click', unlockAudio);
+    document.removeEventListener('touchstart', unlockAudio);
+  };
+  document.addEventListener('click', unlockAudio, { once: true });
+  document.addEventListener('touchstart', unlockAudio, { once: true });
 }
 
 function speak(text, options = {}) {
-  if (!('speechSynthesis' in window)) return;
-  window.speechSynthesis.cancel();
+  if (!('speechSynthesis' in window) || !text) return;
 
-  const utterance = new SpeechSynthesisUtterance(text);
-  if (selectedVoice) utterance.voice = selectedVoice;
-  utterance.lang = options.lang || 'en-US';
-  utterance.rate = options.rate || 0.82;   // Slightly slower = clearer for learners
-  utterance.pitch = options.pitch || 1.0;
-  utterance.volume = options.volume || 1.0;
-  window.speechSynthesis.speak(utterance);
+  stopAllAudio();
+
+  // Safari/Chrome resume check
+  if (window.speechSynthesis.paused) {
+    window.speechSynthesis.resume();
+  }
+
+  // Clean pronunciation characters (slashes, brackets) that can confuse TTS
+  const cleanText = String(text)
+    .replace(/[\/\[\]]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+  if (!cleanText) return;
+
+  // Small async tick (25ms) prevents the browser cancel()-speak() race condition deadlock
+  speechTimeoutId = setTimeout(() => {
+    try {
+      const utterance = new SpeechSynthesisUtterance(cleanText);
+      if (selectedVoice) utterance.voice = selectedVoice;
+      utterance.lang = options.lang || 'en-US';
+      utterance.rate = options.rate || 0.82;
+      utterance.pitch = options.pitch || 1.0;
+      utterance.volume = options.volume || 1.0;
+
+      // Keep reference to prevent GC bug in Chrome/Safari
+      currentUtterance = utterance;
+
+      utterance.onend = () => {
+        if (currentUtterance === utterance) {
+          currentUtterance = null;
+        }
+        if (typeof options.onend === 'function') {
+          options.onend();
+        }
+      };
+
+      utterance.onerror = (e) => {
+        if (currentUtterance === utterance) {
+          currentUtterance = null;
+        }
+        if (typeof options.onerror === 'function') {
+          options.onerror(e);
+        }
+      };
+
+      window.speechSynthesis.speak(utterance);
+
+      // Long utterance watchdog to resume if stalled
+      const resumeWatchdog = setInterval(() => {
+        if (!window.speechSynthesis.speaking) {
+          clearInterval(resumeWatchdog);
+        } else if (window.speechSynthesis.paused) {
+          window.speechSynthesis.resume();
+        }
+      }, 5000);
+    } catch (err) {
+      console.warn('Speech synthesis notice:', err);
+    }
+  }, 25);
 }
 
 // Vocabulary visual — real illustration when we have a good one, otherwise a
@@ -78,10 +175,9 @@ function jsAttrEscape(text) {
 }
 
 // Karaoke-style read-aloud: highlights each word in `elementId` as it's spoken.
-// If elementId is null, just speaks the text without highlighting.
 function speakKaraoke(text, elementId) {
-  if (!('speechSynthesis' in window)) return;
-  window.speechSynthesis.cancel();
+  if (!('speechSynthesis' in window) || !text) return;
+  stopAllAudio();
 
   const container = elementId ? document.getElementById(elementId) : null;
   const tokens = text.split(/(\s+)/);
@@ -89,45 +185,65 @@ function speakKaraoke(text, elementId) {
     container.innerHTML = tokens.map((t, i) => t.trim() ? `<span class="karaoke-word" data-i="${i}">${t}</span>` : t).join('');
   }
 
-  const utter = new SpeechSynthesisUtterance(text);
-  if (selectedVoice) utter.voice = selectedVoice;
-  utter.lang = 'en-US';
-  utter.rate = 0.82;
+  speechTimeoutId = setTimeout(() => {
+    try {
+      const utter = new SpeechSynthesisUtterance(text);
+      if (selectedVoice) utter.voice = selectedVoice;
+      utter.lang = 'en-US';
+      utter.rate = 0.82;
+      currentUtterance = utter;
 
-  if (container) {
-    utter.onboundary = (e) => {
-      if (e.name && e.name !== 'word') return;
-      let acc = 0, targetIdx = -1;
-      for (let i = 0; i < tokens.length; i++) {
-        if (e.charIndex < acc + tokens[i].length) { targetIdx = i; break; }
-        acc += tokens[i].length;
+      if (container) {
+        utter.onboundary = (e) => {
+          if (e.name && e.name !== 'word') return;
+          let acc = 0, targetIdx = -1;
+          for (let i = 0; i < tokens.length; i++) {
+            if (e.charIndex < acc + tokens[i].length) { targetIdx = i; break; }
+            acc += tokens[i].length;
+          }
+          container.querySelectorAll('.karaoke-word.active').forEach(s => s.classList.remove('active'));
+          const span = targetIdx >= 0 ? container.querySelector(`.karaoke-word[data-i="${targetIdx}"]`) : null;
+          if (span) span.classList.add('active');
+        };
+        utter.onend = () => {
+          container.querySelectorAll('.karaoke-word.active').forEach(s => s.classList.remove('active'));
+          if (currentUtterance === utter) currentUtterance = null;
+        };
       }
-      container.querySelectorAll('.karaoke-word.active').forEach(s => s.classList.remove('active'));
-      const span = targetIdx >= 0 ? container.querySelector(`.karaoke-word[data-i="${targetIdx}"]`) : null;
-      if (span) span.classList.add('active');
-    };
-    utter.onend = () => container.querySelectorAll('.karaoke-word.active').forEach(s => s.classList.remove('active'));
-  }
 
-  window.speechSynthesis.speak(utter);
+      window.speechSynthesis.speak(utter);
+    } catch (e) {
+      console.warn('speakKaraoke notice:', e);
+    }
+  }, 25);
 }
 
-// Turtle Technique — say each letter slowly (🐢), then blend the full word (🐇)
+// Turtle Technique — say each letter slowly (🐢) in sequence, then blend the full word (🐇)
 function playTurtleWord(word) {
-  if (!('speechSynthesis' in window)) return;
-  window.speechSynthesis.cancel();
-  word.toUpperCase().split('').forEach(ch => {
-    const u = new SpeechSynthesisUtterance(ch);
-    if (selectedVoice) u.voice = selectedVoice;
-    u.lang = 'en-US';
-    u.rate = 0.55;
-    window.speechSynthesis.speak(u);
-  });
-  const full = new SpeechSynthesisUtterance(word);
-  if (selectedVoice) full.voice = selectedVoice;
-  full.lang = 'en-US';
-  full.rate = 0.75;
-  window.speechSynthesis.speak(full);
+  if (!('speechSynthesis' in window) || !word) return;
+  stopAllAudio();
+
+  const letters = word.toUpperCase().split('');
+  let idx = 0;
+
+  function speakNextLetter() {
+    if (idx < letters.length) {
+      const ch = letters[idx];
+      idx++;
+      speak(ch, {
+        rate: 0.58,
+        onend: () => {
+          speechTimeoutId = setTimeout(speakNextLetter, 120);
+        }
+      });
+    } else {
+      speechTimeoutId = setTimeout(() => {
+        speak(word, { rate: 0.78 });
+      }, 220);
+    }
+  }
+
+  speakNextLetter();
 }
 
 // ============================================================
@@ -246,28 +362,38 @@ function openPhonicsModalByAnimal(animalName) {
 }
 
 function playAnimalSongDirect(animalName) {
+  stopAllAudio();
   const songsMap = window.ABC_SONGS_BY_ANIMAL_LOWER || {};
   const songFile = songsMap[animalName.toLowerCase()] || (window.ABC_SONGS_MAP && window.ABC_SONGS_MAP[animalName]);
   if (songFile) {
-    const audio = new Audio('assets/songs/' + songFile);
-    audio.play().catch(e => console.warn('Audio play notice', e));
+    try {
+      const audio = new Audio('assets/songs/' + songFile);
+      currentPlayingAudio = audio;
+      audio.play().catch(e => console.warn('Audio play notice', e));
+    } catch (e) {}
   }
   openPhonicsModalByAnimal(animalName);
 }
 
 function playTrackAudio(trackNumStr) {
+  stopAllAudio();
   const clean = String(trackNumStr).padStart(2, '0');
   const cdPath = 'assets/cd/';
   const file = `${clean}_Pista_${clean}.m4a`;
   const altFile = `${clean}_Pista_${clean}_1.m4a`;
   
-  const audio = new Audio(cdPath + file);
-  audio.play().catch(() => {
-    const audio2 = new Audio(cdPath + altFile);
-    audio2.play().catch(e => console.warn('Track audio notice', e));
-  });
+  try {
+    const audio = new Audio(cdPath + file);
+    currentPlayingAudio = audio;
+    audio.play().catch(() => {
+      try {
+        const audio2 = new Audio(cdPath + altFile);
+        currentPlayingAudio = audio2;
+        audio2.play().catch(e => console.warn('Track audio notice', e));
+      } catch (e) {}
+    });
+  } catch (e) {}
   
-  // Also show notification or open speaking pace
   goToPace('speaking', '1001');
 }
 
@@ -707,7 +833,7 @@ function playWordSound(word) {
 
 function closeModal() {
   document.getElementById('modal-overlay').classList.remove('open');
-  window.speechSynthesis.cancel();
+  stopAllAudio();
 }
 
 // ============================================================
