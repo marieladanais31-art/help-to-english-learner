@@ -1249,8 +1249,66 @@ function buildAbcWeekSchedule(abcWeekNum) {
   };
 }
 
-window.buildAbcWeekSchedule = buildAbcWeekSchedule;
-window.ABC_WEEK_METADATA = ABC_WEEK_METADATA;
+// ============================================================
+// DAILY SCHEDULE (75 MIN) — Phase 1 & ABC
+// ============================================================
+const DAILY_SCHEDULE_PHASE1 = [
+  {
+    icon: "✝️",
+    title: "1. Opening Exercises (Ejercicios de Apertura)",
+    minutes: 10,
+    activity: "Pledge to the Christian Flag, Pledge to the Bible, Morning Prayer y Classroom Rules.",
+    actionType: "openOpeningModal",
+    jumpTo: "supervisor",
+    tab: "pledges",
+    buttonLabel: "Abrir Apertura & Pledges ➜"
+  },
+  {
+    icon: "💬",
+    title: "2. Conversational Review & TPR",
+    minutes: 15,
+    activity: "Saludos cotidianos (Good morning!), calendario, clima, diálogo guiado y órdenes físicas TPR (Sit down, Stand up, Touch your nose).",
+    actionType: "openConversationalModal",
+    jumpTo: "paces",
+    tab: "speaking",
+    buttonLabel: "Abrir Diálogos & Comandos ➜"
+  },
+  {
+    icon: "🗣️",
+    title: "3. New Vocabulary (Speaking & Phonics)",
+    minutes: 20,
+    activity: "Presentación del vocabulario ilustrado del día (Speaking English en Semanas 1–5 / Fonética ABC en Semanas 6–17) con la Regla de las 5 Repeticiones.",
+    actionType: "openVocabStep",
+    jumpTo: "paces",
+    buttonLabel: "Ver Vocabulario del Día ➜"
+  },
+  {
+    icon: "📖",
+    title: "4. Independent PACE Work",
+    minutes: 15,
+    activity: "Trabajo guiado en el cuaderno físico asignado (Speaking English 1001–1006 / Word Building 1001–1012 / Animal Science 1001–1012).",
+    jumpTo: "paces",
+    buttonLabel: "Guía de PACEs ➜"
+  },
+  {
+    icon: "🎲",
+    title: "5. Juegos & Canciones (Apéndice D)",
+    minutes: 10,
+    activity: "Refuerzo lúdico y activo con los juegos del Apéndice D (Simon Says, Memory, Word Hunt, Bingo) y canciones MP3 originales.",
+    jumpTo: "supervisor",
+    tab: "games",
+    buttonLabel: "Ver Juegos ➜"
+  },
+  {
+    icon: "✝️",
+    title: "6. Closing & Prayer",
+    minutes: 5,
+    activity: "Revisión del cuaderno con bolígrafo rojo, corrección inmediata de errores, felicitación por el esfuerzo y oración de cierre.",
+    jumpTo: "supervisor",
+    tab: "facilitation",
+    buttonLabel: "Pautas de Cierre ➜"
+  }
+];
 
 // ============================================================
 // SUPERVISOR / TUTOR MANUAL — Chanak Academy & A.C.E. Guidelines
