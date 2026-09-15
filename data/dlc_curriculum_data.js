@@ -1252,67 +1252,98 @@ function buildAbcWeekSchedule(abcWeekNum) {
 window.buildAbcWeekSchedule = buildAbcWeekSchedule;
 window.ABC_WEEK_METADATA = ABC_WEEK_METADATA;
 
-const DAILY_SCHEDULE_PHASE1 = [
-  {
-    icon: "✝️",
-    title: "1. Opening Exercises (Ejercicios de Apertura)",
-    minutes: 10,
-    activity: "Pledge to the Christian Flag, Pledge to the Bible, Morning Prayer y Classroom Rules.",
-    actionType: "openOpeningModal",
-    jumpTo: "supervisor",
-    tab: "pledges",
-    buttonLabel: "Abrir Apertura & Pledges ➜"
+// ============================================================
+// SUPERVISOR / TUTOR MANUAL — Chanak Academy & A.C.E. Guidelines
+// ============================================================
+const SUPERVISOR_MANUAL = {
+  physicalPaceSchedule: {
+    title: "📋 Asignación de Páginas Físicas por Semana (Manuales Vol. 1, 2 y 3)",
+    description: "Guía oficial de las páginas exactas que el estudiante debe completar en sus cuadernos físicos de trabajo (PACEs) y la referencia en los manuales del maestro semana a semana:",
+    weeks: [
+      { week: "Semana 1", phase: "Fase 1: Inmersión Oral", pages: "Speaking English PACE 1001 (págs. 1–10) · Comandos TPR iniciales, partes del cuerpo y juramentos." },
+      { week: "Semana 2", phase: "Fase 1: Inmersión Oral", pages: "Speaking English PACE 1001 (págs. 11–25) + PACE 1002 (págs. 1–10) · Familia y animales." },
+      { week: "Semana 3", phase: "Fase 1: Inmersión Oral", pages: "Speaking English PACE 1002 (págs. 11–25) + PACE 1003 (págs. 1–12) · Ropa y objetos del hogar." },
+      { week: "Semana 4", phase: "Fase 1: Inmersión Oral", pages: "Speaking English PACE 1003 (págs. 13–25) + PACE 1004 (págs. 1–15) · Habitación, juguetes y transporte." },
+      { week: "Semana 5", phase: "Fase 1: Inmersión Oral", pages: "Speaking English PACE 1004 (págs. 16–25) + PACE 1005 (págs. 1–15) · Ayudantes de la comunidad y preparación ABC." },
+      { week: "Semana 6", phase: "Fase 2: Fonética & Lectura", pages: "Manual ABC Vol. 1 págs. 219–282 · Letra A · PACEs Físicas: Word Building 1001, Animal Science 1001, Speaking English PACE 1005 (págs. 16–25)." },
+      { week: "Semana 7", phase: "Fase 2: Fonética & Lectura", pages: "Manual ABC Vol. 1 págs. 283–338 · Letras E, O · PACEs Físicas: Word Building 1002, Animal Science 1002, Speaking English PACE 1005." },
+      { week: "Semana 8", phase: "Fase 2: Fonética & Lectura", pages: "Manual ABC Vol. 1 págs. 339–403 · Letras U, B · PACEs Físicas: Word Building 1003, Animal Science 1003, Speaking English PACE 1005." },
+      { week: "Semana 9", phase: "Fase 2: Fonética & Lectura", pages: "Manual ABC Vol. 1 págs. 405–472 · Letras C, F · PACEs Físicas: Word Building 1004, Animal Science 1004, Speaking English PACE 1006 (págs. 1–10)." },
+      { week: "Semana 10", phase: "Fase 2: Fonética & Lectura", pages: "Manual ABC Vol. 2 págs. 1–60 · Letras G, T, P · PACEs Físicas: Word Building 1005, Animal Science 1005, Speaking English PACE 1006 (págs. 11–20)." },
+      { week: "Semana 11", phase: "Fase 2: Fonética & Lectura", pages: "Manual ABC Vol. 2 págs. 61–126 · Letras I, D · PACEs Físicas: Word Building 1006, Animal Science 1006, Speaking English PACE 1006 (págs. 21–25)." },
+      { week: "Semana 12", phase: "Fase 2: Fonética & Lectura", pages: "Manual ABC Vol. 2 págs. 127–196 · Letras H, J, K · PACEs Físicas: Word Building 1007, Animal Science 1007." },
+      { week: "Semana 13", phase: "Fase 2: Fonética & Lectura", pages: "Manual ABC Vol. 2 págs. 197–260 · Letras L, M, N · PACEs Físicas: Word Building 1008, Animal Science 1008." },
+      { week: "Semana 14", phase: "Fase 2: Fonética & Lectura", pages: "Manual ABC Vol. 2 págs. 261–330 · Letras R, S, V · PACEs Físicas: Word Building 1009, Animal Science 1009." },
+      { week: "Semana 15", phase: "Fase 2: Fonética & Lectura", pages: "Manual ABC Vol. 2 págs. 331–400 · Letras W, Y, Z · PACEs Físicas: Word Building 1010, Animal Science 1010." },
+      { week: "Semana 16", phase: "Fase 2: Fonética & Lectura", pages: "Manual ABC Vol. 2 págs. 401–464 · Letras Q, X, Digraphs (SH, CH, TH) · PACEs Físicas: Word Building 1011, Animal Science 1011." },
+      { week: "Semana 17", phase: "Fase 2: Fonética & Lectura", pages: "Manual ABC Vol. 2 págs. 465–516 · Diphthongs (WH, OU, OW, OO, OI, OY, ER, AR, OR) · PACEs Físicas: Word Building 1012, Animal Science 1012." },
+      { week: "Semana 18", phase: "Fase 3: Cierre & Transición", pages: "Manual ABC Vol. 3 · Repaso general, inicio de Math 1001 y aplicación del Post-Test (Reading Readiness Test final)." }
+    ]
   },
-  {
-    icon: "💬",
-    title: "2. Conversational Review & TPR",
-    minutes: 15,
-    activity: "Saludos cotidianos (Good morning!), calendario, clima, diálogo guiado y órdenes físicas TPR (Sit down, Stand up, Touch your nose).",
-    actionType: "openConversationalModal",
-    jumpTo: "paces",
-    tab: "speaking",
-    buttonLabel: "Abrir Diálogos & Comandos ➜"
+  learningCenter: {
+    title: "Organización del Learning Center en el Hogar (Homeschool A.C.E. & Chanak)",
+    rules: [
+      "Escritorio / Oficina Privada (Office): Cada estudiante tiene su espacio delimitado con divisores laterales para evitar distracciones y fomentar el trabajo autónomo.",
+      "Bandera Roja (Help Flag): El alumno levanta la bandera roja en su escritorio cuando tiene una duda y no puede avanzar, esperando en silencio.",
+      "Bandera Azul (Review Flag): El alumno levanta la bandera azul cuando termina una página o sección y está listo para que el supervisor la revise.",
+      "Mesa de Scoring / Verificación: El supervisor revisa el cuaderno con bolígrafo rojo. Si hay un error, se marca con un círculo rojo para que el alumno lo borre y corrija en su puesto.",
+      "Silencio y Concentración: Durante el bloque de trabajo en la PACE de papel, no se permite hablar ni interrumpir a otros hermanos.",
+      "Cuidado de Materiales: Lápiz bien afilado, borrador limpio, cuadernos sin arrugas y devocional en su lugar."
+    ]
   },
-  {
-    icon: "🗣️",
-    title: "3. New Vocabulary (Speaking & Phonics)",
-    minutes: 20,
-    activity: "Presentación del vocabulario ilustrado del día (Speaking English en Semanas 1–5 / Fonética ABC en Semanas 6–17) con la Regla de las 5 Repeticiones.",
-    actionType: "openVocabStep",
-    jumpTo: "paces",
-    buttonLabel: "Ver Vocabulario del Día ➜"
+  characterTraits: {
+    title: "Programa de Formación del Carácter Bíblico (Character Traits)",
+    description: "Cada mes y cada PACE de A.C.E. se enfoca en un rasgo del carácter piadoso. Los padres y estudiantes memorizan el versículo y conversan sobre cómo aplicarlo en el hogar:",
+    monthly: [
+      { month: "Septiembre", trait: "Attentiveness (Atención)", verse: "Proverbs 1:5 — 'A wise man will hear, and will increase learning.'" },
+      { month: "Octubre", trait: "Obedience (Obediencia)", verse: "Colossians 3:20 — 'Children, obey your parents in all things: for this is well pleasing unto the Lord.'" },
+      { month: "Noviembre", trait: "Thankfulness (Gratitud)", verse: "1 Thessalonians 5:18 — 'In every thing give thanks: for this is the will of God in Christ Jesus concerning you.'" },
+      { month: "Diciembre", trait: "Giving (Generosidad)", verse: "Luke 6:38 — 'Give, and it shall be given unto you; good measure, pressed down...'" },
+      { month: "Enero", trait: "Diligence (Diligencia)", verse: "Proverbs 12:24 — 'The hand of the diligent shall bear rule: but the slothful shall be under tribute.'" },
+      { month: "Febrero", trait: "Love (Amor)", verse: "1 Corinthians 13:4 — 'Charity suffereth long, and is kind; charity envieth not; charity vaunteth not itself...'" },
+      { month: "Marzo", trait: "Patience (Paciencia)", verse: "James 1:4 — 'But let patience have her perfect work, that ye may be perfect and entire, wanting nothing.'" },
+      { month: "Abril", trait: "Faithfulness (Fidelidad)", verse: "Luke 16:10 — 'He that is faithful in that which is least is faithful also in much.'" },
+      { month: "Mayo", trait: "Excellence (Excelencia)", verse: "Colossians 3:23 — 'And whatsoever ye do, do it heartily, as to the Lord, and not unto men.'" },
+      { month: "Junio", trait: "Honesty (Honestidad)", verse: "2 Corinthians 8:21 — 'Providing for honest things, not only in the sight of the Lord, but also in the sight of men.'" }
+    ]
   },
-  {
-    icon: "📖",
-    title: "4. Independent PACE Work",
-    minutes: 15,
-    activity: "Trabajo guiado en el cuaderno físico asignado (Speaking English 1001–1006 / Word Building 1001–1012 / Animal Science 1001–1012).",
-    jumpTo: "paces",
-    buttonLabel: "Guía de PACEs ➜"
+  readinessTest: {
+    title: "Protocolo de Diagnóstico y Ubicación Académica (Manual de Procedimientos A.C.E. y Chanak)",
+    steps: [
+      "1. ALUMNOS MENORES DE 5 AÑOS: Prescribir Kindergarten with Ace and Christi incorporando actividades orales diarias de Speaking English y comandos TPR.",
+      "2. ALUMNOS DE 5 A 8 AÑOS: Aplicar la Prueba de Madurez Lectora (Reading Readiness Test) en su idioma materno (evalúa desarrollo cognitivo y coordinación motriz fina, umbral mínimo 80%). Con ≥80%, prescribir Speaking English (Semanas 1–5) seguido del programa ABCs with Ace and Christi (Semanas 6–17).",
+      "3. ALUMNOS DE 9 AÑOS EN ADELANTE (ESL / English Learners): Distinguir claramente entre vocabulario pasivo (lo que reconoce al leer) y vocabulario activo (lo que puede decir y dialogar con fluidez en inglés).",
+      "4. EVALUACIÓN DE COMPRENSIÓN ORAL: Administrar los PACE Tests de Speaking English 1001 a 1012 hasta que el alumno obtenga menos del 80% en 2 pruebas consecutivas.",
+      "5. NIVEL ACTIVO DE RENDIMIENTO: Para materias de contenido (Science / Social Studies), prescribir de 6 a 12 PACEs por debajo de su nivel pasivo de lectura en inglés para asegurar que pueda mantener conversaciones orales sobre el tema.",
+      "6. MI PROPIO DICCIONARIO ('My Own Dictionary'): Todo estudiante ESL debe registrar y memorizar diariamente nuevas palabras y sus definiciones ilustradas."
+    ]
   },
-  {
-    icon: "🎲",
-    title: "5. Juegos & Canciones (Apéndice D)",
-    minutes: 10,
-    activity: "Refuerzo lúdico y activo con los juegos del Apéndice D (Simon Says, Memory, Word Hunt, Bingo) y canciones MP3 originales.",
-    jumpTo: "supervisor",
-    tab: "games",
-    buttonLabel: "Ver Juegos ➜"
-  },
-  {
-    icon: "✝️",
-    title: "6. Closing & Prayer",
-    minutes: 5,
-    activity: "Revisión del cuaderno con bolígrafo rojo, corrección inmediata de errores, felicitación por el esfuerzo y oración de cierre.",
-    jumpTo: "supervisor",
-    tab: "facilitation",
-    buttonLabel: "Pautas de Cierre ➜"
+  facilitationGuide: {
+    title: "Guía del Maestro & Facilitación para el Tutor en Casa",
+    legalNotice: "Esta plataforma ('Helping English Learner') es un acompañante interactivo de facilitación docente para familias Chanak y tutores A.C.E. Las actividades en pantalla complementan y guían el trabajo en los cuadernos físicos (PACEs) adquiridos.",
+    principles: [
+      "1. REGLA DE LAS 5 REPETICIONES: Cada palabra, comando o rima pronunciada por el audio o el padre debe repetirse EXACTAMENTE 5 VECES en voz alta por el estudiante con energía y buena articulación.",
+      "2. NO TRADUCIR DIRECTAMENTE: Si el niño no comprende una palabra (ej. 'Apple'), señala una manzana real, una imagen o haz mímica. Si traduces a español, el cerebro del niño no creará la conexión neuronal directa en inglés.",
+      "3. ENTUSIASMO EN LAS HISTORIAS: Al leer la historia del animal (Animal Science), actúa el personaje, ruge como el león, haz sonidos y modula la voz. La emoción fija el vocabulario de forma permanente.",
+      "4. VOCABULARIO ACTIVO VS PASIVO: No basta con que el niño complete un ejercicio en silencio. Debe ser capaz de responder oralmente a preguntas (*What is this? Who is this?*).",
+      "5. REVISIÓN INMEDIATA CON BOLÍGRAFO ROJO (Mastery Learning): Revisa el cuaderno el mismo día. Un error se marca con círculo rojo, el alumno borra con lápiz, corrige y vuelve a revisar (Umbral mínimo: 80% en Checkup y Self-Test, 90% en PACE Test)."
+    ],
+    dailyRoutineSteps: [
+      { step: "Apertura & Juramentos (10 min)", detail: "Ponerse de pie con respeto. Recitar el Pledge to the Christian Flag, Pledge to the Bible, Morning Prayer y repasar las reglas del aula con los audios de la app." },
+      { step: "Conversational Review & TPR (15 min)", detail: "Saludos (Good morning! How are you?), preguntas del calendario y clima (What day is today?), y comandos de acción física (Stand up, Sit down, Touch your head)." },
+      { step: "Lección del Día: Vocabulario / Fonética (20 min)", detail: "Semanas 1–5: Vocabulario ilustrado de Speaking English. Semanas 6–17: Historia de Animal Science, tarjeta oficial del animal ABC, canción MP3 y modelado de 5 repeticiones." },
+      { step: "Trabajo en la PACE Física de Papel (20-30 min)", detail: "El estudiante trabaja en su escritorio individual en Word Building o Speaking English trazando letras y repitiendo el sonido mientras escribe." },
+      { step: "Juegos del Apéndice D & Canciones (10-15 min)", detail: "Juego grupal o en pareja (Simon Says, Memory, Trading Places, Bingo) aplicando la regla de 5 repeticiones en voz alta." },
+      { step: "Scoring, Corrección & Oración de Cierre (5-10 min)", detail: "El padre revisa con bolígrafo rojo, el estudiante corrige errores, marca la Goal Card y se cierra con una oración de acción de gracias." }
+    ]
   }
-];
+};
 
 window.DAILY_SCHEDULE_PHASE1 = DAILY_SCHEDULE_PHASE1;
 window.SPEAKING_ENGLISH_PACES = SPEAKING_ENGLISH_PACES;
 window.WORD_BUILDING_PACES = WORD_BUILDING_PACES;
 window.ANIMAL_SCIENCE_PACES = ANIMAL_SCIENCE_PACES;
 window.WEEKLY_SCHEDULE = WEEKLY_SCHEDULE;
+window.SUPERVISOR_MANUAL = SUPERVISOR_MANUAL;
+
 

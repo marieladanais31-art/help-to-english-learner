@@ -1707,14 +1707,24 @@ function showSubject(key, btn) {
 // ============================================================
 // SUPERVISOR SECTION — Guías, Pledges, Juegos y Facilitación
 // ============================================================
+// ============================================================
+// SUPERVISOR SECTION — Guías, Pledges, Juegos y Facilitación
+// ============================================================
 function showSupTab(tab, btn) {
   document.querySelectorAll('.sup-tab').forEach(b => b.classList.remove('active'));
-  if (btn) btn.classList.add('active');
-  const content = document.getElementById('supervisor-content');
-  const manual = window.SUPERVISOR_MANUAL;
-  if (!manual) return;
+  if (btn) {
+    btn.classList.add('active');
+  } else {
+    const matchingBtn = document.querySelector(`.sup-tab[onclick*="${tab}"]`) || document.querySelector('.sup-tab');
+    if (matchingBtn) matchingBtn.classList.add('active');
+  }
 
+  const content = document.getElementById('supervisor-content');
+  if (!content) return;
+
+  const manual = window.SUPERVISOR_MANUAL || {};
   let html = '';
+
   if (tab === 'pledges') {
     html = `
       <div class="sup-panel">
@@ -1722,7 +1732,7 @@ function showSupTab(tab, btn) {
           <span style="font-size:2.2rem">✝️</span>
           <div>
             <h3 style="margin:0;font-size:1.4rem">Juramentos Oficiales &amp; Ejercicios de Apertura (Opening Exercises)</h3>
-            <span style="font-size:0.85rem;color:var(--accent);font-weight:700">A.C.E. School of Tomorrow · Primeros 10 Minutos Diarios</span>
+            <span style="font-size:0.85rem;color:var(--accent);font-weight:700">A.C.E. School of Tomorrow & Chanak Academy · Primeros 10 Minutos Diarios</span>
           </div>
         </div>
 
@@ -1768,13 +1778,18 @@ function showSupTab(tab, btn) {
 
         <!-- 3. Morning Prayer -->
         <div style="background:rgba(255,217,61,0.06);border:1px solid rgba(255,217,61,0.25);border-radius:var(--radius-sm);padding:1.1rem;margin-bottom:1.25rem">
-          <h4 style="margin:0 0 0.5rem;font-size:1.05rem;color:var(--accent)">☀️ 3. Oración Matutina (Morning Prayer)</h4>
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.5rem;margin-bottom:0.6rem">
+            <h4 style="margin:0;font-size:1.05rem;color:var(--accent)">☀️ 3. Oración Matutina (Morning Prayer)</h4>
+            <button class="btn-primary" style="font-size:0.8rem;padding:0.35rem 0.8rem" onclick="speakMorningPrayer()">
+              🔊 Escuchar Oración en Inglés
+            </button>
+          </div>
           <p style="font-size:0.85rem;color:var(--text-muted);line-height:1.5;margin-bottom:0.6rem">
             "Dear Heavenly Father, thank You for this brand new day. Help me to listen, to obey, and to learn with joy. Bless my family and my studies today. In Jesus' Name, Amen."
           </p>
-          <button class="btn-primary" style="font-size:0.8rem;padding:0.35rem 0.8rem" onclick="speakMorningPrayer()">
-            🔊 Escuchar Oración en Inglés
-          </button>
+          <p style="font-size:0.84rem;color:var(--text-muted);margin:0">
+            <strong>Traducción para el Padre:</strong> "Querido Padre Celestial, gracias por este nuevo día. Ayúdame a escuchar, obedecer y aprender con gozo. Bendice a mi familia y mis estudios hoy. En el nombre de Jesús, Amén."
+          </p>
         </div>
 
         <!-- 4. Classroom Rules & Commands -->
@@ -1817,7 +1832,7 @@ function showSupTab(tab, btn) {
         <div style="background:rgba(91,79,233,0.08);border-left:4px solid var(--primary);padding:1rem 1.25rem;border-radius:var(--radius-sm);margin-bottom:1.5rem;font-size:0.9rem;line-height:1.6">
           🎯 <strong>¿Cuál es el rol de cada material en casa?</strong><br/>
           • 💻 <strong>La App (Helping English Learner):</strong> Es el <em>Profesor Nativo Virtual en pantalla</em>. Modela la pronunciación en inglés de cada palabra, reproduce las canciones oficiales MP3 de los animales y pistas de audio del CD, guía los juramentos y registra el avance del día sin perderse.<br/>
-          • 📖 <strong>Manuales del Supervisor (Vol. 1 y Vol. 2):</strong> Son la guía pedagógica de mamá/papá para saber qué pauta seguir y qué preguntas hacer antes de que el niño escriba.<br/>
+          • 📖 <strong>Manuales del Supervisor (Vol. 1, 2 y 3 / Guía de Tutor):</strong> Son la guía pedagógica de mamá/papá para saber qué historia contar, qué pauta seguir y qué preguntas hacer antes de que el niño escriba.<br/>
           • 📝 <strong>Cuadernos Físicos (PACEs impresas):</strong> Son los cuadernos donde el estudiante escribe a mano con lápiz, traza letras, une con líneas y realiza sus ejercicios de <em>Speaking English (1001–1006)</em>, <em>Word Building (1001–1012)</em> y <em>Animal Science (1001–1012)</em>.
         </div>
 
@@ -1937,9 +1952,9 @@ function showSupTab(tab, btn) {
           </div>
 
           <div style="background:rgba(78,205,196,0.06);border:1px solid rgba(78,205,196,0.2);border-radius:var(--radius-sm);padding:1rem">
-            <strong style="color:#4ECDC4;font-size:0.95rem">🗣️ Vocabulario Activo vs Pasivo</strong>
+            <strong style="color:#4ECDC4;font-size:0.95rem">🚫 No Traducir Directamente</strong>
             <p style="font-size:0.85rem;color:var(--text-muted);line-height:1.5;margin:0.4rem 0 0">
-              No es suficiente con que el niño reconozca la palabra al verla (pasivo). Debe ser capaz de <strong>responder oralmente</strong> a las preguntas del supervisor (*What is this? It is a chair*).
+              Si el niño no comprende una palabra, señala un objeto real, la imagen o haz mímica. Si traduces a español, el cerebro del niño no creará la conexión directa en inglés.
             </p>
           </div>
 
@@ -1959,27 +1974,101 @@ function showSupTab(tab, btn) {
       </div>
     `;
   } else if (tab === 'schedule') {
-    const sched = manual.physicalPaceSchedule;
-    const weekTabsHTML = (sched.weeks || []).map((w, i) =>
+    const sched = manual.physicalPaceSchedule || {};
+    const weeks = sched.weeks || [];
+    const weekTabsHTML = weeks.map((w, i) =>
       `<button class="filter-btn${i === 0 ? ' active' : ''}" onclick="showScheduleWeek(${i}, this)">${w.week}</button>`
     ).join('');
     html = `
       <div class="sup-panel">
-        <h3>${sched.title}</h3>
-        <p style="color:var(--text-muted);margin-bottom:1.5rem;font-size:0.9rem">${sched.description}</p>
-        <div class="filter-bar" id="schedule-week-tabs">${weekTabsHTML}</div>
+        <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.85rem">
+          <span style="font-size:2.2rem">📋</span>
+          <div>
+            <h3 style="margin:0;font-size:1.4rem">${sched.title || 'Asignación de Páginas Físicas por Semana'}</h3>
+            <span style="font-size:0.85rem;color:var(--accent);font-weight:700">A.C.E. School of Tomorrow & Chanak Academy</span>
+          </div>
+        </div>
+        <p style="color:var(--text-muted);margin-bottom:1.25rem;font-size:0.9rem">${sched.description || ''}</p>
+        <div class="filter-bar" id="schedule-week-tabs" style="margin-bottom:1rem">${weekTabsHTML}</div>
         <div id="schedule-week-content"></div>
       </div>
     `;
   } else if (tab === 'learning-center') {
-    const rules = manual.learningCenter.rules.map((r, i) => `<div class="rule-item"><div class="rule-num">${i + 1}</div><div class="rule-text">${r}</div></div>`).join('');
-    html = `<div class="sup-panel"><h3>🏫 Learning Center Rules</h3><p style="color:var(--text-muted);margin-bottom:1.5rem;font-size:0.9rem">${manual.learningCenter.title}</p>${rules}</div>`;
+    const lc = manual.learningCenter || { rules: [] };
+    const rulesHTML = (lc.rules || []).map((r, i) => `
+      <div class="rule-item" style="display:flex;align-items:flex-start;gap:0.85rem;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:var(--radius-sm);padding:1rem;margin-bottom:0.75rem">
+        <div class="rule-num" style="background:var(--primary);color:#fff;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:0.85rem;flex-shrink:0">${i + 1}</div>
+        <div class="rule-text" style="font-size:0.9rem;color:var(--text);line-height:1.5">${r}</div>
+      </div>
+    `).join('');
+    html = `
+      <div class="sup-panel">
+        <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1rem">
+          <span style="font-size:2.2rem">🏫</span>
+          <div>
+            <h3 style="margin:0;font-size:1.4rem">${lc.title || 'Learning Center Rules'}</h3>
+            <span style="font-size:0.85rem;color:var(--accent);font-weight:700">Organización del Espacio de Estudio en el Hogar</span>
+          </div>
+        </div>
+        <p style="color:var(--text-muted);margin-bottom:1.25rem;font-size:0.9rem">
+          Normas fundamentales para crear un ambiente ordenado, independiente y centrado en el dominio del aprendizaje en casa:
+        </p>
+        ${rulesHTML}
+      </div>
+    `;
   } else if (tab === 'character') {
-    const rows = manual.characterTraits.monthly.map(m => `<tr><td>${m.month}</td><td><span class="trait-badge">${m.trait}</span></td><td style="font-style:italic;color:var(--text-dim)">${m.verse}</td></tr>`).join('');
-    html = `<div class="sup-panel"><h3>✝️ Character Trait Program</h3><p style="color:var(--text-muted);margin-bottom:1.5rem;font-size:0.9rem">${manual.characterTraits.description}</p><table class="character-table"><thead><tr><th>Month</th><th>Trait</th><th>Bible Verse</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+    const ct = manual.characterTraits || { monthly: [] };
+    const rows = (ct.monthly || []).map(m => `
+      <tr>
+        <td style="font-weight:700;color:var(--accent)">${m.month}</td>
+        <td><span class="trait-badge" style="background:rgba(91,79,233,0.15);color:var(--primary-light);padding:0.25rem 0.6rem;border-radius:6px;font-weight:700">${m.trait}</span></td>
+        <td style="font-style:italic;color:var(--text-muted);font-size:0.88rem">${m.verse}</td>
+      </tr>
+    `).join('');
+    html = `
+      <div class="sup-panel">
+        <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1rem">
+          <span style="font-size:2.2rem">✝️</span>
+          <div>
+            <h3 style="margin:0;font-size:1.4rem">${ct.title || 'Character Trait Program'}</h3>
+            <span style="font-size:0.85rem;color:var(--accent);font-weight:700">60 Rasgos de Carácter Bíblico A.C.E.</span>
+          </div>
+        </div>
+        <p style="color:var(--text-muted);margin-bottom:1.25rem;font-size:0.9rem">${ct.description || ''}</p>
+        <div style="overflow-x:auto">
+          <table class="character-table" style="width:100%;border-collapse:collapse;margin-top:0.5rem">
+            <thead>
+              <tr style="background:rgba(255,255,255,0.05);text-align:left">
+                <th style="padding:0.75rem;border-bottom:1px solid var(--border)">Mes</th>
+                <th style="padding:0.75rem;border-bottom:1px solid var(--border)">Rasgo de Carácter</th>
+                <th style="padding:0.75rem;border-bottom:1px solid var(--border)">Versículo Bíblico</th>
+              </tr>
+            </thead>
+            <tbody>${rows}</tbody>
+          </table>
+        </div>
+      </div>
+    `;
   } else if (tab === 'placement') {
-    const steps = manual.readinessTest.steps.map(s => `<li>${s}</li>`).join('');
-    html = `<div class="sup-panel"><h3>📊 Placement & Readiness Test</h3><p style="color:var(--text-muted);margin-bottom:1.5rem;font-size:0.9rem">${manual.readinessTest.title}</p><ul class="step-by-step">${steps}</ul></div>`;
+    const rt = manual.readinessTest || { steps: [] };
+    const steps = (rt.steps || []).map(s => `
+      <li style="margin-bottom:0.85rem;line-height:1.55;font-size:0.9rem;color:var(--text)">${s}</li>
+    `).join('');
+    html = `
+      <div class="sup-panel">
+        <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1rem">
+          <span style="font-size:2.2rem">📊</span>
+          <div>
+            <h3 style="margin:0;font-size:1.4rem">${rt.title || 'Placement & Readiness Test'}</h3>
+            <span style="font-size:0.85rem;color:var(--accent);font-weight:700">Diagnóstico Oficial por Edades</span>
+          </div>
+        </div>
+        <p style="color:var(--text-muted);margin-bottom:1.25rem;font-size:0.9rem">
+          Criterios oficiales de ubicación pedagógica para estudiantes hispanohablantes o que están aprendiendo inglés:
+        </p>
+        <ol class="step-by-step" style="padding-left:1.3rem">${steps}</ol>
+      </div>
+    `;
   } else if (tab === 'games') {
     const games = window.APPENDIX_D_GAMES || [];
     const gamesHTML = games.map(g => `
@@ -1996,11 +2085,11 @@ function showSupTab(tab, btn) {
           🔁 <strong>Regla de repetición:</strong> ${g.repeatRule}
         </div>
 
-        ${g.materials.length ? `<p style="font-size:0.82rem;color:var(--text-dim);margin-bottom:0.6rem">📦 <strong>Materiales:</strong> ${g.materials.join(', ')}</p>` : ''}
+        ${g.materials && g.materials.length ? `<p style="font-size:0.82rem;color:var(--text-dim);margin-bottom:0.6rem">📦 <strong>Materiales:</strong> ${g.materials.join(', ')}</p>` : ''}
 
         <p style="font-size:0.78rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-dim);font-weight:700;margin-bottom:0.4rem">Instrucciones para el Supervisor:</p>
         <ol style="padding-left:1.2rem;margin-bottom:0.85rem;font-size:0.88rem;color:var(--text);line-height:1.5">
-          ${g.supervisorInstructions.map(s => `<li style="margin-bottom:0.3rem">${s}</li>`).join('')}
+          ${(g.supervisorInstructions || []).map(s => `<li style="margin-bottom:0.3rem">${s}</li>`).join('')}
         </ol>
 
         ${g.commands ? `
@@ -2016,8 +2105,14 @@ function showSupTab(tab, btn) {
 
     html = `
       <div class="sup-panel">
-        <h3>🎲 Juegos Educativos del Apéndice D (Manual ABC Vol. 4)</h3>
-        <p style="color:var(--text-muted);margin-bottom:1.5rem;font-size:0.9rem">
+        <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1rem">
+          <span style="font-size:2.2rem">🎲</span>
+          <div>
+            <h3 style="margin:0;font-size:1.4rem">Juegos Educativos del Apéndice D (Manual ABC Vol. 4)</h3>
+            <span style="font-size:0.85rem;color:var(--accent);font-weight:700">Refuerzo Lúdico Oral y Físico</span>
+          </div>
+        </div>
+        <p style="color:var(--text-muted);margin-bottom:1.25rem;font-size:0.9rem">
           Juegos y dinámicas de grupo diseñados específicamente para el supervisor. Utilízalos diariamente para reforzar vocabulario, fonética y comandos en inglés de manera lúdica.
         </p>
         <div style="margin-bottom:1.5rem;padding:0.85rem 1rem;background:rgba(255,107,157,0.08);border:1px solid rgba(255,107,157,0.2);border-radius:var(--radius-sm);font-size:0.88rem">
@@ -2027,6 +2122,7 @@ function showSupTab(tab, btn) {
       </div>
     `;
   }
+
   content.innerHTML = html;
   if (tab === 'schedule') {
     showScheduleWeek(0, document.querySelector('#schedule-week-tabs .filter-btn'));
@@ -2037,16 +2133,22 @@ function showScheduleWeek(i, btn) {
   document.querySelectorAll('#schedule-week-tabs .filter-btn').forEach(b => b.classList.remove('active'));
   if (btn) btn.classList.add('active');
 
-  const sched = (window.SUPERVISOR_MANUAL || {}).physicalPaceSchedule;
+  const sched = (window.SUPERVISOR_MANUAL || {}).physicalPaceSchedule || {};
   const container = document.getElementById('schedule-week-content');
-  if (!sched || !container) return;
+  if (!container) return;
   const w = (sched.weeks || [])[i];
-  if (!w) { container.innerHTML = '<p style="color:var(--text-muted)">Contenido no disponible para esta semana.</p>'; return; }
+  if (!w) {
+    container.innerHTML = '<p style="color:var(--text-muted)">Contenido no disponible para esta semana.</p>';
+    return;
+  }
 
   container.innerHTML = `
-    <div style="background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:var(--radius-sm);padding:1rem 1.1rem">
-      <span style="font-weight:800;color:var(--accent);font-size:1.05rem">${w.week}</span>
-      <p style="font-size:0.92rem;color:var(--text);margin-top:0.5rem">${w.pages}</p>
+    <div style="background:rgba(255,255,255,0.03);border:1px solid var(--border);border-left:4px solid var(--primary);border-radius:var(--radius-sm);padding:1.1rem">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;flex-wrap:wrap;gap:0.4rem">
+        <span style="font-weight:800;color:var(--accent);font-size:1.15rem">${w.week}</span>
+        ${w.phase ? `<span style="font-size:0.8rem;padding:0.2rem 0.6rem;background:rgba(91,79,233,0.15);color:var(--primary-light);border-radius:6px;font-weight:700">${w.phase}</span>` : ''}
+      </div>
+      <p style="font-size:0.95rem;color:var(--text);margin:0;line-height:1.55">${w.pages}</p>
     </div>
   `;
 }
