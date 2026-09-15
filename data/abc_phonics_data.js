@@ -1435,6 +1435,9 @@ const ABC_PHONICS_DATA = [
     "habitat": "High rocky mountains and steep cliffs",
     "behavior": "Climbs steep rocks with sure-footed precision",
     "diet": "Grazes on grasses and mountain shrubs",
+    "storyTitle": "Ivan Ibex",
+    "storyPages": "1-7",
+    "storySummary": "Ivan Ibex aprende a obedecer a sus padres y mantenerse seguro en las alturas de las montañas, descubriendo la importancia de la prudencia.",
     "type": "long-vowel",
     "color": "#96CEB4",
     "week": 6
@@ -1516,6 +1519,9 @@ const ABC_PHONICS_DATA = [
     "habitat": "Leaves, garden twigs and tree branches",
     "behavior": "Loops its tiny body to measure as it crawls",
     "diet": "Eats leaves",
+    "storyTitle": "Ignatz Inchworm",
+    "storyPages": "8-14",
+    "storySummary": "Ignatz Inchworm descubre el valor de la perseverancia y cómo Dios diseñó cada parte de su pequeño cuerpo para cumplir un propósito especial.",
     "type": "short-vowel",
     "color": "#FFEEAD",
     "week": 6
@@ -1590,6 +1596,9 @@ const ABC_PHONICS_DATA = [
     "habitat": "Freshwater ponds, marshes and rivers",
     "behavior": "Ducks under water to find water plants",
     "diet": "Eats plants, insects, and small fish",
+    "storyTitle": "Dicky Duck",
+    "storyPages": "15-22",
+    "storySummary": "Dicky Duck aprende a ser agradecido y a seguir con alegría las instrucciones de su mamá para nadar y protegerse.",
     "type": "consonant",
     "color": "#D4A5A5",
     "week": 6

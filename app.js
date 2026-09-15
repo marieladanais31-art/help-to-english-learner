@@ -845,8 +845,82 @@ function playWordSound(word) {
 }
 
 function closeModal() {
-  document.getElementById('modal-overlay').classList.remove('open');
+  const overlay = document.getElementById('modal-overlay');
+  if (overlay) overlay.classList.remove('open');
+  const content = document.getElementById('modal-content');
+  if (content) content.innerHTML = '';
   stopAllAudio();
+}
+
+// ============================================================
+// ANIMAL SCIENCE / ABC STORIES — Kelly Rivera YouTube Videos
+// ============================================================
+const ANIMAL_STORY_VIDEOS = {
+  "Ape": "bIBB-icTG0s",
+  "Antelope": "nXpN7hi89JY",
+  "Armadillo": "oX59ovkeKhk",
+  "Mule": "e05xEYUQZ4Q",
+  "Sunfish": "REgXV-Vifz4",
+  "Fox": "inAu65bgVO8",
+  "Rabbit": "ozMvHOCvM6A",
+  "Emu": "jvO-3EptCIc",
+  "Elephant": "LH2bNwn7WEA",
+  "Buffalo": "IUTnRDIqY7c",
+  "Nightingale": "niOTPF61b4c",
+  "Gerbil": "S8eB_d_6d78",
+  "Goldfish": "3RXonT29Bbk",
+  "Tiger": "v5Xt_a7NuGA",
+  "Peacock": "RphuWoPt94c",
+  "Ibex": "1XxZWIYlbhY",
+  "Inchworm": "oxgsuP1zMws",
+  "Duck": "Mxb2VFjEDcM",
+  "Hippopotamus": "8xf2x8UgVnY",
+  "Okapi": "bcNZRPgNTF4",
+  "Ostrich": "rRbhtQ-2tI0",
+  "Lizard": "RCz-gQ9hBgE",
+  "Kangaroo": "J7DvfUqEe-w",
+  "Cockatoo": "LKKcEK3ISTU",
+  "Civet": "LmZBSYhn3lA",
+  "Jaguar": "1NyVIu6JN7k",
+  "Walrus": "JHL778SkHVc",
+  "Unicorn": "jJIS9uX_FFQ",
+  "Umbrella Bird": "KodhSH75OwU",
+  "Vole": "RoKjpVpBNT0",
+  "Quail": "aAKJEJ5rfXA",
+  "Ox": "6t3BCOY2xwk"
+};
+
+function openStoryVideo(videoId, title) {
+  const overlay = document.getElementById('modal-overlay');
+  const content = document.getElementById('modal-content');
+  if (!overlay || !content) return;
+  
+  content.innerHTML = `
+    <div style="padding:0.5rem 0">
+      <div style="margin-bottom:0.85rem">
+        <h3 style="margin:0;font-size:1.15rem;color:var(--accent);display:flex;align-items:center;gap:0.5rem">
+          🎥 ${title || 'Lectura de la Historia (Animal Science)'}
+        </h3>
+        <p style="font-size:0.8rem;color:var(--text-muted);margin:0.25rem 0 0">Learn to Read with Ace and Christi (A.C.E. Accelerated Christian Education)</p>
+      </div>
+      <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:12px;background:#000;box-shadow:var(--shadow-md)">
+        <iframe 
+          src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0" 
+          title="${title || 'Video'}" 
+          style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" 
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+          allowfullscreen>
+        </iframe>
+      </div>
+      <div style="margin-top:0.85rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.5rem">
+        <span style="font-size:0.78rem;color:var(--text-dim)">Canal de apoyo docente: Kelly Rivera</span>
+        <a href="https://www.youtube.com/watch?v=${videoId}" target="_blank" rel="noopener noreferrer" class="btn-secondary" style="font-size:0.78rem;padding:0.35rem 0.75rem;text-decoration:none">
+          ↗️ Abrir en YouTube
+        </a>
+      </div>
+    </div>
+  `;
+  overlay.classList.add('open');
 }
 
 // ============================================================
@@ -1356,28 +1430,65 @@ function renderAnimalSciencePace(pace) {
 
     const factsText = `${animal.animal}. Where it lives: ${animal.habitat}. Characteristics: ${animal.behavior}. What it eats: ${animal.diet || 'a varied natural diet'}.`;
 
-    // Referencia a la historia real del PACE físico — solo título, páginas y un
-    // resumen original breve. El texto completo es material con derechos de
-    // autor de A.C.E./School of Tomorrow y no se reproduce aquí; se lee del
-    // cuaderno físico que la familia ya posee.
-    const storyHTML = animal.storyTitle ? `
-      <div style="margin-top:0.75rem;padding:0.85rem;background:rgba(255,255,255,0.04);border-radius:var(--radius-sm)">
-        <p style="font-weight:700;font-size:0.85rem;color:var(--accent);margin-bottom:0.4rem">📖 Historia de tu PACE físico: "${animal.storyTitle}" (págs. ${animal.storyPages})</p>
-        <p style="font-size:0.85rem;color:var(--text);line-height:1.5;font-style:italic">${animal.storySummary}</p>
-        <p style="font-size:0.75rem;color:var(--text-dim);margin-top:0.4rem">👉 Lee la historia completa en el cuaderno físico del PACE.</p>
-      </div>
-    ` : '';
+    const videoId = animal.youtubeVideoId || ANIMAL_STORY_VIDEOS[animal.animal] || ANIMAL_STORY_VIDEOS[animal.keyword];
+    const storyTitle = animal.storyTitle || `${animal.animal} Story`;
+    const storyPages = animal.storyPages ? `(págs. ${animal.storyPages})` : '';
+    const storySummary = animal.storySummary || `Lectura guiada de la historia de ${animal.animal} para reforzar el fonema y la formación del carácter.`;
 
-    const questionsHTML = animal.storyTitle ? `
-      <div style="margin-top:0.75rem;padding:0.85rem;background:rgba(91,79,233,0.08);border-radius:var(--radius-sm);border-left:3px solid var(--primary)">
-        <p style="font-weight:700;font-size:0.85rem;color:var(--primary-light);margin-bottom:0.4rem">💬 Para conversar después de leer:</p>
-        <ol style="padding-left:1.2rem;font-size:0.82rem;color:var(--text);line-height:1.6;margin:0">
-          <li>¿Qué hizo ${animal.animal.split(' ')[0]} en la historia?</li>
-          <li>¿Cómo se sintió al principio y cómo se sintió al final?</li>
-          <li>¿Qué podemos aprender de esta historia?</li>
-        </ol>
+    const storyHTML = `
+      <div style="margin-top:0.75rem;padding:0.9rem;background:rgba(255,255,255,0.04);border-radius:var(--radius-sm)">
+        <p style="font-weight:700;font-size:0.88rem;color:var(--accent);margin-bottom:0.4rem">📖 Historia de tu PACE físico: "${storyTitle}" ${storyPages}</p>
+        <p style="font-size:0.85rem;color:var(--text);line-height:1.5;font-style:italic">${storySummary}</p>
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.6rem;margin-top:0.6rem">
+          <p style="font-size:0.78rem;color:var(--text-dim);margin:0">👉 Lee la historia completa en el cuaderno físico del PACE.</p>
+          ${videoId ? `
+            <button class="btn-primary" style="font-size:0.82rem;padding:0.4rem 0.95rem;display:inline-flex;align-items:center;gap:0.4rem;background:linear-gradient(135deg,#FF6B6B,#EE5A24);border:none;color:#fff;border-radius:20px;font-weight:700;cursor:pointer;box-shadow:0 3px 10px rgba(255,107,107,0.35)" onclick="openStoryVideo('${videoId}', '${jsAttrEscape(animal.animal)} — ${jsAttrEscape(storyTitle)}')">
+              ▶️ Ver / Escuchar Video de la Historia (Kelly Rivera)
+            </button>
+          ` : ''}
+        </div>
       </div>
-    ` : '';
+    `;
+
+    const q1Eng = `What did ${animal.animal.split(' ')[0]} do in the story?`;
+    const q1Es = `¿Qué hizo ${animal.animal.split(' ')[0]} en la historia?`;
+    const q2Eng = `How did he feel at the beginning and how did he feel in the end?`;
+    const q2Es = `¿Cómo se sintió al principio y cómo se sintió al final?`;
+    const q3Eng = `What can we learn from this story?`;
+    const q3Es = `¿Qué podemos aprender de esta historia?`;
+    const allQuestionsAudio = `${q1Eng}. ${q2Eng}. ${q3Eng}`;
+
+    const questionsHTML = `
+      <div style="margin-top:0.75rem;padding:0.9rem;background:rgba(91,79,233,0.08);border-radius:var(--radius-sm);border-left:3px solid var(--primary)">
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.5rem;margin-bottom:0.6rem">
+          <p style="font-weight:700;font-size:0.85rem;color:var(--primary-light);margin:0">💬 Questions for Parents & Kids / Para conversar después de leer:</p>
+          <button class="btn-secondary" style="font-size:0.75rem;padding:0.25rem 0.65rem;border-radius:15px" onclick="speak('${jsAttrEscape(allQuestionsAudio)}', {rate:0.8})">🔊 Escuchar Todas</button>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:0.45rem">
+          <div style="background:rgba(255,255,255,0.03);padding:0.45rem 0.7rem;border-radius:6px;display:flex;align-items:flex-start;gap:0.6rem">
+            <button class="command-btn" style="padding:0.2rem 0.5rem;font-size:0.78rem;flex-shrink:0" onclick="speak('${jsAttrEscape(q1Eng)}', {rate:0.8})">🔊 Q1</button>
+            <div>
+              <div style="font-weight:600;font-size:0.85rem;color:var(--text)">1. ${q1Eng}</div>
+              <div style="font-size:0.78rem;color:var(--text-muted);font-style:italic">${q1Es}</div>
+            </div>
+          </div>
+          <div style="background:rgba(255,255,255,0.03);padding:0.45rem 0.7rem;border-radius:6px;display:flex;align-items:flex-start;gap:0.6rem">
+            <button class="command-btn" style="padding:0.2rem 0.5rem;font-size:0.78rem;flex-shrink:0" onclick="speak('${jsAttrEscape(q2Eng)}', {rate:0.8})">🔊 Q2</button>
+            <div>
+              <div style="font-weight:600;font-size:0.85rem;color:var(--text)">2. ${q2Eng}</div>
+              <div style="font-size:0.78rem;color:var(--text-muted);font-style:italic">${q2Es}</div>
+            </div>
+          </div>
+          <div style="background:rgba(255,255,255,0.03);padding:0.45rem 0.7rem;border-radius:6px;display:flex;align-items:flex-start;gap:0.6rem">
+            <button class="command-btn" style="padding:0.2rem 0.5rem;font-size:0.78rem;flex-shrink:0" onclick="speak('${jsAttrEscape(q3Eng)}', {rate:0.8})">🔊 Q3</button>
+            <div>
+              <div style="font-weight:600;font-size:0.85rem;color:var(--text)">3. ${q3Eng}</div>
+              <div style="font-size:0.78rem;color:var(--text-muted);font-style:italic">${q3Es}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
 
     return `
       <div style="margin:1rem 0;padding:1rem;background:rgba(78,205,196,0.08);border-radius:var(--radius-sm);border-left:4px solid var(--accent)">
