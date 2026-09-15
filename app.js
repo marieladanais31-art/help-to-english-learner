@@ -464,6 +464,18 @@ function openGameModal(gameId) {
 // ============================================================
 // MODAL: EJERCICIOS DE APERTURA (Pledges, Prayer & Rules)
 // ============================================================
+function speakPledgeChristian() {
+  speak("I pledge allegiance to the Christian flag, and to the Saviour for whose Kingdom it stands; one Saviour, crucified, risen and coming again with life and liberty to all who believe.", { rate: 0.85 });
+}
+
+function speakPledgeBible() {
+  speak("I pledge allegiance to the Bible, God's Holy Word, I will make it a lamp unto my feet and a light unto my path and will hide its words in my heart that I might not sin against God.", { rate: 0.85 });
+}
+
+function speakMorningPrayer() {
+  speak("Thank you, God, for the day. Thank You for our Learning Center. Help us work. Help us speak English. Help us play with our friends and not fight. In Jesus' name, Amen.", { rate: 0.85 });
+}
+
 function openOpeningExercisesModal() {
   const overlay = document.getElementById('modal-overlay');
   const content = document.getElementById('modal-content');
@@ -510,7 +522,7 @@ function openOpeningExercisesModal() {
         <h4 style="margin:0;font-size:1.05rem;color:var(--text);display:flex;align-items:center;gap:0.5rem">
           <span>✝️</span> 1. Pledge to the Christian Flag (Bandera Cristiana)
         </h4>
-        <button class="btn-primary" style="font-size:0.8rem;padding:0.35rem 0.85rem" onclick="speak('I pledge allegiance to the Christian flag, and to the Saviour for whose Kingdom it stands; one Saviour, crucified, risen and coming again with life and liberty to all who believe.', { rate: 0.85 })">
+        <button class="btn-primary" style="font-size:0.8rem;padding:0.35rem 0.85rem" onclick="speakPledgeChristian()">
           🔊 Escuchar en Inglés
         </button>
       </div>
@@ -528,7 +540,7 @@ function openOpeningExercisesModal() {
         <h4 style="margin:0;font-size:1.05rem;color:var(--text);display:flex;align-items:center;gap:0.5rem">
           <span>📖</span> 2. Pledge to the Bible (La Santa Biblia)
         </h4>
-        <button class="btn-primary" style="font-size:0.8rem;padding:0.35rem 0.85rem" onclick="speak('I pledge allegiance to the Bible, God\'s Holy Word, I will make it a lamp unto my feet and a light unto my path and will hide its words in my heart that I might not sin against God.', { rate: 0.85 })">
+        <button class="btn-primary" style="font-size:0.8rem;padding:0.35rem 0.85rem" onclick="speakPledgeBible()">
           🔊 Escuchar en Inglés
         </button>
       </div>
@@ -546,7 +558,7 @@ function openOpeningExercisesModal() {
         <h4 style="margin:0;font-size:1.05rem;color:var(--accent);display:flex;align-items:center;gap:0.5rem">
           <span>☀️</span> 3. Morning Prayer (Oración de la Mañana)
         </h4>
-        <button class="btn-primary" style="font-size:0.8rem;padding:0.35rem 0.85rem" onclick="speak('Thank you, God, for the day. Thank You for our Learning Center. Help us work. Help us speak English. Help us play with our friends and not fight. In Jesus\' name, Amen.', { rate: 0.85 })">
+        <button class="btn-primary" style="font-size:0.8rem;padding:0.35rem 0.85rem" onclick="speakMorningPrayer()">
           🔊 Escuchar Oración
         </button>
       </div>
@@ -1422,13 +1434,23 @@ function renderDailySchedule() {
   updateDailyScheduleProgress(state);
 }
 
+let currentSelectedWeek = 1;
+
 function handleDailyStepAction(index) {
   if (index === 0) {
     openOpeningExercisesModal();
   } else if (index === 1) {
     openConversationalReviewModal();
   } else if (index === 2) {
-    showSection('abc');
+    const week = currentSelectedWeek || 1;
+    if (week <= 5) {
+      // In Weeks 1 to 5, open Speaking English PACE for that week!
+      const paceNum = week === 1 ? '1001' : (week === 2 ? '1002' : (week === 3 ? '1003' : (week === 4 ? '1004' : '1005')));
+      goToPace('speaking', paceNum);
+    } else {
+      // In Weeks 6 to 17, go to ABC & Phonics!
+      showSection('abc');
+    }
   } else if (index === 3) {
     showSection('paces');
   } else if (index === 4) {
@@ -1503,6 +1525,7 @@ function getWeekData(n) {
 }
 
 function showWeek(n, btn) {
+  currentSelectedWeek = n;
   initCompletedDays();
   if (btn) {
     document.querySelectorAll('#weekly-tabs .filter-btn').forEach(b => b.classList.remove('active'));
@@ -1712,7 +1735,7 @@ function showSupTab(tab, btn) {
             <h4 style="margin:0;font-size:1.1rem;color:var(--text);display:flex;align-items:center;gap:0.5rem">
               <span>✝️</span> 1. Pledge to the Christian Flag (Bandera Cristiana)
             </h4>
-            <button class="btn-primary" style="font-size:0.8rem;padding:0.35rem 0.8rem" onclick="speak('I pledge allegiance to the Christian flag, and to the Savior for Whose Kingdom it stands; one brotherhood, uniting all true Christians in service and in love.', { rate: 0.85 })">
+            <button class="btn-primary" style="font-size:0.8rem;padding:0.35rem 0.8rem" onclick="speakPledgeChristian()">
               🔊 Escuchar en Inglés
             </button>
           </div>
@@ -1730,7 +1753,7 @@ function showSupTab(tab, btn) {
             <h4 style="margin:0;font-size:1.1rem;color:var(--text);display:flex;align-items:center;gap:0.5rem">
               <span>📖</span> 2. Pledge to the Bible (La Santa Biblia)
             </h4>
-            <button class="btn-primary" style="font-size:0.8rem;padding:0.35rem 0.8rem" onclick="speak('I pledge allegiance to the Bible, God\'s Holy Word; I will make it a lamp unto my feet, and a light unto my path; I will hide its words in my heart, that I might not sin against God.', { rate: 0.85 })">
+            <button class="btn-primary" style="font-size:0.8rem;padding:0.35rem 0.8rem" onclick="speakPledgeBible()">
               🔊 Escuchar en Inglés
             </button>
           </div>
@@ -1748,7 +1771,7 @@ function showSupTab(tab, btn) {
           <p style="font-size:0.85rem;color:var(--text-muted);line-height:1.5;margin-bottom:0.6rem">
             "Dear Heavenly Father, thank You for this brand new day. Help me to listen, to obey, and to learn with joy. Bless my family and my studies today. In Jesus' Name, Amen."
           </p>
-          <button class="btn-primary" style="font-size:0.8rem;padding:0.35rem 0.8rem" onclick="speak('Dear Heavenly Father, thank You for this brand new day. Help me to listen, to obey, and to learn with joy. Bless my family and my studies today. In Jesus\' Name, Amen.', { rate: 0.85 })">
+          <button class="btn-primary" style="font-size:0.8rem;padding:0.35rem 0.8rem" onclick="speakMorningPrayer()">
             🔊 Escuchar Oración en Inglés
           </button>
         </div>

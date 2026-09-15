@@ -1275,11 +1275,12 @@ const DAILY_SCHEDULE_PHASE1 = [
   },
   {
     icon: "🗣️",
-    title: "3. New Vocabulary & Phonics",
+    title: "3. New Vocabulary (Speaking & Phonics)",
     minutes: 20,
-    activity: "Presentación del vocabulario ilustrado del día o letra/animal ABC aplicando la Regla de las 5 Repeticiones orales en voz alta y técnica de la tortuga.",
-    jumpTo: "abc",
-    buttonLabel: "Ver ABC & Vocabulario ➜"
+    activity: "Presentación del vocabulario ilustrado del día (Speaking English en Semanas 1–5 / Fonética ABC en Semanas 6–17) con la Regla de las 5 Repeticiones.",
+    actionType: "openVocabStep",
+    jumpTo: "paces",
+    buttonLabel: "Ver Vocabulario del Día ➜"
   },
   {
     icon: "📖",
